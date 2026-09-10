@@ -1,0 +1,135 @@
+---
+sidebar_position: 3
+title: 3. Slidev decks
+---
+
+# 3. Embed Slidev decks
+
+[Slidev](https://sli.dev) is a Vue-based slide framework. It is a separate app,
+so the approach is: build each deck to a static site under `static/`, then
+embed it with an iframe.
+
+## Install
+
+```bash
+npm install --save-dev @slidev/cli @slidev/theme-default
+```
+
+## Write a deck
+
+Create `slides/intro.md`. Slides are separated by `---`:
+
+```md
+---
+theme: default
+title: Welcome
+---
+
+# Slidev in Docusaurus
+
+Press space to advance
+
+---
+
+# A second slide
+
+- Markdown-based
+- Embeddable
+```
+
+## Build script
+
+Docusaurus serves everything in `static/` verbatim, so build the deck into
+`static/slides/<name>/`. Two flags matter:
+
+- `--base` must match the path the deck is served from, including the site's
+  `baseUrl` (e.g. `/website/slides/intro/` on GitHub Pages).
+- `--router-mode hash` avoids server rewrites for a subdirectory deploy.
+
+Create `scripts/build-slidev.mjs`:
+
+```js
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
+import { join, basename } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = fileURLToPath(new URL('..', import.meta.url));
+const slidesDir = join(root, 'slides');
+const outRoot = join(root, 'static', 'slides');
+const slidevBin = join(root, 'node_modules', '.bin', 'slidev');
+
+// Match the Docusaurus baseUrl so assets resolve on GitHub Pages.
+const siteBase = (process.env.DOCUSAURUS_BASE_URL || '/').replace(/\/+$/, '');
+
+rmSync(outRoot, { recursive: true, force: true });
+mkdirSync(outRoot, { recursive: true });
+
+for (const deck of readdirSync(slidesDir).filter(
+  (f) => f.endsWith('.md') && statSync(join(slidesDir, f)).isFile(),
+)) {
+  const name = basename(deck, '.md');
+  execFileSync(
+    slidevBin,
+    [
+      'build',
+      join(slidesDir, deck),
+      '--out',
+      join(outRoot, name),
+      '--base',
+      `${siteBase}/slides/${name}/`,
+      '--router-mode',
+      'hash',
+    ],
+    { stdio: 'inherit', cwd: root },
+  );
+}
+```
+
+Add the script:
+
+```json
+{ "scripts": { "slidev:build": "node scripts/build-slidev.mjs" } }
+```
+
+## The embed component
+
+Create `src/components/Slides/index.tsx`:
+
+```tsx
+import React from 'react';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+export default function Slides({ name }: { name: string }) {
+  const src = useBaseUrl(`/slides/${name}/`);
+  return (
+    <iframe
+      src={src}
+      title={`Slidev deck: ${name}`}
+      style={{
+        width: '100%',
+        aspectRatio: '16 / 9',
+        border: '1px solid var(--ifm-color-emphasis-300)',
+      }}
+      allow="fullscreen"
+      loading="lazy"
+    />
+  );
+}
+```
+
+## Use it in a page
+
+```mdx
+import Slides from '@site/src/components/Slides';
+
+<Slides name="intro" />
+
+Open the deck [full screen](pathname:///slides/intro/).
+```
+
+:::warning Linking to the deck
+Use the `pathname://` prefix for the full-screen link. A normal link to
+`/slides/intro/` is a static asset, not a Docusaurus route, so
+`onBrokenLinks: 'throw'` would fail the build.
+:::

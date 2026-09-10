@@ -1,0 +1,109 @@
+---
+sidebar_position: 2
+title: 2. CALM architectures
+---
+
+# 2. Render CALM architectures
+
+[CALM](https://calm.finos.org) (FINOS Common Architecture Language Model) is a
+machine-readable, validatable format for software architecture. There is no
+published Docusaurus plugin for it, but the CLI can render a model to a Mermaid
+diagram, which Docusaurus renders natively.
+
+## Install
+
+```bash
+npm install --save-dev @finos/calm-cli
+npm install @docusaurus/theme-mermaid
+```
+
+## Enable Mermaid
+
+In `docusaurus.config.ts`:
+
+```ts
+const config: Config = {
+  markdown: { mermaid: true },
+  themes: ['@docusaurus/theme-mermaid'],
+  // ...
+};
+```
+
+## Write an architecture
+
+Create `calm/website.architecture.json` with `nodes` and `relationships`. For
+example a visitor talking to a web UI, an API and a store. Keep `unique-id`,
+`node-type`, `name` and `description` on each node, and use `relationship-type`
+(`interacts` / `connects`) for the edges.
+
+## Build script
+
+`calm docify` generates a whole standalone Docusaurus project, which is more
+than we want. Instead, generate to a temp directory, extract the Mermaid
+diagram, and write it as an MDX partial. Create `scripts/build-calm.mjs`:
+
+````js
+import { execFileSync } from 'node:child_process';
+import {
+  mkdtempSync,
+  rmSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+  readdirSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, basename } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = fileURLToPath(new URL('..', import.meta.url));
+const calmDir = join(root, 'calm');
+const outDir = join(root, 'src', 'calm');
+const calmBin = join(root, 'node_modules', '.bin', 'calm');
+
+mkdirSync(outDir, { recursive: true });
+
+for (const file of readdirSync(calmDir).filter((f) =>
+  f.endsWith('.architecture.json'),
+)) {
+  const name = basename(file, '.architecture.json');
+  const archPath = join(calmDir, file);
+  const tmp = mkdtempSync(join(tmpdir(), `calm-${name}-`));
+  try {
+    execFileSync(calmBin, ['validate', '-a', archPath], { stdio: 'inherit' });
+    execFileSync(
+      calmBin,
+      ['docify', '-a', archPath, '-o', tmp, '--clear-output-directory'],
+      { stdio: 'inherit' },
+    );
+    const md = readFileSync(join(tmp, 'docs', 'index.md'), 'utf8');
+    const mermaid = md.match(/```mermaid\n([\s\S]*?)```/)?.[1]?.trimEnd();
+    if (!mermaid) throw new Error(`No mermaid diagram for ${file}`);
+    writeFileSync(
+      join(outDir, `${name}.mdx`),
+      `\`\`\`mermaid\n${mermaid}\n\`\`\`\n`,
+    );
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+}
+````
+
+Add the script and run it:
+
+```json
+{ "scripts": { "calm:build": "node scripts/build-calm.mjs" } }
+```
+
+## Use it in a page
+
+```mdx
+import WebsiteArchitecture from '@site/src/calm/website.mdx';
+
+<WebsiteArchitecture />
+```
+
+:::tip
+`calm validate` runs first, so a broken model fails the build early. Make
+validation part of every change.
+:::
