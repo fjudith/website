@@ -1,0 +1,58 @@
+// LikeC4 model — describes architecture as a single model,
+// then projects it into multiple views/diagrams.
+// Docs: https://likec4.dev
+specification {
+  element actor {
+    style {
+      shape person
+    }
+  }
+  element system
+  element component
+  element database {
+    style {
+      shape cylinder
+    }
+  }
+}
+
+model {
+  customer = actor 'Customer' {
+    description 'A visitor browsing the website'
+  }
+
+  website = system 'Website' {
+    description 'The Docusaurus documentation site'
+
+    ui = component 'Web UI' {
+      description 'React / Docusaurus frontend'
+    }
+    api = component 'Content API' {
+      description 'Serves docs, blog and rendered diagrams'
+    }
+    store = database 'Content Store' {
+      description 'Markdown, MDX and model files'
+    }
+
+    ui -> api 'requests content'
+    api -> store 'reads/writes'
+  }
+
+  customer -> website.ui 'browses'
+}
+
+views {
+  view index {
+    title 'Landing: System Context'
+    include *
+  }
+
+  view of website {
+    title 'Website — Containers'
+    include
+      website,
+      website.*,
+      customer
+    autoLayout LeftRight
+  }
+}

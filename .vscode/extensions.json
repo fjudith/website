@@ -1,8 +1,8 @@
 {
-    "recommendations": [
-        "eliostruyf.vscode-front-matter",
-        "likec4.likec4-vscode",
-        "finos.calm-vscode-plugin",
-        "antfu.slidev"
-    ]
+  "recommendations": [
+    "eliostruyf.vscode-front-matter",
+    "likec4.likec4-vscode",
+    "finos.calm-vscode-plugin",
+    "antfu.slidev"
+  ]
 }

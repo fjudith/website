@@ -1,0 +1,61 @@
+{
+  "unique-id": "website-architecture",
+  "nodes": [
+    {
+      "unique-id": "visitor",
+      "node-type": "actor",
+      "name": "Visitor",
+      "description": "A person browsing the documentation website"
+    },
+    {
+      "unique-id": "web-ui",
+      "node-type": "webclient",
+      "name": "Web UI",
+      "description": "Docusaurus React frontend served as static assets"
+    },
+    {
+      "unique-id": "content-api",
+      "node-type": "service",
+      "name": "Content API",
+      "description": "Serves docs, blog posts and rendered diagrams"
+    },
+    {
+      "unique-id": "content-store",
+      "node-type": "database",
+      "name": "Content Store",
+      "description": "Markdown, MDX and architecture model files"
+    }
+  ],
+  "relationships": [
+    {
+      "unique-id": "visitor-uses-ui",
+      "description": "Browses the site",
+      "relationship-type": {
+        "interacts": {
+          "actor": "visitor",
+          "nodes": ["web-ui"]
+        }
+      }
+    },
+    {
+      "unique-id": "ui-calls-api",
+      "description": "Requests content",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "web-ui" },
+          "destination": { "node": "content-api" }
+        }
+      }
+    },
+    {
+      "unique-id": "api-reads-store",
+      "description": "Reads and writes content",
+      "relationship-type": {
+        "connects": {
+          "source": { "node": "content-api" },
+          "destination": { "node": "content-store" }
+        }
+      }
+    }
+  ]
+}
