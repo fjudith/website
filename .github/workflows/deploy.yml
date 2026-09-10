@@ -20,8 +20,8 @@ concurrency:
 
 defaults:
   run:
-    # The Docusaurus site lives in the websites/fjudith/ subdirectory.
-    working-directory: websites/fjudith
+    # The Docusaurus site lives in the workspaces/fjudith/ subdirectory.
+    working-directory: workspaces/fjudith
 
 jobs:
   build:
@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: websites/fjudith/package-lock.json
+          cache-dependency-path: workspaces/fjudith/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -52,7 +52,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: websites/fjudith/build
+          path: workspaces/fjudith/build
 
   deploy:
     name: Deploy
