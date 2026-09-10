@@ -33,17 +33,14 @@ export default function LikeC4({
   showTitle = true,
 }: LikeC4Props): React.ReactElement {
   return (
-    <BrowserOnly fallback={<div style={{height}} />}>
+    <BrowserOnly fallback={<div style={{ height }} />}>
       {() => {
         // Imported lazily so it never runs during SSR.
-        const {
-          LikeC4ModelProvider,
-          ReactLikeC4,
-        } = require('@likec4/diagram');
-        const {likec4model} = require('@site/src/likec4/likec4-model');
+        const { LikeC4ModelProvider, ReactLikeC4 } = require('@likec4/diagram');
+        const { likec4model } = require('@site/src/likec4/likec4-model');
 
         return (
-          <div style={{height, width: '100%'}}>
+          <div style={{ height, width: '100%' }}>
             <LikeC4ModelProvider model={likec4model}>
               <ReactLikeC4
                 viewId={viewId}

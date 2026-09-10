@@ -33,7 +33,7 @@ export default function Slides({
     width: '100%',
     border: '1px solid var(--ifm-color-emphasis-300)',
     borderRadius: 'var(--ifm-global-radius)',
-    ...(height ? {height} : {aspectRatio}),
+    ...(height ? { height } : { aspectRatio }),
   };
 
   return (

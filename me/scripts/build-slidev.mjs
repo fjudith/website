@@ -11,10 +11,10 @@
  *   --base /slides/<name>/   so assets resolve under the subdirectory
  *   --router-mode hash       so client-side routing works without server rewrites
  */
-import {execFileSync} from 'node:child_process';
-import {mkdirSync, readdirSync, rmSync, statSync} from 'node:fs';
-import {join, basename} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
+import { join, basename } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const slidesDir = join(root, 'slides');
@@ -41,8 +41,8 @@ if (decks.length === 0) {
 }
 
 // Start from a clean slate so removed decks don't linger.
-rmSync(outRoot, {recursive: true, force: true});
-mkdirSync(outRoot, {recursive: true});
+rmSync(outRoot, { recursive: true, force: true });
+mkdirSync(outRoot, { recursive: true });
 
 for (const deck of decks) {
   const name = basename(deck, '.md');
@@ -54,7 +54,7 @@ for (const deck of decks) {
   execFileSync(
     slidevBin,
     ['build', entry, '--out', out, '--base', base, '--router-mode', 'hash'],
-    {stdio: 'inherit', cwd: root},
+    { stdio: 'inherit', cwd: root },
   );
 }
 

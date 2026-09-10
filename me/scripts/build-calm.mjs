@@ -13,11 +13,18 @@
  *   import WebsiteArchitecture from '@site/src/calm/website.mdx';
  *   <WebsiteArchitecture />
  */
-import {execFileSync} from 'node:child_process';
-import {mkdtempSync, rmSync, mkdirSync, readFileSync, writeFileSync, readdirSync} from 'node:fs';
-import {tmpdir} from 'node:os';
-import {join, basename} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import { execFileSync } from 'node:child_process';
+import {
+  mkdtempSync,
+  rmSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+  readdirSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, basename } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const calmDir = join(root, 'calm');
@@ -26,7 +33,9 @@ const outDir = join(root, 'src', 'calm');
 // Discover every *.architecture.json in the calm/ directory.
 let archFiles = [];
 try {
-  archFiles = readdirSync(calmDir).filter((f) => f.endsWith('.architecture.json'));
+  archFiles = readdirSync(calmDir).filter((f) =>
+    f.endsWith('.architecture.json'),
+  );
 } catch {
   console.log('[calm] no calm/ directory found, skipping.');
   process.exit(0);
@@ -37,7 +46,7 @@ if (archFiles.length === 0) {
   process.exit(0);
 }
 
-mkdirSync(outDir, {recursive: true});
+mkdirSync(outDir, { recursive: true });
 
 const calmBin = join(root, 'node_modules', '.bin', 'calm');
 
@@ -54,12 +63,16 @@ for (const file of archFiles) {
 
   try {
     // Validate first — fail the build early on a broken model.
-    execFileSync(calmBin, ['validate', '-a', archPath], {stdio: 'inherit'});
+    execFileSync(calmBin, ['validate', '-a', archPath], { stdio: 'inherit' });
 
     // Generate docs into a throwaway directory.
-    execFileSync(calmBin, ['docify', '-a', archPath, '-o', tmp, '--clear-output-directory'], {
-      stdio: 'inherit',
-    });
+    execFileSync(
+      calmBin,
+      ['docify', '-a', archPath, '-o', tmp, '--clear-output-directory'],
+      {
+        stdio: 'inherit',
+      },
+    );
 
     const indexMd = readFileSync(join(tmp, 'docs', 'index.md'), 'utf8');
     const mermaid = extractMermaid(indexMd);
@@ -78,6 +91,6 @@ ${mermaid}
     writeFileSync(outFile, mdx, 'utf8');
     console.log(`[calm] wrote src/calm/${name}.mdx`);
   } finally {
-    rmSync(tmp, {recursive: true, force: true});
+    rmSync(tmp, { recursive: true, force: true });
   }
 }
