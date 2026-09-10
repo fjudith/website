@@ -35,13 +35,28 @@ export default function LikeC4({
   return (
     <BrowserOnly fallback={<div style={{ height }} />}>
       {() => {
-        // Imported lazily so it never runs during SSR.
+        // Imported here so it never runs during SSR.
         const { LikeC4ModelProvider, ReactLikeC4 } = require('@likec4/diagram');
         const { likec4model } = require('@site/src/likec4/likec4-model');
 
+        // Render built-in icons referenced in the model. We import only the
+        // single icon we use (tech:docusaurus) instead of the full
+        // @likec4/icons bundle, which is too large for the production bundler.
+        const DocusaurusIcon = require('@likec4/icons/tech/docusaurus').default;
+        const renderIcon = ({
+          node,
+        }: {
+          node: { icon?: string | null };
+        }): React.ReactNode => {
+          if (node.icon === 'tech:docusaurus') {
+            return <DocusaurusIcon />;
+          }
+          return null;
+        };
+
         return (
           <div style={{ height, width: '100%' }}>
-            <LikeC4ModelProvider model={likec4model}>
+            <LikeC4ModelProvider likec4model={likec4model}>
               <ReactLikeC4
                 viewId={viewId}
                 pannable={pannable}
@@ -51,6 +66,7 @@ export default function LikeC4({
                 enableElementDetails
                 enableRelationshipDetails
                 showDiagramTitle={showTitle}
+                renderIcon={renderIcon}
               />
             </LikeC4ModelProvider>
           </div>
