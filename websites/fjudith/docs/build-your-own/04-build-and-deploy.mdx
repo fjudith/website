@@ -52,7 +52,7 @@ const config: Config = {
 ## GitHub Actions workflow
 
 Create `.github/workflows/deploy.yml`. If the site lives in a subdirectory
-(e.g. `me/`), set `working-directory` and `DOCUSAURUS_BASE_URL`:
+(e.g. `websites/fjudith/`), set `working-directory` and `DOCUSAURUS_BASE_URL`:
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -69,7 +69,7 @@ concurrency:
   cancel-in-progress: false
 defaults:
   run:
-    working-directory: me
+    working-directory: websites/fjudith
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -81,12 +81,12 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: me/package-lock.json
+          cache-dependency-path: websites/fjudith/package-lock.json
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: me/build
+          path: websites/fjudith/build
   deploy:
     needs: build
     runs-on: ubuntu-latest

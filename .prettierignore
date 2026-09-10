@@ -2,15 +2,15 @@
 **/node_modules
 
 # Build output
-me/build
-me/.docusaurus
-me/.cache-loader
+websites/**/build
+websites/**/.docusaurus
+websites/**/.cache-loader
 
 # Generated rendering artifacts
-me/src/likec4/likec4-model.ts
-me/src/calm/*.mdx
-me/static/slides
-me/slides/node_modules
+websites/**/src/likec4/likec4-model.ts
+websites/**/src/calm/*.mdx
+websites/**/static/slides
+websites/**/slides/node_modules
 
 # Lockfiles and generated data
 **/package-lock.json
