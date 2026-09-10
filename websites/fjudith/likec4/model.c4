@@ -23,6 +23,9 @@ model {
 
   website = system 'Website' {
     description 'The Docusaurus documentation site'
+    style {
+      icon tech:docusaurus
+    }
 
     ui = component 'Web UI' {
       description 'React / Docusaurus frontend'
@@ -47,7 +50,7 @@ views {
     include *
   }
 
-  view of website {
+  view website of website {
     title 'Website — Containers'
     include
       website,

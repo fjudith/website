@@ -1,0 +1,118 @@
+---
+sidebar_position: 4
+title: 4. Build + deploy
+---
+
+# 4. Wire the build and deploy to GitHub Pages
+
+## Run generators before every build
+
+LikeC4, CALM and Slidev all produce artifacts that the site imports. Run their
+generators before `start` and `build` using npm's `pre` hooks:
+
+```json
+{
+  "scripts": {
+    "likec4:codegen": "likec4 codegen model ./likec4 --use-core-package --outfile ./src/likec4/likec4-model.ts",
+    "calm:build": "node scripts/build-calm.mjs",
+    "slidev:build": "node scripts/build-slidev.mjs",
+    "prestart": "npm run likec4:codegen && npm run calm:build && npm run slidev:build",
+    "start": "docusaurus start",
+    "prebuild": "npm run likec4:codegen && npm run calm:build && npm run slidev:build",
+    "build": "docusaurus build"
+  }
+}
+```
+
+The generated files are reproducible, so add them to `.gitignore`:
+
+```gitignore
+/src/likec4/likec4-model.ts
+/src/calm/*.mdx
+/static/slides
+/slides/node_modules
+```
+
+## Configure the base URL
+
+For a project site at `https://<user>.github.io/<repo>/`, the `baseUrl` is
+`/<repo>/`. Make it overridable so the Slidev build (which needs the same
+prefix for its assets) stays in sync:
+
+```ts
+const config: Config = {
+  url: 'https://<user>.github.io',
+  baseUrl: process.env.DOCUSAURUS_BASE_URL || '/<repo>/',
+  organizationName: '<user>',
+  projectName: '<repo>',
+  // ...
+};
+```
+
+## GitHub Actions workflow
+
+Create `.github/workflows/deploy.yml`. If the site lives in a subdirectory
+(e.g. `websites/fjudith/`), set `working-directory` and `DOCUSAURUS_BASE_URL`:
+
+```yaml
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+defaults:
+  run:
+    working-directory: websites/fjudith
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCUSAURUS_BASE_URL: /<repo>/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: websites/fjudith/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: websites/fjudith/build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+## One manual step
+
+In the repository, go to **Settings → Pages → Build and deployment → Source**
+and select **GitHub Actions**. After that, every push to `main` publishes the
+site.
+
+## Verify locally
+
+Build exactly as CI does before pushing:
+
+```bash
+DOCUSAURUS_BASE_URL=/<repo>/ npm run build
+npm run serve
+```
+
+That's the whole pipeline: three source formats (`.c4`, `.architecture.json`,
+`.md` decks), three generators wired into `prebuild`, and one workflow to ship
+it.
