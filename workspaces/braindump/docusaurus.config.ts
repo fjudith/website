@@ -151,6 +151,9 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      // Languages not bundled by default in prism-react-renderer must be
+      // listed here to get syntax highlighting (e.g. bash/toml/yaml).
+      additionalLanguages: ['bash', 'toml', 'yaml'],
     },
   } satisfies Preset.ThemeConfig,
 };
