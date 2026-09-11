@@ -315,6 +315,47 @@ If you'd rather not wire this up manually, the formula lives at
 **[github.com/fjudith/salt-devops-tools](https://github.com/fjudith/salt-devops-tools)**
 (see the `kiro/crew`, `kata-containers`, and `cloud-hypervisor` states).
 
+The whole setup is driven by pillar. Here is the relevant extract from my
+`/srv/pillar/devops.sls` — it selects the **kata** service mode, points the
+guest workspace share at my code directory, and enables the supporting
+formulas:
+
+```yaml
+# /srv/pillar/devops.sls (extract)
+kiro:
+  cli:
+    enabled: true
+  crew:
+    enabled: true
+    service:
+      enabled: true
+      mode: kata # run the container in a Kata micro-VM (Cloud Hypervisor)
+      user: fjudith
+      bin: /home/fjudith/.local/bin/kirocrew
+      kata:
+        shared_dir: /home/fjudith/git # bind-mounted at /workspace in the guest
+
+kata-containers:
+  kata-containers:
+    enabled: true
+
+containerd:
+  nerdctl:
+    enabled: true
+
+cloud-hypervisor:
+  cloud-hypervisor:
+    # Kept disabled here: the Kata static tarball already bundles the
+    # cloud-hypervisor binary, so the standalone formula is optional.
+    enabled: false
+```
+
+Applying it is a single highstate:
+
+```bash
+sudo salt-call --local state.apply
+```
+
 ## References
 
 - [Kata Containers](https://katacontainers.io) — [containerd how-to](https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/containerd-kata.md)
