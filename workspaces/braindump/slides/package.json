@@ -1,0 +1,19 @@
+{
+  "name": "braindump-slidev",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Slidev presentation decks managed as an npm workspace",
+  "workspaces": [
+    "decks/*"
+  ],
+  "scripts": {
+    "dev": "echo 'Usage: npm run dev --workspace <deck-name>' && exit 1",
+    "build": "echo 'Usage: npm run build --workspace <deck-name>' && exit 1",
+    "export": "echo 'Usage: npm run export --workspace <deck-name>' && exit 1",
+    "build:all": "npm run build --workspaces --if-present",
+    "export:all": "npm run export --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

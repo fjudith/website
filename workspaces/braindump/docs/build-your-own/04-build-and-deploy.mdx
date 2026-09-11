@@ -29,8 +29,11 @@ The generated files are reproducible, so add them to `.gitignore`:
 ```gitignore
 /src/likec4/likec4-model.ts
 /src/calm/*.mdx
+/src/slides-manifest.json
 /static/slides
 /slides/node_modules
+/slides/decks/*/node_modules
+/slides/decks/*/dist
 ```
 
 ## Configure the base URL
@@ -52,7 +55,7 @@ const config: Config = {
 ## GitHub Actions workflow
 
 Create `.github/workflows/deploy.yml`. If the site lives in a subdirectory
-(e.g. `websites/fjudith/`), set `working-directory` and `DOCUSAURUS_BASE_URL`:
+(e.g. `workspaces/braindump/`), set `working-directory` and `DOCUSAURUS_BASE_URL`:
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -69,7 +72,7 @@ concurrency:
   cancel-in-progress: false
 defaults:
   run:
-    working-directory: websites/fjudith
+    working-directory: workspaces/braindump
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -81,12 +84,17 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: websites/fjudith/package-lock.json
+          cache-dependency-path: |
+            workspaces/braindump/package-lock.json
+            workspaces/braindump/slides/package-lock.json
       - run: npm ci
+      # Decks are a separate npm workspace with their own Slidev versions.
+      - run: npm ci
+        working-directory: workspaces/braindump/slides
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: websites/fjudith/build
+          path: workspaces/braindump/build
   deploy:
     needs: build
     runs-on: ubuntu-latest

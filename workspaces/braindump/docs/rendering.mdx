@@ -5,6 +5,7 @@ title: Diagrams & Slides
 
 import LikeC4 from '@site/src/components/LikeC4';
 import Slides from '@site/src/components/Slides';
+import SlidesIndex from '@site/src/components/SlidesIndex';
 import WebsiteArchitecture from '@site/src/calm/website.mdx';
 
 # Diagrams & Slides
@@ -34,9 +35,19 @@ validates it and renders it to a Mermaid diagram embedded below.
 
 ## Slidev
 
-Developer-focused Markdown slide decks. Author in `slides/intro.md`;
-`npm run slidev:build` compiles the deck to a static app served at
-`/slides/intro/` and embedded here.
+Developer-focused Markdown slide decks, managed as an npm workspace under
+`slides/`. Each deck is its own package at `slides/decks/<name>/` with its own
+`slides.md` and pinned Slidev version. `npm run slidev:build` builds each deck
+(via its own build script) into a static app served at `/slides/<name>/`. All
+decks are discovered automatically.
+
+### All decks
+
+<SlidesIndex />
+
+### Embedded deck
+
+Any deck can also be embedded inline:
 
 <Slides name="intro" />
 
