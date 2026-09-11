@@ -5,6 +5,8 @@ description: Running kirocrew agents in hardware-isolated micro-VMs using Kata C
 tags: [kata-containers, cloud-hypervisor, sandboxing, kirocrew]
 ---
 
+import LikeC4 from '@site/src/components/LikeC4';
+
 # Isolating kirocrew with Kata Containers + Cloud Hypervisor
 
 :::info Experiment log
@@ -27,18 +29,10 @@ boundary while still behaving like an OCI container. Paired with
 [Cloud Hypervisor](https://www.cloudhypervisor.org) — a modern, Rust-based VMM
 built for cloud workloads — the per-pod VM boots fast and stays lean.
 
-```mermaid
-flowchart LR
-  subgraph host["Host node"]
-    containerd["containerd"]
-    subgraph vm["Cloud Hypervisor micro-VM"]
-      kernel["Guest kernel"]
-      agent["kirocrew agent (OCI container)"]
-      kernel --- agent
-    end
-    containerd -->|kata-clh runtime handler| vm
-  end
-```
+The stack, from the container down to the hardware — modelled in LikeC4 and
+rendered interactively (scroll to zoom, drag to pan, click a node for details):
+
+<LikeC4 viewId="stack" height={560} />
 
 ## The pieces
 
@@ -185,6 +179,14 @@ kubectl exec deploy/kirocrew -- uname -r   # guest kernel (should differ)
 ```
 
 If those two differ, the agent is running in its own Cloud Hypervisor VM. 🎉
+
+## Sharing folders over virtio-fs
+
+Because the container runs in a VM, host paths reach it through virtio-fs
+(`virtiofsd`) rather than a plain bind mount. This view shows how host
+directories map to guest mounts:
+
+<LikeC4 viewId="virtiofs" height={360} />
 
 ## What worked, what to watch
 

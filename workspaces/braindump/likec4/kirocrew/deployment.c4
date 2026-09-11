@@ -1,0 +1,67 @@
+// -*- coding: utf-8 -*-
+deployment {
+
+  // Bottom of the stack: the physical machine.
+  hardware bareMetal 'Bare-metal host' {
+    #host
+    description 'x86_64 CPU with VT-x / AMD-V. Exposes /dev/kvm.'
+
+    // Linux kernel + KVM on the host.
+    os hostOs 'Ubuntu host OS' {
+      #host
+      technology 'Linux kernel'
+
+      // Host filesystem directories exported into the guest over virtio-fs.
+      homeDirInstance = instanceOf host.homeDir
+      sharedDirInstance = instanceOf host.sharedDir
+
+      hypervisor kvm 'KVM' {
+        #host #isolation-boundary
+        description '/dev/kvm - hardware-assisted virtualization.'
+
+        // The systemd-managed container runtime chain lives on the host.
+        systemd unit 'kirocrew-kata.service' {
+          #host
+          systemdInstance = instanceOf host.systemdUnit
+
+          runtime cri 'containerd + nerdctl' {
+            #host
+            nerdctlInstance = instanceOf host.nerdctl
+            containerdInstance = instanceOf host.containerd
+            shimInstance = instanceOf host.shim
+            cniInstance = instanceOf host.cni
+
+            // Cloud Hypervisor boots the micro-VM under KVM.
+            hypervisor clh 'cloud-hypervisor' {
+              #host #isolation-boundary
+              clhInstance = instanceOf host.cloudHypervisor
+              virtiofsdInstance = instanceOf host.virtiofsd
+
+              // Top of the stack: the guest micro-VM and the container in it.
+              microvm guest 'Kata micro-VM' {
+                #guest
+                description 'Lightweight guest with its own kernel. Namespace: kirocrew.'
+
+                os guestOs 'Guest OS' {
+                  #guest
+                  technology 'Kata guest kernel + agent'
+
+                  runtime container 'kirocrew container' {
+                    #guest
+                    technology 'OCI image ghcr.io/kirodotdev/kirocrew:stable'
+                    pid1Instance = instanceOf kirocrew.pid1
+                    gatewayInstance = instanceOf kirocrew.dashboard
+                    kiroCliInstance = instanceOf kirocrew.kiroCli
+                    toolsInstance = instanceOf kirocrew.tools
+                    homeInstance = instanceOf kirocrew.home
+                    workspaceInstance = instanceOf kirocrew.workspace
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
