@@ -23,6 +23,9 @@ yarn-error.log*
 /src/likec4/likec4-model.ts
 /src/calm/*.mdx
 /static/slides
+/src/slides-manifest.json
 
-# Slidev build artifacts
+# Slidev workspace artifacts (deck node_modules and per-deck dist/)
 /slides/node_modules
+/slides/decks/*/node_modules
+/slides/decks/*/dist

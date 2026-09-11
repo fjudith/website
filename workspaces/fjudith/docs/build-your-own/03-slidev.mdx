@@ -9,15 +9,45 @@ title: 3. Slidev decks
 so the approach is: build each deck to a static site under `static/`, then
 embed it with an iframe.
 
-## Install
+## The slides workspace
 
-```bash
-npm install --save-dev @slidev/cli @slidev/theme-default
+Decks live in their own npm workspace under `slides/`, one package per deck.
+This lets each deck pin its own Slidev version and dependencies independently.
+
+`slides/package.json`:
+
+```json
+{
+  "name": "fjudith-slidev",
+  "private": true,
+  "workspaces": ["decks/*"]
+}
 ```
 
 ## Write a deck
 
-Create `slides/intro.md`. Slides are separated by `---`:
+Each deck is a workspace package at `slides/decks/<name>/` with its own
+`package.json` and a `slides.md`.
+
+`slides/decks/intro/package.json`:
+
+```json
+{
+  "name": "intro",
+  "private": true,
+  "scripts": {
+    "dev": "slidev --open",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.0.0",
+    "@slidev/theme-default": "latest"
+  }
+}
+```
+
+`slides/decks/intro/slides.md` (slides separated by `---`):
 
 ```md
 ---
@@ -37,60 +67,38 @@ Press space to advance
 - Embeddable
 ```
 
-## Build script
+Install the workspace once from `slides/`:
 
-Docusaurus serves everything in `static/` verbatim, so build the deck into
-`static/slides/<name>/`. Two flags matter:
-
-- `--base` must match the path the deck is served from, including the site's
-  `baseUrl` (e.g. `/website/slides/intro/` on GitHub Pages).
-- `--router-mode hash` avoids server rewrites for a subdirectory deploy.
-
-Create `scripts/build-slidev.mjs`:
-
-```js
-import { execFileSync } from 'node:child_process';
-import { mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
-import { join, basename } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const root = fileURLToPath(new URL('..', import.meta.url));
-const slidesDir = join(root, 'slides');
-const outRoot = join(root, 'static', 'slides');
-const slidevBin = join(root, 'node_modules', '.bin', 'slidev');
-
-// Match the Docusaurus baseUrl so assets resolve on GitHub Pages.
-const siteBase = (process.env.DOCUSAURUS_BASE_URL || '/').replace(/\/+$/, '');
-
-rmSync(outRoot, { recursive: true, force: true });
-mkdirSync(outRoot, { recursive: true });
-
-for (const deck of readdirSync(slidesDir).filter(
-  (f) => f.endsWith('.md') && statSync(join(slidesDir, f)).isFile(),
-)) {
-  const name = basename(deck, '.md');
-  execFileSync(
-    slidevBin,
-    [
-      'build',
-      join(slidesDir, deck),
-      '--out',
-      join(outRoot, name),
-      '--base',
-      `${siteBase}/slides/${name}/`,
-      '--router-mode',
-      'hash',
-    ],
-    { stdio: 'inherit', cwd: root },
-  );
-}
+```bash
+npm install
 ```
 
-Add the script:
+## Build script
+
+Docusaurus serves everything in `static/` verbatim, so build each deck into
+`static/slides/<name>/`. The site's `scripts/build-slidev.mjs`:
+
+- discovers each `slides/decks/<name>/slides.md`,
+- runs that deck's own `npm run build` (so it uses the deck's pinned Slidev
+  version) with these flags forwarded to `slidev build`:
+  - `--out` → `static/slides/<name>/` (where Docusaurus serves it),
+  - `--base` → `<baseUrl>/slides/<name>/` (so assets resolve on GitHub Pages),
+  - `--router-mode hash` → avoids server rewrites for a subdirectory deploy,
+    **only for Slidev versions that support the flag** (older versions error
+    on unknown args, so the script probes `build --help` first),
+- and writes `src/slides-manifest.json` for the decks index.
+
+The site's `slidev:build` script simply runs it:
 
 ```json
 { "scripts": { "slidev:build": "node scripts/build-slidev.mjs" } }
 ```
+
+:::note Mixed Slidev versions
+Because each deck pins its own version, one deck can be on Slidev v51 and
+another on v52. The build script only passes `--router-mode` to decks whose
+Slidev supports it, so mixed versions build side by side.
+:::
 
 ## The embed component
 
@@ -133,3 +141,14 @@ Use the `pathname://` prefix for the full-screen link. A normal link to
 `/slides/intro/` is a static asset, not a Docusaurus route, so
 `onBrokenLinks: 'throw'` would fail the build.
 :::
+
+## Hosting multiple decks
+
+Add another workspace package (`slides/decks/<name>/` with a `package.json` and
+`slides.md`), run `npm install` in `slides/`, and it builds to `/slides/<name>/`
+automatically. The build script also writes a `src/slides-manifest.json`
+listing each deck's name, title (from frontmatter), and path, which a small
+`SlidesIndex` component renders as a gallery linking to every deck.
+
+Since CI installs the site and the slides workspace separately, remember to run
+`npm ci` in `slides/` in the deploy workflow before building the site.

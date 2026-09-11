@@ -40,9 +40,17 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: workspaces/fjudith/package-lock.json
+          cache-dependency-path: |
+            workspaces/fjudith/package-lock.json
+            workspaces/fjudith/slides/package-lock.json
 
       - name: Install dependencies
+        run: npm ci
+
+      - name: Install Slidev workspace dependencies
+        # Decks are a separate npm workspace under slides/ with their own
+        # (per-deck pinned) Slidev versions.
+        working-directory: workspaces/fjudith/slides
         run: npm ci
 
       - name: Build website

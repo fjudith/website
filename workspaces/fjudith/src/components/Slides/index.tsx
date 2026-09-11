@@ -4,8 +4,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 /**
  * Embeds a built Slidev deck via an <iframe>.
  *
- * Decks live in `slides/<name>.md` and are built by `npm run slidev:build`
- * into `static/slides/<name>/`, served at `/slides/<name>/`.
+ * Decks live in `slides/<name>/slides.md` and are built by
+ * `npm run slidev:build` into `static/slides/<name>/`, served at
+ * `/slides/<name>/`.
  *
  * Usage in MDX:
  *   import Slides from '@site/src/components/Slides';

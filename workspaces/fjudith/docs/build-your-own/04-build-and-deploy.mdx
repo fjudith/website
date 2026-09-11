@@ -29,8 +29,11 @@ The generated files are reproducible, so add them to `.gitignore`:
 ```gitignore
 /src/likec4/likec4-model.ts
 /src/calm/*.mdx
+/src/slides-manifest.json
 /static/slides
 /slides/node_modules
+/slides/decks/*/node_modules
+/slides/decks/*/dist
 ```
 
 ## Configure the base URL
@@ -81,8 +84,13 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: workspaces/fjudith/package-lock.json
+          cache-dependency-path: |
+            workspaces/fjudith/package-lock.json
+            workspaces/fjudith/slides/package-lock.json
       - run: npm ci
+      # Decks are a separate npm workspace with their own Slidev versions.
+      - run: npm ci
+        working-directory: workspaces/fjudith/slides
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
