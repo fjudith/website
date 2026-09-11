@@ -330,10 +330,9 @@ kiro:
     service:
       enabled: true
       mode: kata # run the container in a Kata micro-VM (Cloud Hypervisor)
-      user: fjudith
-      bin: /home/fjudith/.local/bin/kirocrew
+      user: johndoe
       kata:
-        shared_dir: /home/fjudith/git # bind-mounted at /workspace in the guest
+        shared_dir: /home/johndoe/git # bind-mounted at /workspace in the guest
 
 kata-containers:
   kata-containers:
