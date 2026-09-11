@@ -20,8 +20,8 @@ concurrency:
 
 defaults:
   run:
-    # The Docusaurus site lives in the workspaces/fjudith/ subdirectory.
-    working-directory: workspaces/fjudith
+    # The Docusaurus site lives in the workspaces/braindump/ subdirectory.
+    working-directory: workspaces/braindump
 
 jobs:
   build:
@@ -41,8 +41,8 @@ jobs:
           node-version: 20
           cache: npm
           cache-dependency-path: |
-            workspaces/fjudith/package-lock.json
-            workspaces/fjudith/slides/package-lock.json
+            workspaces/braindump/package-lock.json
+            workspaces/braindump/slides/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -50,7 +50,7 @@ jobs:
       - name: Install Slidev workspace dependencies
         # Decks are a separate npm workspace under slides/ with their own
         # (per-deck pinned) Slidev versions.
-        working-directory: workspaces/fjudith/slides
+        working-directory: workspaces/braindump/slides
         run: npm ci
 
       - name: Build website
@@ -60,7 +60,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: workspaces/fjudith/build
+          path: workspaces/braindump/build
 
   deploy:
     name: Deploy
