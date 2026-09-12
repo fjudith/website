@@ -1,17 +1,24 @@
 # Dependencies
 **/node_modules
 
+# Tool-managed config (not project source)
+.kiro
+
 # Build output
 workspaces/**/build
 workspaces/**/.docusaurus
 workspaces/**/.cache-loader
+# Any bundler/Slidev "dist" output (e.g. likec4 deck projects)
+**/dist
 
 # Generated rendering artifacts
+workspaces/**/src/likec4/*-model.ts
 workspaces/**/src/likec4/likec4-model.ts
 workspaces/**/src/calm/*.mdx
 workspaces/**/src/slides-manifest.json
 workspaces/**/static/slides
 workspaces/**/slides/decks/*/dist
+workspaces/**/slides/decks/*/index.html
 
 # Lockfiles and generated data
 **/package-lock.json
