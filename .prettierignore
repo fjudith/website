@@ -12,11 +12,13 @@ workspaces/**/.cache-loader
 **/dist
 
 # Generated rendering artifacts
+workspaces/**/src/likec4/*-model.ts
 workspaces/**/src/likec4/likec4-model.ts
 workspaces/**/src/calm/*.mdx
 workspaces/**/src/slides-manifest.json
 workspaces/**/static/slides
 workspaces/**/slides/decks/*/dist
+workspaces/**/slides/decks/*/index.html
 
 # Lockfiles and generated data
 **/package-lock.json
