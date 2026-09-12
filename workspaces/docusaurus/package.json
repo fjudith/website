@@ -1,10 +1,12 @@
 {
-  "name": "braindump",
+  "name": "docusaurus",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "likec4:codegen": "likec4 codegen model ./likec4 --use-core-package --outfile ./src/likec4/likec4-model.ts",
+    "likec4:codegen": "npm run likec4:codegen:kirocrew && npm run likec4:codegen:agentic",
+    "likec4:codegen:kirocrew": "likec4 codegen model ./likec4 --project kirocrew-kata --use-core-package --outfile ./src/likec4/likec4-model.ts",
+    "likec4:codegen:agentic": "likec4 codegen model ./likec4 --project agentic-platform --use-core-package --outfile ./src/likec4/agentic-platform-model.ts",
     "calm:build": "node scripts/build-calm.mjs",
     "slidev:build": "node scripts/build-slidev.mjs",
     "prestart": "npm run likec4:codegen && npm run calm:build && npm run slidev:build",
@@ -29,6 +31,7 @@
     "@likec4/diagram": "^1.59.3",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
+    "cosmos-docusaurus-theme": "^2.2.6",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

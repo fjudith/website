@@ -23,3 +23,12 @@ slorber:
     linkedin: sebastienlorber
     github: slorber
     newsletter: https://thisweekinreact.com
+
+fjudith:
+  name: fjudith
+  title: Engineering Director
+  url: https://github.com/fjudith
+  image_url: https://github.com/fjudith.png
+  page: true
+  socials:
+    github: fjudith

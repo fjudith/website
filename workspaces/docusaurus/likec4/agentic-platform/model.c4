@@ -1,0 +1,120 @@
+// -*- coding: utf-8 -*-
+// Cartographie neutre des couches d'une plateforme agentique.
+// Sert la figure de l'article de blog « Sept couches, deux angles morts ».
+specification {
+  element platform {
+    style {
+      shape rectangle
+      color primary
+    }
+  }
+  // Une strate de la pile. Empilée de 01 (bas) à 07 (haut).
+  // `size sm` garde des boîtes compactes : le détail de chaque couche vit
+  // dans sa description (panneau au clic) et dans le tableau de l'article.
+  element layer {
+    style {
+      shape rectangle
+      color indigo
+      size sm
+    }
+  }
+  // Préoccupation transverse : ne se situe pas *entre* deux strates,
+  // elle s'applique *à chacune*.
+  element concern {
+    style {
+      shape rectangle
+      color amber
+      size sm
+    }
+  }
+
+  relationship supports
+  relationship crosses
+
+  tag transverse
+}
+
+model {
+  platform pile 'Plateforme agentique' {
+    description '''
+      Pas un produit unique, mais un empilement de couches aux
+      responsabilités distinctes.
+    '''
+
+    layer l7 '07 · Interface & surfaces' {
+      description '''
+        Expose l'agent à l'humain et aux systèmes.
+        Test de maturité : si la logique agentique connaît sa surface,
+        chaque canal supplémentaire est une réécriture.
+      '''
+    }
+    layer l6 '06 · Coordination multi-agents' {
+      description 'Faire collaborer plusieurs agents : délégation, sous-agents, protocoles.'
+    }
+    layer l5 '05 · Mémoire & connaissance' {
+      description 'Fournir le contexte durable et récupérable.'
+    }
+    layer l4 '04 · Outils & intégrations' {
+      description '''
+        Donner à l'agent des capacités d'action.
+        MCP transforme « N agents × M outils » en « N + M ».
+        Le sandboxing cesse d'être négociable dès que l'agent exécute du code.
+      '''
+    }
+    layer l3 '03 · Orchestration / runtime' {
+      description '''
+        Exécuter la boucle agentique et gérer l'état.
+        C'est là qu'est le produit : le différenciateur n'est pas le
+        framework mais la gestion d'état (reprise après compaction,
+        idempotence des étapes).
+      '''
+    }
+    layer l2 '02 · Modèles' {
+      description 'Fournir la capacité de raisonnement et de génération.'
+    }
+    layer l1 '01 · Compute & inférence' {
+      description '''
+        Faire tourner les modèles et router les requêtes.
+        Le gateway est le seul point durable : il découple tout le reste
+        du fournisseur.
+      '''
+    }
+
+    // L'empilement : chaque couche s'appuie sur celle du dessous.
+    l7 -[supports]-> l6
+    l6 -[supports]-> l5
+    l5 -[supports]-> l4
+    l4 -[supports]-> l3
+    l3 -[supports]-> l2
+    l2 -[supports]-> l1
+  }
+
+  concern securite 'A · Sécurité & gouvernance' {
+    #transverse
+    technology "Permissions · approbation humaine · audit · rayon d'impact"
+    description '''
+      La question n'est pas « l'agent est-il sûr ? » mais « quelle est sa
+      pire action possible, et qui l'approuve ? ».
+    '''
+  }
+  concern observabilite 'B · Observabilité & évaluation' {
+    #transverse
+    technology 'Traces · coût/token · evals · closed-loop'
+    description "Sans traces bout-en-bout ni evals, la fiabilité est une opinion."
+  }
+
+  // Transverses : elles traversent la pile de bout en bout, et non
+  // une strate en particulier.
+  securite -[crosses]-> pile 'traverse toutes les couches'
+  observabilite -[crosses]-> pile 'traverse toutes les couches'
+}
+
+views {
+  // Vue principale utilisée par l'article : la pile + les transverses.
+  view couches {
+    title 'Sept couches, deux préoccupations transverses'
+    include *
+    include pile.*
+    autoLayout TopBottom 24 12
+  }
+}

@@ -55,7 +55,7 @@ const config: Config = {
 ## GitHub Actions workflow
 
 Create `.github/workflows/deploy.yml`. If the site lives in a subdirectory
-(e.g. `workspaces/braindump/`), set `working-directory` and `DOCUSAURUS_BASE_URL`:
+(e.g. `workspaces/docusaurus/`), set `working-directory` and `DOCUSAURUS_BASE_URL`:
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -72,7 +72,7 @@ concurrency:
   cancel-in-progress: false
 defaults:
   run:
-    working-directory: workspaces/braindump
+    working-directory: workspaces/docusaurus
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -87,16 +87,16 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: |
-            workspaces/braindump/package-lock.json
-            workspaces/braindump/slides/package-lock.json
+            workspaces/docusaurus/package-lock.json
+            workspaces/docusaurus/slides/package-lock.json
       - run: npm ci
       # Decks are a separate npm workspace with their own Slidev versions.
       - run: npm ci
-        working-directory: workspaces/braindump/slides
+        working-directory: workspaces/docusaurus/slides
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: workspaces/braindump/build
+          path: workspaces/docusaurus/build
   deploy:
     needs: build
     runs-on: ubuntu-latest

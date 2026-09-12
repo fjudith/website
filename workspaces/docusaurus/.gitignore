@@ -21,6 +21,7 @@ yarn-error.log*
 
 # Generated rendering artifacts (LikeC4 / CALM / Slidev)
 /src/likec4/likec4-model.ts
+/src/likec4/agentic-platform-model.ts
 /src/calm/*.mdx
 /static/slides
 /src/slides-manifest.json
@@ -29,3 +30,8 @@ yarn-error.log*
 /slides/node_modules
 /slides/decks/*/node_modules
 /slides/decks/*/dist
+# index.html intermédiaire écrit par `slidev build` dans le dossier du deck
+/slides/decks/*/index.html
+
+# Build output of likec4 deck projects (e.g. likec4/<deck>/dist)
+/likec4/*/dist
