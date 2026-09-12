@@ -1,10 +1,15 @@
 # Dependencies
 **/node_modules
 
+# Tool-managed config (not project source)
+.kiro
+
 # Build output
 workspaces/**/build
 workspaces/**/.docusaurus
 workspaces/**/.cache-loader
+# Any bundler/Slidev "dist" output (e.g. likec4 deck projects)
+**/dist
 
 # Generated rendering artifacts
 workspaces/**/src/likec4/likec4-model.ts
