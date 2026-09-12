@@ -1,0 +1,362 @@
+---
+sidebar_position: 1
+title: Isolating KiroCrew with Kata Containers + Cloud Hypervisor
+description: Running the KiroCrew container in a hardware-isolated micro-VM using Kata Containers with the Cloud Hypervisor VMM, driven by containerd/nerdctl and systemd.
+tags: [kata-containers, cloud-hypervisor, sandboxing, kirocrew, containerd]
+---
+
+import LikeC4 from '@site/src/components/LikeC4';
+
+# Isolating KiroCrew with Kata Containers + Cloud Hypervisor
+
+:::info[Experiment log]
+This documents how I run the **KiroCrew** container inside a hardware-isolated
+micro-VM on a single Ubuntu workstation. Everything below is plain shell —
+`nerdctl`, `containerd`, and `systemd`. Pin the versions to whatever is current
+when you read this.
+:::
+
+## Why
+
+KiroCrew drives `kiro-cli` agents that run tools, shell out, and touch the
+filesystem. A normal container shares the host kernel, so an escape is a host
+compromise. [Kata Containers](https://katacontainers.io) runs the container
+inside a lightweight VM with its **own guest kernel**, and
+[Cloud Hypervisor](https://www.cloudhypervisor.org) (`clh`) is the Rust-based
+VMM that boots it — fast to start and light on resources.
+
+The stack, from the container down to the hardware — modelled in LikeC4 and
+rendered interactively (scroll to zoom, drag to pan, click a node for details):
+
+<LikeC4 viewId="stack" height={560} />
+
+## The pieces
+
+| Component                                    | Role                                                      |
+| -------------------------------------------- | --------------------------------------------------------- |
+| **Cloud Hypervisor** (`clh`)                 | The VMM that runs the micro-VM (needs `/dev/kvm`)         |
+| **virtiofsd**                                | Shares host directories into the guest over virtio-fs     |
+| **Kata Containers**                          | OCI runtime that launches the container in the VM         |
+| **containerd** + **nerdctl**                 | Runs the image, wires the CNI network, publishes the port |
+| **systemd**                                  | Manages the container lifecycle and the host-side proxy   |
+| **KiroCrew** (`ghcr.io/kirodotdev/kirocrew`) | The workload being isolated                               |
+
+## Prerequisites
+
+- A Linux host with hardware virtualization (`/dev/kvm` present).
+- `containerd` and `nerdctl` installed and working.
+- Root/sudo access.
+
+```bash
+test -e /dev/kvm && echo "KVM OK" || echo "no /dev/kvm — enable nested virt"
+```
+
+## 1. Install Cloud Hypervisor
+
+Grab the static binary for your architecture, verify it, and symlink it onto
+`PATH`. Pin `CLH_VERSION` to a
+[current release](https://github.com/cloud-hypervisor/cloud-hypervisor/releases).
+
+```bash
+CLH_VERSION="53.0"
+sudo install -d /usr/local/cloud-hypervisor/${CLH_VERSION}
+sudo curl -fsSL -o /usr/local/cloud-hypervisor/${CLH_VERSION}/cloud-hypervisor-static \
+  "https://github.com/cloud-hypervisor/cloud-hypervisor/releases/download/v${CLH_VERSION}/cloud-hypervisor-static"
+sudo chmod 0755 /usr/local/cloud-hypervisor/${CLH_VERSION}/cloud-hypervisor-static
+sudo ln -sf /usr/local/cloud-hypervisor/${CLH_VERSION}/cloud-hypervisor-static \
+  /usr/local/bin/cloud-hypervisor
+
+# virtiofsd shares host dirs into the guest.
+sudo apt-get install -y virtiofsd
+
+cloud-hypervisor --version
+```
+
+:::tip[Verify downloads]
+Release binaries publish checksums. Fetch the matching `sha256` and check it
+before installing — the Salt formula pins the digest per architecture.
+:::
+
+## 2. Install Kata Containers
+
+The static tarball extracts into `/opt/kata`. Pin `KATA_VERSION` to a
+[current release](https://github.com/kata-containers/kata-containers/releases).
+
+```bash
+KATA_VERSION="3.14.0"
+ARCH=amd64   # or arm64
+curl -fsSL -o /tmp/kata-static.tar.xz \
+  "https://github.com/kata-containers/kata-containers/releases/download/${KATA_VERSION}/kata-static-${KATA_VERSION}-${ARCH}.tar.xz"
+sudo tar -xf /tmp/kata-static.tar.xz -C /
+
+# Put the runtime and shim on PATH.
+sudo ln -sf /opt/kata/bin/kata-runtime /usr/local/bin/kata-runtime
+sudo ln -sf /opt/kata/bin/containerd-shim-kata-v2 /usr/local/bin/containerd-shim-kata-v2
+
+kata-runtime --version
+kata-runtime check   # confirms KVM + host capabilities
+```
+
+Kata ships a ready-made Cloud Hypervisor config alongside the default one:
+`/opt/kata/share/defaults/kata-containers/configuration-clh.toml`. No edits are
+needed for this setup — the trick is making the shim always use it (next step).
+
+## 3. Pin the shim to the Cloud Hypervisor config
+
+The shim reads `KATA_CONF_FILE` to decide which hypervisor config to load. Drop
+a tiny wrapper named after a dedicated runtime handler (`kata-clh`) so both
+containerd and the CLIs resolve Cloud Hypervisor consistently:
+
+```bash
+sudo tee /usr/local/bin/containerd-shim-kata-clh-v2 >/dev/null <<'EOF'
+#!/bin/bash
+# Pin the Kata configuration to the Cloud Hypervisor (clh) backend.
+KATA_CONF_FILE=/opt/kata/share/defaults/kata-containers/configuration-clh.toml \
+  exec /opt/kata/bin/containerd-shim-kata-v2 "$@"
+EOF
+sudo chmod 0755 /usr/local/bin/containerd-shim-kata-clh-v2
+```
+
+## 4. Register the `kata-clh` runtime in containerd
+
+Add the runtime handler to `/etc/containerd/config.toml`. containerd derives the
+shim binary name from the handler (`kata-clh` → `containerd-shim-kata-clh-v2`),
+so the wrapper above gets invoked. The annotation allowlists let you pass
+per-container Kata tuning later.
+
+```toml
+# /etc/containerd/config.toml
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.kata-clh]
+  runtime_type = "io.containerd.kata-clh.v2"
+  privileged_without_host_devices = true
+  pod_annotations = ["io.katacontainers.*"]
+  container_annotations = ["io.katacontainers.*"]
+```
+
+```bash
+sudo systemctl restart containerd
+```
+
+## 5. Prepare host directories (shared over virtio-fs)
+
+Because the container runs in a VM, host paths reach it through virtio-fs, not a
+plain bind mount. Two directories are shared into the guest:
+
+<LikeC4 viewId="virtiofs" height={360} />
+
+- **Home** — persistent state and the `kiro-cli` login credentials, mounted at
+  `/home/kirocrew`. Owned by uid/gid `1000` (the container user) so the guest
+  can write to it.
+- **Shared** — an optional workspace, mounted at `/workspace`.
+
+```bash
+sudo install -d -m 0700 -o 1000 -g 1000 /var/lib/kirocrew/home
+sudo install -d -m 0755 /var/lib/kirocrew/shared
+```
+
+## 6. Create a dedicated network and pull the image
+
+A dedicated CNI network gives the container a fixed IP that a host-side proxy
+can forward to. Everything runs in a `kirocrew` containerd namespace.
+
+```bash
+NS=kirocrew
+IMAGE=ghcr.io/kirodotdev/kirocrew:stable
+
+sudo nerdctl --namespace "$NS" network create kirocrew --subnet 10.88.0.0/24
+sudo nerdctl --namespace "$NS" pull "$IMAGE"
+```
+
+## 7. Run KiroCrew as a systemd service
+
+This unit runs the image under the `kata-clh` runtime, on the dedicated network
+with a fixed IP, with the home and shared directories bind-mounted (Kata turns
+these into virtio-fs shares):
+
+```ini
+# /etc/systemd/system/kirocrew-kata.service
+[Unit]
+Description=KiroCrew (Kata Containers / Cloud Hypervisor)
+After=containerd.service network-online.target
+Requires=containerd.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStartPre=-/usr/local/bin/nerdctl --namespace kirocrew rm --force kirocrew
+ExecStart=/usr/local/bin/nerdctl --namespace kirocrew run \
+  --rm \
+  --name kirocrew \
+  --runtime io.containerd.kata-clh.v2 \
+  --network kirocrew \
+  --ip 10.88.0.10 \
+  --volume /var/lib/kirocrew/home:/home/kirocrew \
+  --volume /var/lib/kirocrew/shared:/workspace \
+  ghcr.io/kirodotdev/kirocrew:stable
+ExecStop=-/usr/local/bin/nerdctl --namespace kirocrew stop kirocrew
+Restart=always
+RestartSec=5
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now kirocrew-kata.service
+```
+
+Confirm the container is actually in a VM — the guest kernel differs from the
+host:
+
+```bash
+uname -r                                                          # host kernel
+sudo nerdctl --namespace kirocrew exec kirocrew uname -r          # guest kernel
+```
+
+## 8. Log in to kiro-cli (one time)
+
+`kiro-cli login` is an interactive device-code flow, so it can't run headless in
+the service. Run it once against the persistent home; the credentials land in
+`/var/lib/kirocrew/home` and survive restarts.
+
+:::note[Why the login uses Docker]
+The login needs reliable outbound networking. On some hosts (notably WSL2) the
+Kata micro-VM can't plumb a network interface into the guest, so the login is
+run under Docker (runc) instead. The runtime doesn't matter — it only writes
+credential files into the shared home that the Kata service later mounts.
+`--userns=host` maps the container's uid `1000` to host uid `1000` so it can
+write the `0700` home.
+:::
+
+```bash
+sudo systemctl stop kirocrew-kata.service
+
+sudo docker run --rm -it \
+  --name kirocrew-login \
+  --userns=host \
+  -v /var/lib/kirocrew/home:/home/kirocrew \
+  --entrypoint kiro-cli \
+  ghcr.io/kirodotdev/kirocrew:stable \
+  login --use-device-flow
+# Open the printed URL on your host, enter the code, approve.
+
+sudo systemctl start kirocrew-kata.service
+```
+
+## 9. Open the dashboard
+
+KiroCrew binds its dashboard on port `5476` inside the container. Mint a
+short-lived access token from the running container:
+
+```bash
+sudo nerdctl --namespace kirocrew exec kirocrew \
+  kirocrew token --port 5476 --ttl 2h
+```
+
+Paste the printed URL into a browser. The container's port is not published with
+a listening socket, so on a plain host you reach it at the container IP
+(`http://10.88.0.10:5476`).
+
+:::tip[WSL2: forward the dashboard to Windows]
+A CNI portmap publish is DNAT-only — no listening socket — so WSL2's
+localhost-forwarding won't mirror it to Windows. A `systemd` socket unit opens a
+**real** listener on `127.0.0.1:5476` and `systemd-socket-proxyd` forwards to
+the container. WSL2 detects that socket and forwards it to Windows, while Kata
+VM isolation is preserved.
+
+```ini
+# /etc/systemd/system/kirocrew-kata-proxy.socket
+[Socket]
+ListenStream=127.0.0.1:5476
+[Install]
+WantedBy=sockets.target
+```
+
+```ini
+# /etc/systemd/system/kirocrew-kata-proxy.service
+[Unit]
+Requires=kirocrew-kata-proxy.socket
+After=kirocrew-kata-proxy.socket kirocrew-kata.service
+BindsTo=kirocrew-kata.service
+[Service]
+ExecStart=/lib/systemd/systemd-socket-proxyd 10.88.0.10:5476
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now kirocrew-kata-proxy.socket
+```
+
+:::
+
+## What to watch
+
+- **Nested virtualization** — on a cloud VM you need nested virt enabled (or a
+  bare-metal instance), otherwise `kata-runtime check` fails.
+- **Home ownership** — `/var/lib/kirocrew/home` must be owned by uid/gid `1000`
+  and `0700`, or the container entrypoint fails with a permission error.
+- **Don't shadow the home** — a shared workspace must not be mounted at
+  `/home/kirocrew`; the entrypoint needs to write there.
+- **Login runtime** — if the Kata guest has no network on your host, do the
+  one-time `kiro-cli login` under Docker as shown above.
+
+## Automating it: the Salt formula
+
+I run this on my workstation via a SaltStack formula rather than by hand — it
+installs Cloud Hypervisor and Kata, drops the shim wrapper, registers the
+`kata-clh` runtime in containerd, creates the directories and network, and
+manages the `kirocrew-kata` service plus the WSL2 socket proxy. It also ships
+`kirocrew-kata-login` and `kirocrew-kata-token` helpers for the two interactive
+steps above.
+
+If you'd rather not wire this up manually, the formula lives at
+**[github.com/fjudith/salt-devops-tools](https://github.com/fjudith/salt-devops-tools)**
+(see the `kiro/crew`, `kata-containers`, and `cloud-hypervisor` states).
+
+The whole setup is driven by pillar. Here is the relevant extract from my
+`/srv/pillar/devops.sls` — it selects the **kata** service mode, points the
+guest workspace share at my code directory, and enables the supporting
+formulas:
+
+```yaml
+# /srv/pillar/devops.sls (extract)
+kiro:
+  cli:
+    enabled: true
+  crew:
+    enabled: true
+    service:
+      enabled: true
+      mode: kata # run the container in a Kata micro-VM (Cloud Hypervisor)
+      user: johndoe
+      kata:
+        shared_dir: /home/johndoe/git # bind-mounted at /workspace in the guest
+
+kata-containers:
+  kata-containers:
+    enabled: true
+
+containerd:
+  nerdctl:
+    enabled: true
+
+cloud-hypervisor:
+  cloud-hypervisor:
+    # Kept disabled here: the Kata static tarball already bundles the
+    # cloud-hypervisor binary, so the standalone formula is optional.
+    enabled: false
+```
+
+Applying it is a single highstate:
+
+```bash
+sudo salt-call --local state.apply
+```
+
+## References
+
+- [Kata Containers](https://katacontainers.io) — [containerd how-to](https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/containerd-kata.md)
+- [Cloud Hypervisor](https://www.cloudhypervisor.org)
+- [Kata Containers with Cloud Hypervisor](https://katacontainers.io/blog/kata-containers-with-cloud-hypervisor/)

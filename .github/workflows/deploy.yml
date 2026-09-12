@@ -20,8 +20,8 @@ concurrency:
 
 defaults:
   run:
-    # The Docusaurus site lives in the workspaces/braindump/ subdirectory.
-    working-directory: workspaces/braindump
+    # The Docusaurus site lives in the workspaces/docusaurus/ subdirectory.
+    working-directory: workspaces/docusaurus
 
 jobs:
   build:
@@ -43,8 +43,8 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: |
-            workspaces/braindump/package-lock.json
-            workspaces/braindump/slides/package-lock.json
+            workspaces/docusaurus/package-lock.json
+            workspaces/docusaurus/slides/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -52,7 +52,7 @@ jobs:
       - name: Install Slidev workspace dependencies
         # Decks are a separate npm workspace under slides/ with their own
         # (per-deck pinned) Slidev versions.
-        working-directory: workspaces/braindump/slides
+        working-directory: workspaces/docusaurus/slides
         run: npm ci
 
       - name: Build website
@@ -62,7 +62,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: workspaces/braindump/build
+          path: workspaces/docusaurus/build
 
   deploy:
     name: Deploy

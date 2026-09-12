@@ -1,0 +1,182 @@
+// -*- coding: utf-8 -*-
+model {
+
+  // The KiroCrew workload (logical) that we want to run under Kata.
+  // Internals reflect docker/Dockerfile: python:3.12-slim-trixie base,
+  // non-root user kirocrew (uid 1000), tini as PID 1, the kirocrew gateway
+  // (wheel) driving kiro-cli over ACP, published on 5476.
+  system kirocrew 'KiroCrew container' {
+    technology 'OCI image ghcr.io/kirodotdev/kirocrew:stable (python:3.12-slim-trixie)'
+    description '''
+      Headless dashboard + channel bots (Slack/Discord/Telegram/WeCom/Webex).
+      Runs as non-root user `kirocrew` (uid 1000); all state lives under
+      /home/kirocrew. Published on 127.0.0.1:5476.
+    '''
+
+    process pid1 'tini (PID 1)' {
+      technology 'tini'
+      description '''
+        Reaps agent subprocess zombies and forwards SIGTERM for graceful
+        `stop`. The entrypoint scrubs credentials from the environment, then
+        execs `tini -- kirocrew gateway`.
+      '''
+    }
+
+    app dashboard 'KiroCrew gateway' {
+      technology 'Python wheel (kiro_crew), CMD gateway'
+      description '''
+        HTTP UI/API bound at KIROCREW_BIND=0.0.0.0:5476 inside the container
+        namespace. Token auth + CSRF + Host checks on every request except the
+        token-free liveness probes.
+      '''
+    }
+
+    service kiroCli 'kiro-cli' {
+      technology '/usr/local/bin (outside the volume), installed Q_INSTALL_GLOBAL'
+      description '''
+        Agent runtime KiroCrew drives over ACP; required for chat sessions.
+        Version resolved from the release manifest and sha256-verified.
+        Recorded at /usr/local/share/kirocrew/kiro-cli-version.
+      '''
+    }
+
+    service tools 'Runtime toolset' {
+      technology 'git, curl, ripgrep, unzip, ca-certificates'
+      description 'Tools available to agent sessions (repo work, search, fetches).'
+    }
+
+    app health 'Healthcheck' {
+      technology 'curl http://127.0.0.1:5476/api/health'
+      description 'HEALTHCHECK: interval 30s, timeout 5s, start-period 30s, 3 retries.'
+    }
+
+    store home 'Persistent home' {
+      technology 'volume at /home/kirocrew'
+      description '''
+        Holds ALL state: gateway home (~/.kiro/crew), kiro-cli credentials,
+        agents, skills. A single volume mount persists everything.
+      '''
+    }
+    store workspace 'Workspace share' {
+      description 'Host directory bind-mounted at /workspace in the guest.'
+    }
+
+    // Container-internal wiring.
+    pid1 -[supervises]-> dashboard 'execs kirocrew gateway'
+    dashboard -[drives]-> kiroCli 'ACP sessions'
+    dashboard -[runs]-> tools 'agent tooling'
+    health -[probes]-> dashboard '/api/health'
+    dashboard -> home 'reads / writes state'
+    kiroCli -> home 'reads / writes credentials'
+    dashboard -> workspace 'reads / writes files'
+  }
+
+  // Foundation models reached by kiro-cli. kiro-cli does NOT call a customer
+  // Bedrock account directly; it talks to the Kiro / Q Developer managed
+  // service (CodeWhisperer/Q backend), which is itself backed by Amazon
+  // Bedrock. Models below are those Kiro (IDE/CLI) exposes.
+  external qService 'Kiro / Q Developer service' {
+    #cloud
+    technology 'AWS managed endpoint (CodeWhisperer / Q Developer)'
+    description '''
+      Signed endpoint kiro-cli authenticates to (Builder ID / IAM Identity
+      Center / Kiro plan). Routes agent requests to models on Amazon Bedrock.
+    '''
+
+    system bedrock 'Amazon Bedrock' {
+      #cloud
+      technology 'Amazon Bedrock (cross-region inference)'
+      description 'Hosts the foundation models behind the managed service.'
+
+      // Anthropic Claude family.
+      model claudeSonnet 'Anthropic Claude Sonnet' {
+        #cloud
+        description 'Sonnet 4 / 4.5. Sonnet 4.5 is the default foundation model.'
+      }
+      model claudeOpus 'Anthropic Claude Opus' {
+        #cloud
+        description 'Opus tiers (higher-capability, higher-cost).'
+      }
+      // OpenAI family.
+      model openaiGpt 'OpenAI GPT-5.x' {
+        #cloud
+        description 'GPT-5.x tiers balancing agentic performance and cost.'
+      }
+      // Open-weight models.
+      model openWeight 'Open-weight models' {
+        #cloud
+        description 'Qwen3 Coder, DeepSeek, MiniMax M2 (available on some plans).'
+      }
+    }
+  }
+
+  // The host software chain that stands the workload up. Each is a real
+  // process/service on the Ubuntu host, described here logically; the
+  // deployment block below maps them onto the physical nodes.
+  system host 'Ubuntu workstation host' {
+
+    // Host directories that virtiofsd exports into the guest.
+    store homeDir 'home_dir' {
+      technology 'host directory'
+      description '/var/lib/kirocrew/home (chowned to uid/gid 1000).'
+    }
+    store sharedDir 'shared_dir' {
+      technology 'host directory'
+      description '/var/lib/kirocrew/shared (workspace source on the host).'
+    }
+
+    service systemdUnit 'kirocrew-kata.service' {
+      technology 'systemd unit (Type=simple, Restart=always)'
+      description 'Manages the container lifecycle via nerdctl.'
+    }
+    service nerdctl 'nerdctl' {
+      technology 'containerd CLI'
+      description 'Runs the image, wires the CNI network and publishes the port.'
+    }
+    service containerd 'containerd' {
+      technology 'container runtime daemon'
+    }
+    process shim 'containerd-shim-kata-clh-v2' {
+      technology 'Kata runtime handler io.containerd.kata-clh.v2'
+      description 'KATA_CONF_FILE=configuration-clh.toml'
+    }
+    process cloudHypervisor 'cloud-hypervisor' {
+      technology 'Cloud Hypervisor (clh) VMM'
+      description 'Boots the micro-VM on KVM.'
+    }
+    process virtiofsd 'virtiofsd' {
+      technology 'virtio-fs daemon'
+      description 'Shares home_dir + shared_dir into the guest.'
+    }
+    service cni 'CNI bridge + portmap' {
+      technology 'nerdctl-managed CNI network (10.88.0.0/24)'
+      description 'Publishes the guest dashboard port to 127.0.0.1:5476.'
+    }
+  }
+
+  // ---- How the host stands up the workload ----------------------------------
+  host.systemdUnit -[manages]-> host.nerdctl 'ExecStart nerdctl run'
+  host.nerdctl -[runs]-> host.containerd 'run --runtime kata-clh'
+  host.nerdctl -[manages]-> host.cni 'attach --network kirocrew'
+  host.containerd -[runs]-> host.shim 'starts the Kata shim'
+  host.shim -[boots]-> host.cloudHypervisor 'boots micro-VM'
+  host.cloudHypervisor -[runs]-> kirocrew 'runs the OCI image in-guest'
+
+  // virtio-fs folder mappings (explicit host dir -> guest mount).
+  host.homeDir -[shares]-> host.virtiofsd 'exports /var/lib/kirocrew/home'
+  host.sharedDir -[shares]-> host.virtiofsd 'exports /var/lib/kirocrew/shared'
+  host.virtiofsd -[shares]-> kirocrew.home 'virtio-fs mount -> /home/kirocrew'
+  host.virtiofsd -[shares]-> kirocrew.workspace 'virtio-fs mount -> /workspace'
+
+  host.cni -[publishes]-> kirocrew.dashboard 'portmap 127.0.0.1:5476 -> 5476'
+
+  // ---- kiro-cli reaches the models on Amazon Bedrock ------------------------
+  // kiro-cli calls the managed service; the service resolves the request to a
+  // model hosted on Bedrock. Parent->child edges are implicit via nesting, so
+  // the model edges originate from the real caller (kiro-cli).
+  kirocrew.kiroCli -[invokes]-> qService 'HTTPS, signed (agent requests)'
+  kirocrew.kiroCli -[invokes]-> qService.bedrock.claudeSonnet 'default'
+  kirocrew.kiroCli -[invokes]-> qService.bedrock.claudeOpus
+  kirocrew.kiroCli -[invokes]-> qService.bedrock.openaiGpt
+  kirocrew.kiroCli -[invokes]-> qService.bedrock.openWeight
+}

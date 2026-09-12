@@ -1,0 +1,80 @@
+---
+sidebar_position: 5
+title: Diagrams & Slides
+---
+
+import LikeC4 from '@site/src/components/LikeC4';
+import Slides from '@site/src/components/Slides';
+import SlidesIndex from '@site/src/components/SlidesIndex';
+import WebsiteArchitecture from '@site/src/calm/website.mdx';
+
+# Diagrams & Slides
+
+This site supports three rendering integrations. Each has its own source format
+and build step, wired into `npm start` and `npm run build`.
+
+## LikeC4
+
+Architecture-as-a-model with interactive diagrams. Edit the model under
+`likec4/`; run `npm run likec4:codegen` to regenerate the TypeScript model
+(this also runs automatically on build).
+
+<LikeC4 viewId="landscape" height={480} />
+
+A second view of the same model — the deployment stack from container to
+hardware:
+
+<LikeC4 viewId="stack" height={480} />
+
+## CALM
+
+FINOS [Common Architecture Language Model](https://calm.finos.org). Edit the
+architecture in `calm/website.architecture.json`; `npm run calm:build`
+validates it and renders it to a Mermaid diagram embedded below.
+
+<WebsiteArchitecture />
+
+## Slidev
+
+Developer-focused Markdown slide decks, managed as an npm workspace under
+`slides/`. Each deck is its own package at `slides/decks/<name>/` with its own
+`slides.md` and pinned Slidev version. `npm run slidev:build` builds each deck
+(via its own build script) into a static app served at `/slides/<name>/`. All
+decks are discovered automatically.
+
+### All decks
+
+<SlidesIndex />
+
+### Embedded deck
+
+Any deck can also be embedded inline:
+
+<Slides name="intro" />
+
+Open the deck [full screen](pathname:///slides/intro/).
+
+## Live code
+
+Interactive, editable React snippets via
+[`@docusaurus/theme-live-codeblock`](https://docusaurus.io/docs/api/themes/@docusaurus/theme-live-codeblock).
+Add `live` to a `jsx` code block and the reader can edit it and see the result
+update in place:
+
+```jsx live
+function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (
+    <button
+      onClick={() => setCount((c) => c + 1)}
+      style={{
+        padding: '0.5rem 1rem',
+        borderRadius: 'var(--ifm-global-radius)',
+        border: '1px solid var(--ifm-color-emphasis-300)',
+      }}
+    >
+      Clicked {count} time{count === 1 ? '' : 's'}
+    </button>
+  );
+}
+```

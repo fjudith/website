@@ -1,0 +1,104 @@
+// -*- coding: utf-8 -*-
+specification {
+
+  // ---- Logical element kinds ------------------------------------------------
+  element system {
+    style {
+      shape rectangle
+      color primary
+    }
+  }
+  element app {
+    style {
+      shape rectangle
+      color indigo
+    }
+  }
+  element service {
+    style {
+      shape rectangle
+      color muted
+    }
+  }
+  element process {
+    style {
+      shape rectangle
+      color slate
+    }
+  }
+  element store {
+    style {
+      shape storage
+      color gray
+    }
+  }
+  element external {
+    style {
+      shape rectangle
+      color amber
+    }
+  }
+  element model {
+    style {
+      shape rectangle
+      color green
+      icon tech:anthropic
+    }
+  }
+
+  // ---- Deployment node kinds (the physical stack) ---------------------------
+  deploymentNode hardware {
+    style {
+      shape rectangle
+      color gray
+    }
+  }
+  deploymentNode hypervisor {
+    style {
+      shape rectangle
+      color amber
+    }
+  }
+  deploymentNode microvm {
+    style {
+      shape rectangle
+      color green
+    }
+  }
+  deploymentNode os {
+    style {
+      shape rectangle
+      color secondary
+      icon tech:linux
+    }
+  }
+  deploymentNode runtime {
+    style {
+      shape rectangle
+      color blue
+    }
+  }
+  deploymentNode systemd {
+    style {
+      shape rectangle
+      color muted
+    }
+  }
+
+  // ---- Relationship kinds ---------------------------------------------------
+  relationship manages
+  relationship runs
+  relationship boots
+  relationship shares
+  relationship publishes
+  relationship supervises
+  relationship drives
+  relationship probes
+  relationship invokes
+
+  // ---- Tags -----------------------------------------------------------------
+  tag host
+  tag guest
+  tag isolation-boundary
+  tag cloud
+}

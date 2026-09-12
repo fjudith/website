@@ -1,0 +1,48 @@
+// -*- coding: utf-8 -*-
+views {
+
+  // Logical view: the KiroCrew workload and the host chain that runs it.
+  view landscape {
+    title 'KiroCrew (kata mode) - logical'
+    include *
+    include host.* -> kirocrew.*
+    autoLayout TopBottom
+  }
+
+  // The requested stack: from the container down to the hardware.
+  deployment view stack {
+    title 'KiroCrew stack - container down to hardware'
+    include bareMetal.**
+    autoLayout TopBottom
+  }
+
+  // Zoom into the KiroCrew container internals (from docker/Dockerfile).
+  view container of kirocrew {
+    title 'KiroCrew container internals'
+    include *
+    autoLayout TopBottom
+  }
+
+  // Models kiro-cli reaches on Amazon Bedrock via the Kiro / Q service.
+  view models {
+    title 'Models accessed by kiro-cli on Amazon Bedrock'
+    include
+      kirocrew.kiroCli,
+      qService,
+      qService.bedrock,
+      qService.bedrock.*
+    autoLayout LeftRight
+  }
+
+  // Explicit virtio-fs folder mapping: host directories -> virtiofsd -> guest mounts.
+  view virtiofs {
+    title 'virtio-fs folder mapping (host dir -> guest mount)'
+    include
+      host.homeDir,
+      host.sharedDir,
+      host.virtiofsd,
+      kirocrew.home,
+      kirocrew.workspace
+    autoLayout LeftRight
+  }
+}
