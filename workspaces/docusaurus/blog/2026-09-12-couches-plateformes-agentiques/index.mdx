@@ -1,0 +1,95 @@
+---
+slug: couches-plateformes-agentiques
+title: "Anatomie d'une plateforme agentique"
+description: 'LLM, agent, agentique, MCP : une carte en sept couches pour situer chaque terme et savoir de quelle couche relève votre prochain problème.'
+authors: fjudith
+tags: [agentic-platforms, architecture, ai]
+---
+
+« On va mettre un agent là-dessus. »
+
+Dans la même réunion : pour l'un, c'est un appel LLM avec un prompt système. Pour l'autre, un orchestrateur multi-agents avec mémoire persistante et sandbox d'exécution. Personne ne relève. Tout le monde acquiesce.
+
+LLM, agent, agentique, MCP, RAG, A2A — le vocabulaire s'empile plus vite que les plateformes. Moi aussi je m'y perds.
+
+D'où cette carte : **sept couches, deux préoccupations transverses**. Pas de classement, pas de fournisseur recommandé — juste de quoi situer chaque terme et savoir **de quelle couche** relève votre prochain problème.
+
+{/* truncate */}
+
+## La carte
+
+Sept dalles empilées, et deux parois qui les longent sur toute la hauteur : les préoccupations transverses. Chaque dalle porte ses composants types peints au sol, colorés selon leur nature — brique différenciante à construire, service managé, infrastructure, standard ouvert, surface utilisateur, composant encore émergent.
+
+![Vue isométrique de sept dalles empilées, de 01 Compute et inférence en bas à 07 Interface et surfaces en haut. Chaque dalle porte ses composants types, colorés selon leur nature : brique différenciante à construire, service managé, infrastructure, standard ouvert, surface utilisateur, composant émergent. Deux parois translucides longent la pile sur toute sa hauteur : A Sécurité et gouvernance, B Observabilité et évaluation.](/img/couches-plateformes-agentiques-iso.svg)
+
+Pourquoi sécurité et observabilité sont **transverses** et non des couches : elles ne se situent pas _entre_ deux strates, elles s'appliquent _à chacune_. Une permission gouverne l'appel d'outil (couche 4) autant que la surface d'interface (couche 7) ; une trace instrumente l'inférence (couche 1) autant que la coordination multi-agents (couche 6). Les traiter comme une couche, c'est les reléguer au rang de module — et découvrir trop tard qu'elles devaient être partout.
+
+## Les sept couches
+
+| #   | Couche                    | Responsabilité                                   | Composants types                                                                    |
+| --- | ------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| 1   | Compute & inférence       | Faire tourner les modèles et router les requêtes | Accélérateurs (GPU/TPU), serving (vLLM, TGI), model gateways, routing multi-modèles |
+| 2   | Modèles                   | Fournir la capacité de raisonnement/génération   | Foundation models, fine-tunes, petits modèles spécialisés (SLM)                     |
+| 3   | Orchestration / runtime   | Exécuter la boucle agentique et gérer l'état     | Boucle act-observe-verify, planning, gestion d'état, mémoire de session             |
+| 4   | Outils & intégrations     | Donner à l'agent des capacités d'action          | Function calling, MCP, connecteurs, sandbox d'exécution                             |
+| 5   | Mémoire & connaissance    | Fournir le contexte durable et récupérable       | RAG, vector stores, knowledge graphs, mémoire persistante                           |
+| 6   | Coordination multi-agents | Faire collaborer plusieurs agents                | Orchestrateur/workers, délégation, sous-agents, protocoles (A2A)                    |
+| 7   | Interface & surfaces      | Exposer l'agent à l'humain et aux systèmes       | Chat, IDE, dashboards, exécution planifiée (cron), webhooks                         |
+
+## Où ça casse
+
+La carte devient utile quand elle sert de grille de diagnostic.
+
+| Symptôme                                           | Couche en cause                                      |
+| -------------------------------------------------- | ---------------------------------------------------- |
+| La facture explose sans explication                | **1** — pas de gateway, donc pas de mesure par appel |
+| Changer de modèle impose de toucher au code métier | **1** — accès aux modèles non centralisé             |
+| L'agent « oublie » au milieu d'une tâche longue    | **3** — pas d'état après compaction du contexte      |
+| Chaque outil coûte une intégration sur mesure      | **4** — pas de protocole standard                    |
+| L'agent a fait quelque chose de destructeur        | **A** — rayon d'impact non borné, pas d'approbation  |
+| Impossible de dire si la v2 vaut mieux que la v1   | **B** — sans evals, la fiabilité est une opinion     |
+| Ajouter un canal (cron, webhook) = réécriture      | **7** — logique agentique couplée à la surface       |
+
+Si plusieurs lignes vous parlent, elles ne désignent probablement pas le même propriétaire dans votre organisation. C'est généralement le vrai problème.
+
+## Deux lectures de la même carte
+
+### Si vous portez l'architecture
+
+_Vous optimisez : cohérence, dette maîtrisée, dépendances lisibles._
+
+- **Couche 1 — le gateway est le seul point durable.** Centraliser l'accès aux modèles derrière une interface unique découple tout le reste du fournisseur. Trois jours de travail qui en épargnent trente.
+- **Couche 3 — c'est là qu'est le produit.** Le différenciateur n'est pas le framework d'orchestration mais la gestion d'état : reprise après compaction, idempotence des étapes. Le framework se remplace ; l'état mal pensé se paie.
+- **Couche 4 — MCP transforme « N agents × M outils » en « N + M ».** Et le sandboxing cesse d'être négociable dès que l'agent exécute du code.
+- **Couche 7 — le test de maturité.** Si la logique agentique connaît sa surface, chaque canal supplémentaire est une réécriture. Découpler runtime et surface, c'est ce qui sépare une plateforme d'une démo.
+- **Transverses — reformulez la question.** Pas « l'agent est-il sûr ? » mais « quelle est sa pire action possible, et qui l'approuve ? ».
+
+### Si vous portez la décision d'achat
+
+_Vous optimisez : risque, coût total, dépendance, maturité._
+
+| Couche                       | Build vs Buy             | Coût dominant                    | Lock-in                       | Maturité       |
+| ---------------------------- | ------------------------ | -------------------------------- | ----------------------------- | -------------- |
+| 1. Compute & inférence       | Buy                      | Usage (tokens / heure GPU)       | Élevé sans gateway            | Élevée         |
+| 2. Modèles                   | Buy / Build (fine-tunes) | Prix par token, fine-tuning      | Moyen (portable via gateway)  | Élevée         |
+| 3. Orchestration / runtime   | Build ou framework OSS   | Ingénierie interne               | Moyen à élevé si propriétaire | Moyenne        |
+| 4. Outils & intégrations     | Buy + standard (MCP)     | Intégration & maintenance        | Faible si protocole standard  | Moyenne        |
+| 5. Mémoire & connaissance    | Buy / Build              | Stockage + requêtes vectorielles | Moyen                         | Moyenne-élevée |
+| 6. Coordination multi-agents | Build                    | Ingénierie                       | Faible                        | Faible (early) |
+| 7. Interface & surfaces      | Buy / Build              | Licences par siège               | Moyen                         | Élevée         |
+
+**Cinq questions à poser avant de signer :**
+
+- L'accès aux modèles passe-t-il par un gateway standard ?
+- Les outils passent-ils par un protocole ouvert (MCP) ?
+- La mémoire est-elle exportable — et dans quel format ?
+- Les traces et les coûts s'exportent-ils vers votre observabilité existante ?
+- Sécurité et audit sont-ils natifs, ou vendus plus tard en add-on ?
+
+Une réponse floue sur l'une des cinq n'est pas rédhibitoire. Deux, c'est un pattern.
+
+## Ce que cette carte ne dit pas
+
+Elle ne désigne aucun gagnant. Les mentions de lock-in et de maturité décrivent des tendances observées à date — celle de la couche 6 aura probablement changé quand vous lirez ces lignes.
+
+Ce qu'elle apporte est plus modeste et plus utile : un vocabulaire partagé. Quand l'architecte dit « c'est un problème de couche 3 » et que l'acheteur comprend pourquoi ça ne se réglera pas en changeant de fournisseur, la carte a fait son travail.
