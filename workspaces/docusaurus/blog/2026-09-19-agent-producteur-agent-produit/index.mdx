@@ -1,0 +1,78 @@
+---
+slug: agent-producteur-agent-produit
+title: 'Agent producteur, agent produit : deux plateformes, un seul mot'
+description: "Ma carte des plateformes agentiques tient-elle face à la CNCF, au platform engineering et aux analystes ? Elle converge, diverge sur deux points, et révèle une distinction que personne ne fait : l'agent qu'on produit contre l'agent qui produit."
+authors: fjudith
+tags: [agentic-platforms, architecture, ai]
+---
+
+Dans un [précédent billet](/blog/couches-plateformes-agentiques), j'ai posé une carte : sept couches, deux préoccupations transverses, de quoi situer chaque terme et savoir de quelle couche relève votre prochain problème. Une carte maison. Reste à savoir si elle tient debout face à ce que l'écosystème décrit de son côté.
+
+La réponse courte : elle converge avec la CNCF et le platform engineering sur presque toutes les frontières, elle diverge sur un point que j'assume — et elle bute sur une distinction que peu de gens font explicitement, alors qu'elle décide de tout : **l'agent qu'on produit n'est pas l'agent qui produit.** C'est la thèse de ce billet. Le reste est l'étayage.
+
+{/* truncate */}
+
+## La convergence : personne ne dessine les mêmes couches, tout le monde décrit les mêmes tensions
+
+Première surprise en confrontant la carte aux sources : les modèles en couches abondent, mais aucun ne fait autorité au sens strict.
+
+Les documents qui _font_ autorité ne dessinent pas de couches. Le [Platforms White Paper de la CNCF](https://tag-app-delivery.cncf.io/whitepapers/platforms/) liste des _capacités_, pas des strates. Gartner raisonne en plans de supervision et va jusqu'à écrire que les modèles de référence statiques sont inutiles face à des agents qui bougent à la nanoseconde — position frontalement opposée à l'exercice cartographique. L'autorité existe, mais elle refuse de faire la carte.
+
+Les modèles qui _dessinent_ des couches ne font pas autorité : ils viennent d'analystes indépendants et de blogs de fournisseurs. [AIMultiple](https://aimultiple.com/agentic-ai-stack) propose sept couches aussi, avec une lecture moat/commoditisation proche de mon tableau d'achat — mais empile la gouvernance en couche 7 au lieu de la traiter en transverse. Le stack Letta/a16z, repris par [O'Reilly](https://www.oreilly.com/radar/the-ai-agents-stack-2026-edition/), tient en cinq couches orientées _construction d'un agent_. Seul [Catio](https://www.catio.tech/blog/agentic-ai-reference-architecture) partage mon parti pris : séparer les composants (perception, raisonnement, mémoire, action) des _plans transverses_ (orchestration, observabilité, sécurité, gouvernance).
+
+Le découpage exact varie donc d'une carte à l'autre. Ce qui ne varie pas, ce sont les tensions décrites : accès aux modèles à centraliser, protocoles à standardiser, état à gérer, coût à borner, gouvernance à rendre omniprésente. Ma carte ne découvre rien ; elle range ces tensions dans un ordre défendable.
+
+## Le platform engineering nomme l'hypothèse qui casse
+
+Le déplacement le plus utile vient d'une discipline plus ancienne. Le Platforms White Paper pose deux principes qui s'appliquent à ma carte sans retouche : la plateforme interne est un produit, et on construit **la couche la plus mince possible** au-dessus des implémentations managées. Traduit : couches 1, 2 et 5 s'achètent, 3 se construit, le reste doit rester remplaçable.
+
+Puis, dans [« Platform engineering for the agentic enterprise »](https://www.cncf.io/blog/2026/07/21/platform-engineering-for-the-agentic-enterprise-managing-applications-resources-and-ai-agents/) (juillet 2026), la CNCF nomme l'hypothèse implicite de dix ans d'_Internal Developer Platforms_ : **le consommateur de la plateforme est un développeur humain**. L'agent casse cette hypothèse. Il provisionne, déploie, investigue des incidents, déclenche des workflows. Il devient un consommateur au même titre, avec une exigence supplémentaire : identité propre, permissions restreintes, piste d'audit. La conclusion est explicite — pas de plateforme séparée pour l'IA, mais une extension de la plateforme existante.
+
+Deux conséquences pour ma carte :
+
+- **La couche 7 est plus large que je ne l'avais dit.** Portail, CLI, GitOps et serveur MCP sont quatre surfaces de la même plateforme. Si elles ne partagent pas le même modèle de gouvernance, vous n'avez pas une plateforme avec quatre surfaces — vous en avez deux.
+- **Le contexte devient une capacité, pas un accessoire.** Topologie, propriété, dépendances, historique de déploiement : l'agent qui diagnostique un échec a besoin de savoir _qui possède quoi_, pas seulement de retrouver un document. C'est plus exigeant que le RAG de la couche 5.
+
+## Les standards durcissent, dans le sens de la carte
+
+Côté normalisation, trois signaux datés confirment les tendances que la carte annonçait :
+
+- **Couche 1 — la conformité arrive.** Le [Kubernetes AI Conformance Program](https://www.cncf.io/announcements/2025/11/11/cncf-launches-certified-kubernetes-ai-conformance-program-to-standardize-ai-workloads-on-kubernetes/), lancé en novembre 2025, définit un socle minimal pour exécuter des charges IA. La [révision de mars 2026](https://www.cncf.io/announcements/2026/03/24/cncf-nearly-doubles-certified-kubernetes-ai-platforms/) a durci les exigences (codifiées en _Kubernetes AI Requirements_) et fait passer les plateformes certifiées de 18 à 31. Une couche qui se certifie est une couche qui se banalise : ma maturité « élevée » est confirmée, et le risque s'y déplace vers le gateway plutôt que vers le runtime.
+- **Couches 4 et 6 — la gouvernance des protocoles change le calcul du lock-in.** MCP a été [donné à l'Agentic AI Foundation](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation) sous Linux Foundation en décembre 2025, [rejoint par A2A en août 2026](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation). Mon « faible si protocole standard » n'est plus un pari : les deux protocoles sont sous gouvernance neutre. Ce qui reste ouvert, c'est la couche 6 elle-même — aucun standard ne décrit encore comment _orchestrer_ des agents, seulement comment ils se _parlent_.
+- **Transverses A et B — le travail est déjà cadré.** Le document [Cloud native agentic standards](https://www.cncf.io/blog/2026/03/23/cloud-native-agentic-standards/) (CNCF AI TCG, mars 2026) ouvre quatre chantiers : communication, observabilité, gouvernance, sécurité. Deux points à retenir tels quels. **L'identité de l'agent n'est pas celle de l'utilisateur** : dès qu'un agent agit hors session ou au-delà du périmètre de son commanditaire, il lui faut une identité de charge de travail propre (SPIFFE/SPIRE, comptes de service scopés, jetons courts), sinon l'audit ne veut rien dire. Et l'observabilité agentique n'est pas l'observabilité applicative : tokens, coût d'inférence, durée d'exécution, trajectoires — les [conventions sémantiques GenAI d'OpenTelemetry](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-agent-spans/) donnent déjà de quoi instrumenter.
+
+## La divergence que j'assume : paroi, pas couche fondamentale
+
+Sur un point, je ne suis pas la CNCF. Elle raisonne depuis Kubernetes et traite la gouvernance comme une **couche fondamentale obligatoire** — sans elle, rien ne démarre. Ma carte en fait une **paroi transverse**.
+
+La nuance n'est pas cosmétique. Une couche fondamentale est en dessous : on la pose, puis on empile. Une paroi longe toute la hauteur : elle s'applique _à chaque_ couche, de l'inférence à l'interface. Traiter la gouvernance comme un socle, c'est risquer de croire qu'une fois posée, elle est acquise. La traiter comme une paroi, c'est se rappeler qu'une permission gouverne l'appel d'outil (couche 4) autant que la surface d'interface (couche 7), et qu'aucune couche n'en est exemptée.
+
+Leur cadrage est plus strict que le mien — « rien ne démarre sans gouvernance » est une bonne règle. Mais il naît d'un contexte Kubernetes où le socle est littéral. Hors de ce contexte, la paroi décrit mieux la réalité : la gouvernance n'est pas une étape, c'est une exigence permanente.
+
+## Le cadre de fournisseur : Platform Engineering 2.0
+
+Un troisième corpus circule, et il demande une précaution de lecture. [Platform Engineering 2.0](https://platformengineering.org/blog/introducing-platform-engineering-2-0-an-evolution-for-the-ai-era) (juin 2026) est un cadre directionnel commandité par Broadcom, co-écrit avec VMware. Ni standard, ni certification : [Moor Insights le formule sans détour](https://moorinsightsstrategy.com/field-notes/platform-engineering-must-modernize-for-agentic-ai/), c'est un argument de fournisseur, en partie prospectif, dont l'implémentation proposée se trouve vendre de l'infrastructure. Ses cinq piliers restent largement indépendants du produit — mais on ne les lit pas comme un document de fondation neutre.
+
+Ce sont d'ailleurs des **piliers, pas des couches**. Les versions qui vous les présentent empilés en stack ont reconstruit le modèle. Deux de ces piliers corrigent ma carte :
+
+- **FinOps embarqué.** Dans mon billet précédent, « la facture explose » était attribuée à l'absence de mesure par appel en couche 1. C'est vrai mais incomplet. L'outillage de coût actuel est rétrospectif : il dit ce que vous avez dépensé _après_. Le pilier propose de faire apparaître le coût _au moment du provisionnement_, avec ses alternatives. Mesurer ne suffit pas ; il faut arbitrer avant. La couche 1 n'était que la moitié de la réponse.
+- **Sécurité « shift-down ».** Le shift-left n'a pas échoué, mais la surface d'attaque agentique — injection de prompt, fuite par inférence, exécution non relue — est un problème de runtime qu'un scan de pipeline ne voit pas. D'où l'isolation descendue dans le substrat : microVM et sandbox (Firecracker, gVisor, Kata Containers) plutôt qu'un conteneur partagé, dès que la couche 4 exécute du code que personne n'a lu.
+
+## La distinction que personne ne fait : produire un agent, produire avec un agent
+
+C'est ici que la confrontation devient vraiment utile. À côté de PE 2.0 s'est installée la catégorie des **agentic development platforms** (ADP), à laquelle [Forrester consacre un vendor landscape depuis le troisième trimestre 2026](https://www.forrester.com/blogs/launching-the-agentic-development-platforms-vendor-landscape-q3-2026/) : des plateformes où humains et agents développent côte à côte.
+
+Ce n'est pas l'objet de ma carte. Et pourtant les deux portent le même adjectif — « agentique ». Deux plateformes différentes, un seul mot :
+
+- **L'agent comme producteur** (ADP, PE 2.0) : l'agent _écrit le logiciel_. Le goulot se déplace de l'écriture vers la mise en production — PE 2.0 avance des volumes de code multipliés par deux à dix. La plateforme doit absorber un débit de PR, de revues et d'environnements éphémères qu'elle n'a jamais eu à encaisser.
+- **L'agent comme produit** (ma carte) : l'agent _est le logiciel livré_. Ce qui compte devient la mémoire, la reprise après compaction, la coordination.
+
+Les deux partagent leur socle — couches 1 et 2 — et leurs deux parois, puis divergent franchement. Aucune couche de livraison à haut débit n'apparaît dans ma carte, et c'est délibéré : elle relève du monde producteur. Symétriquement, la couche 5 (mémoire, connaissance) est quasi absente des modèles ADP, et c'est cohérent — un agent qui produit du code n'a pas besoin de mémoire persistante ; un agent qu'on met en production, si.
+
+Cette distinction explique la moitié des malentendus de réunion. « On va mettre un agent là-dessus » ne désigne pas la même plateforme selon qui parle : l'un pense à un copilote qui accélère l'équipe, l'autre à un service autonome en production. Mêmes mots, budgets, risques et propriétaires différents.
+
+## Ce que la confrontation aura servi
+
+Ma carte n'en sort ni invalidée ni sacralisée. Elle converge avec l'écosystème là où ça compte, diverge sur la gouvernance-paroi pour de bonnes raisons, et gagne deux corrections utiles — le coût qui s'arbitre avant, la sécurité qui descend dans le substrat.
+
+Mais le vrai gain est la distinction producteur/produit. Elle ne figure sur aucune des cartes voisines, et c'est elle qui décide si votre prochain « agent » a besoin d'une couche 5 ou d'une couche de livraison à haut débit. Avant de choisir une plateforme, demandez-vous lequel des deux agents vous construisez. Le mot ne le dira pas pour vous.
