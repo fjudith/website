@@ -39,7 +39,7 @@ layout: center
 class: text-center
 ---
 
-# Vous connaissez déjà cette douleur
+# Vous connaissez déjà cet irritant
 
 <div class="mt-8 text-xl opacity-80">
 
@@ -55,7 +55,7 @@ C'est un problème de <b>mémoire volatile</b> — et il a une histoire.
 </div>
 
 <!--
-On nomme une douleur qu'ils ont TOUS vécue avant de nommer la moindre méthode.
+On nomme un irritant qu'ils ont TOUS vécu avant de nommer la moindre méthode.
 Ne pas dire « OpenSpec règle ça » ici — juste poser le symptôme. On y reviendra
 à la slide harness. 1-2 min.
 -->
@@ -124,7 +124,7 @@ On **injecte** le bon contexte : RAG, exemples, fichiers ouverts, documentation.
 
 **Le mur** : sur une tâche longue, le contexte **déborde**. Il se compacte, et l'agent oublie.
 
-C'est la douleur de la slide 2. Le contexte est **volatil** aussi — juste un cran plus haut.
+C'est l'irritant de la slide 2. Le contexte est **volatil** aussi — juste un cran plus haut.
 
 </div>
 
