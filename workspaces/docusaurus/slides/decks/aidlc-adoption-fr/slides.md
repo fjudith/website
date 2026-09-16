@@ -3,7 +3,7 @@ theme: default
 title: "AI-DLC × OpenSpec — Garder la main quand l'IA code"
 info: |
   ## AI-DLC × OpenSpec — Garder la main quand l'IA code
-  Talk d'évangélisation, public ingénieurs (Dév · Tech Lead · Architecte).
+  Talk d'adoption, public ingénieurs (Dév · Tech Lead · Architecte).
 
   Fil : prompt → context → harness engineering (pourquoi OpenSpec/Spec-Kit
   existent) → la frontière vibe/spec → la règle de l'auto-arrêt → démo live
@@ -455,7 +455,7 @@ L'agent produit ; l'humain juge à l'étape ; le plan validé part dans **Jira**
 </div>
 
 <!--
-C'est le cœur de ce qu'on évangélise (réponse Q9). La co-location n'est pas
+C'est le cœur de ce qu'on promeut (réponse Q9). La co-location n'est pas
 optionnelle : c'est ce qui rend le verrou réel. La démo va le PROUVER en live. 2 min.
 -->
 
@@ -525,7 +525,7 @@ Si le hand-off live casse (auth, réseau, API) :<br>
 </div>
 
 <div class="mt-8 p-3 border-l-4 border-amber-500 bg-amber-500/10 text-sm inline-block text-left">
-On évangélise la traçabilité : jamais de faux silencieux. Si c'est le repli, on le dit.
+On défend la traçabilité : jamais de faux silencieux. Si c'est le repli, on le dit.
 </div>
 
 <!--
