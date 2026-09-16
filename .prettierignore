@@ -19,6 +19,9 @@ workspaces/**/src/slides-manifest.json
 workspaces/**/static/slides
 workspaces/**/slides/decks/*/dist
 workspaces/**/slides/decks/*/index.html
+# Slidev deck sources: per-slide YAML frontmatter uses tight `---` blocks that
+# Prettier's markdown rules reformat into invalid/altered Slidev syntax.
+workspaces/**/slides/decks/*/slides.md
 
 # Lockfiles and generated data
 **/package-lock.json
