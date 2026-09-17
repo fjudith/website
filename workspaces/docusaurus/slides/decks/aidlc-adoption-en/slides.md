@@ -3,7 +3,7 @@ theme: default
 title: 'AI-DLC × OpenSpec — Staying in Control When the AI Writes the Code'
 info: |
   ## AI-DLC × OpenSpec — Staying in control when the AI writes the code
-  Evangelism talk, engineering audience (Dev · Tech Lead · Architect).
+  Adoption talk, engineering audience (Dev · Tech Lead · Architect).
 
   Thread: prompt → context → harness engineering (why OpenSpec/Spec-Kit
   exist) → the vibe/spec frontier → the self-halt rule → live demo of
@@ -453,7 +453,7 @@ The agent produces; the human judges at the stage; the validated plan goes into 
 </div>
 
 <!--
-The core of what we evangelize (answer Q9). Co-location isn't optional: it's what
+The core of what we advocate (answer Q9). Co-location isn't optional: it's what
 makes the gate real. The demo will PROVE it live. 2 min.
 -->
 
@@ -522,7 +522,7 @@ If the live hand-off breaks (auth, network, API):<br>
 </div>
 
 <div class="mt-8 p-3 border-l-4 border-amber-500 bg-amber-500/10 text-sm inline-block text-left">
-We evangelize traceability: never a silent fake. If it's the fallback, we say so.
+We stand for traceability: never a silent fake. If it's the fallback, we say so.
 </div>
 
 <!--
