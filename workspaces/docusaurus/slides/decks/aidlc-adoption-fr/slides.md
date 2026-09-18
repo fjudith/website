@@ -1,8 +1,8 @@
 ---
 theme: default
-title: "AI-DLC × OpenSpec — Garder la main quand l'IA code"
+title: "Adopter le codage agentique — et garder la main en équipe"
 info: |
-  ## AI-DLC × OpenSpec — Garder la main quand l'IA code
+  ## Adopter le codage agentique — garder la main en équipe
   Talk d'adoption, public ingénieurs (Dév · Tech Lead · Architecte).
 
   Fil : prompt → context → harness engineering (pourquoi OpenSpec/Spec-Kit
@@ -15,9 +15,9 @@ drawings:
   persist: false
 ---
 
-# AI-DLC × OpenSpec
+# Adopter le codage agentique
 
-**Garder la main** quand l'IA écrit le code
+**En équipe** — garder la main quand l'IA écrit le code
 
 <div class="pt-8 opacity-70 text-sm">
 Pas « une méthode de plus ». Une réponse à une question que vous vous posez déjà :<br>
@@ -39,19 +39,19 @@ layout: center
 class: text-center
 ---
 
-# Vous connaissez déjà cet irritant
+# L'irritant que vous connaissez sans doutes déjà
 
 <div class="mt-8 text-xl opacity-80">
 
-L'agent démarre bien.<br>
+L'agent démarre bien. Il analyse, suggère, clarifie, voir même rédige.<br>
 Puis, au milieu d'une tâche longue, il **oublie**.<br>
-Il refait ce qui était fait, contredit une décision prise dix minutes plus tôt.
+Il refait ce qui vous considériez comme était fait, contredit une décision prise dix minutes plus tôt.
 
 </div>
 
 <div class="mt-8 text-lg opacity-60">
 Ce n'est pas un bug du modèle.<br>
-C'est un problème de <b>mémoire volatile</b> — et il a une histoire.
+C'est un problème d'<b>amnésie</b> des modèles de language actuel — et il a une histoire.
 </div>
 
 <!--
@@ -64,18 +64,35 @@ Ne pas dire « OpenSpec règle ça » ici — juste poser le symptôme. On y rev
 layout: section
 ---
 
-# 1 · L'histoire qu'on a vécue
+# 1 · Trois ères, une même volatilité mémorielle
 
 Prompt engineering → context engineering → **harness engineering**.
 Chaque ère répond à la **volatilité** de la précédente.
+
+```mermaid {scale: 0.8}
+timeline
+  title Les ères du codage assisté par l'IA — 2022 → 2027
+  2022 : Prompt engineering : soigner la formulation
+  2023 : Context engineering : RAG, exemples, fichiers ouverts
+  2024 : Le contexte déborde : compaction, l'agent oublie
+  2025 : Harness engineering : la spec durable et versionnée
+  2026 : Loop engineering : régler la boucle d'exécution
+  2027 : Adoption en équipe : co-location + verrous humains
+```
+
+<div class="text-xs opacity-50 mt-2 text-center">
+Chaque ère naît de la volatilité que la précédente n'a pas su tenir. Nous, on ancre le harnais ; le loop puis l'adoption équipe sont le cap.
+</div>
 
 ---
 layout: two-cols-header
 ---
 
-# Prompt engineering
+# Prompt engineering — soigner la formulation
 
 On soigne la **formulation**. Reformuler, donner le rôle, structurer la demande.
+
+![promt engineering](./media/diagrams/prompt-engineering.drawio.png)
 
 ::left::
 
@@ -105,9 +122,11 @@ Insister sur le mur, pas sur la technique. Le mur justifie l'ère suivante.
 layout: two-cols-header
 ---
 
-# Context engineering
+# Context engineering — injecter le contexte
 
 On **injecte** le bon contexte : RAG, exemples, fichiers ouverts, documentation.
+
+![context engineering](./media/diagrams/context-engineering.drawio.png)
 
 ::left::
 
@@ -137,9 +156,11 @@ contexte n'est pas une mémoire, c'est une fenêtre qui se vide. » 2 min.
 layout: two-cols-header
 ---
 
-# Harness engineering
+# Harness engineering — externaliser l'intention
 
 On **externalise** l'intention et l'état dans des artefacts **durables et versionnés** : la spec.
+
+![harness engineering](./media/diagrams/harness-engineering.drawio.png)
 
 ::left::
 
@@ -180,7 +201,7 @@ pas X », renvoyer à l'annexe / Q&R. 3 min.
 layout: two-cols-header
 ---
 
-# Et après ? Loop engineering
+# L'étape d'après : loop engineering
 
 L'étape suivante de l'arc — **pas pour nous aujourd'hui, mais c'est là qu'on va**.
 
@@ -293,7 +314,7 @@ OpenSpec). ~2 min.
 layout: section
 ---
 
-# 2 · Le choix que cette histoire impose
+# 2 · Vibe ou spec ? Le choix qui s'impose
 
 Tout n'a pas besoin d'une spec. **Vibe ou spec ?**
 
@@ -301,7 +322,7 @@ Tout n'a pas besoin d'une spec. **Vibe ou spec ?**
 layout: two-cols-header
 ---
 
-# La frontière
+# La frontière : le coût de l'erreur
 
 Le critère n'est pas le goût, c'est **le coût de l'erreur**.
 
@@ -343,7 +364,7 @@ récit spec de notre vécu peuvent illustrer. 2 min.
 layout: two-cols-header
 ---
 
-# Pourquoi la frontière est principielle
+# La frontière n'est pas arbitraire
 
 Même règle que l'IA autonome elle-même : la **règle de l'auto-arrêt**.
 
@@ -379,7 +400,7 @@ il faut vérifier, donc il faut un humain au bon endroit. 3 min.
 layout: section
 ---
 
-# 3 · Vers où nous allons
+# 3 · La destination, avant la démo
 
 Avant de montrer, disons **la destination**.
 
@@ -426,7 +447,7 @@ la démo. Le deck cinq-rôles est le « deck 2 » de la phase d'élargissement. 
 layout: two-cols-header
 ---
 
-# La co-location, c'est le point
+# La co-location, c'est tout le sujet
 
 Un verrou ne vaut que si la personne qui peut juger est **présente quand il se déclenche**.
 
@@ -538,7 +559,7 @@ Un hand-off truqué non annoncé trahirait la valeur même qu'on vend. 0-1 min.
 layout: section
 ---
 
-# 5 · Et maintenant ?
+# 5 · Votre premier pas
 
 Une réunion qui inspire ne vaut rien sans **une action concrète**.
 
