@@ -1,0 +1,668 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent; color-scheme: light dark;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="940px" height="323px" viewBox="0 0 940 323" id="ge-svg-SAY4FYxQ3pCJJmoe7uEj" content="&lt;mxfile host=&quot;embed.diagrams.net&quot;&gt;&lt;diagram id=&quot;q9DCQ6DZMCm5yvOOPjgk&quot; name=&quot;Page-1&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <style type="text/css">
+        @supports (color: light-dark(#000, #fff)) { #ge-svg-SAY4FYxQ3pCJJmoe7uEj { --ge-adaptive-bg: light-dark(#ffffff, var(--ge-dark-color, #121212)); } }
+    </style>
+    <defs/>
+    <g>
+        <g data-cell-id="0">
+            <g data-cell-id="1">
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-40">
+                    <g>
+                        <path d="M 425 -74 L 705 -74 L 705 362 L 565 396 L 425 362 Z" fill="#e6e6e6" stroke="none" transform="rotate(90,565,161)" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39));"/>
+                    </g>
+                </g>
+                <g data-cell-id="Q7BEyw3pPcg6QZpme_o1-1">
+                    <g>
+                        <rect x="0" y="121" width="80" height="80" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 7.32 197.36 C 8.23 179.34 22.54 164.96 40 164.96 C 45.91 164.96 51.69 166.62 56.74 169.77 C 66.1 175.61 72.1 186.06 72.68 197.36 Z M 22.17 142.6 C 22.17 132.69 30.17 124.64 40 124.64 C 49.83 124.64 57.83 132.69 57.83 142.6 C 57.83 152.5 49.83 160.56 40 160.56 C 30.17 160.56 22.17 152.5 22.17 142.6 Z M 58.66 166.68 C 55.51 164.72 52.09 163.29 48.54 162.4 C 56.14 159.07 61.47 151.45 61.47 142.6 C 61.47 130.69 51.84 121 40 121 C 28.16 121 18.53 130.69 18.53 142.6 C 18.53 151.46 23.87 159.09 31.49 162.41 C 15.54 166.42 3.64 181.36 3.64 199.18 C 3.64 200.19 4.45 201 5.45 201 L 74.55 201 C 75.55 201 76.36 200.19 76.36 199.18 C 76.36 185.94 69.58 173.49 58.66 166.68 Z" fill="#b3b3b3" stroke="none" pointer-events="all" style="fill: light-dark(rgb(179, 179, 179), rgb(83, 83, 83));"/>
+                    </g>
+                </g>
+                <g data-cell-id="Q7BEyw3pPcg6QZpme_o1-2">
+                    <g>
+                        <path d="M 300.02 141.09 C 299.65 141.08 299.3 141.21 299.03 141.46 C 298.77 141.71 298.61 142.06 298.6 142.43 L 298.55 144.09 C 294.72 144.61 292.35 147.23 291.07 149.62 L 286.51 149.62 C 285.07 149.62 283.84 150.23 283.12 151.12 C 282.41 152.01 282.16 153.06 282.16 153.99 L 282.16 163.28 L 281.38 163.28 C 281.01 163.28 280.66 163.43 280.4 163.69 C 280.15 163.95 280 164.3 280 164.66 C 280 165.03 280.15 165.38 280.4 165.63 C 280.66 165.89 281.01 166.04 281.38 166.04 L 282.16 166.04 L 282.16 177.54 C 282.16 177.91 282.31 178.26 282.56 178.52 C 282.82 178.78 283.17 178.92 283.54 178.92 L 316.4 178.89 C 317.16 178.89 317.78 178.28 317.78 177.52 L 317.78 166.05 L 318.62 166.05 C 318.99 166.05 319.34 165.9 319.6 165.64 C 319.85 165.39 320 165.04 320 164.67 C 320 164.31 319.85 163.96 319.6 163.7 C 319.34 163.44 318.99 163.29 318.62 163.29 L 317.78 163.29 L 317.79 154.06 C 317.79 154.06 317.79 154.06 317.79 154.06 C 317.79 151.66 315.9 149.6 313.49 149.6 L 309.09 149.6 C 308.03 147.73 305.55 144.68 301.31 144.1 L 301.36 142.51 C 301.37 142.14 301.23 141.79 300.98 141.52 C 300.73 141.26 300.39 141.1 300.02 141.09 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 313.48 152.35 C 314.44 152.35 315.02 152.95 315.02 154.06 L 315.02 164.56 C 315 164.6 314.98 164.63 314.97 164.67 C 314.98 164.71 315 164.75 315.02 164.78 L 315.01 176.14 L 284.9 176.17 L 284.9 153.99 C 284.9 153.57 285.04 153.12 285.26 152.85 C 285.47 152.58 285.74 152.37 286.5 152.37 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                        <path d="M 294.67 168.21 C 294.3 168.2 293.95 168.34 293.69 168.59 C 293.42 168.84 293.27 169.19 293.26 169.56 C 293.25 169.92 293.39 170.27 293.64 170.54 C 297.01 174.05 302.81 174.09 306.37 170.66 C 306.63 170.4 306.78 170.06 306.79 169.69 C 306.79 169.33 306.66 168.97 306.4 168.71 C 306.15 168.45 305.8 168.3 305.44 168.29 C 305.07 168.28 304.72 168.42 304.46 168.68 C 302 171.05 297.9 171 295.63 168.63 C 295.38 168.37 295.03 168.22 294.67 168.21 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 299.9 146.72 C 302.72 146.72 304.59 148.21 305.75 149.61 L 294.28 149.61 C 295.44 148.06 297.2 146.72 299.9 146.72 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                        <path d="M 293.54 155.43 C 290.82 155.43 288.6 157.66 288.6 160.37 C 288.6 163.09 290.82 165.31 293.54 165.31 C 296.25 165.31 298.48 163.09 298.48 160.37 C 298.48 157.66 296.25 155.43 293.54 155.43 Z M 306.37 155.43 C 303.66 155.43 301.43 157.66 301.43 160.37 C 301.43 163.09 303.66 165.31 306.37 165.31 C 309.09 165.31 311.31 163.09 311.31 160.37 C 311.31 157.66 309.09 155.43 306.37 155.43 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 293.54 158.19 C 294.76 158.19 295.72 159.15 295.72 160.37 C 295.72 161.6 294.76 162.56 293.54 162.56 C 292.31 162.56 291.35 161.6 291.35 160.37 C 291.35 159.15 292.31 158.19 293.54 158.19 Z M 306.37 158.19 C 307.6 158.19 308.56 159.15 308.56 160.37 C 308.56 161.6 307.6 162.56 306.37 162.56 C 305.15 162.56 304.19 161.6 304.19 160.37 C 304.19 159.15 305.15 158.19 306.37 158.19 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                    </g>
+                </g>
+                <g data-cell-id="Q7BEyw3pPcg6QZpme_o1-3">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 200 41 L 290 41 Q 300 41 300 51 L 300 124.29" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 295.5 118.65 L 300 127.65 L 304.5 118.65" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="Q7BEyw3pPcg6QZpme_o1-4">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 40 217.71 L 40 271 Q 40 281 50 281 L 290 281 Q 300 281 300 271 L 300 191" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 44.5 223.35 L 40 214.35 L 35.5 223.35" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="Q7BEyw3pPcg6QZpme_o1-5">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 90 144.29 L 90 137.65 Q 90 131 100 131 L 290 131" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 85.5 138.65 L 90 147.65 L 94.5 138.65" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="Q7BEyw3pPcg6QZpme_o1-6">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 90 171 L 90 181 Q 90 191 100 191 L 283.29 191" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 277.65 195.5 L 286.65 191 L 277.65 186.5" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="Q7BEyw3pPcg6QZpme_o1-84">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="160" y="261" width="40" height="40" fill="#666666" stroke="#000000" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(102, 102, 102), rgb(149, 149, 149)); stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-7">
+                    <g>
+                        <path d="M 434.14 75.14 L 445.86 86.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-8">
+                    <g>
+                        <path d="M 440 61 L 480 61" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-9">
+                    <g>
+                        <path d="M 420 81 L 420 121" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-10">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="420" cy="61" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-11">
+                    <g>
+                        <path d="M 500 81 L 500 121" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-12">
+                    <g>
+                        <path d="M 514.14 75.14 L 525.86 86.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-13">
+                    <g>
+                        <path d="M 520 61 L 560 61" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-14">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="500" cy="61" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-15">
+                    <g>
+                        <path d="M 580 81 L 580 121" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-16">
+                    <g>
+                        <path d="M 600 61 L 640 61" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-17">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="580" cy="61" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-18">
+                    <g>
+                        <path d="M 645.86 75.14 L 634.14 86.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-19">
+                    <g>
+                        <path d="M 660 81 L 660 121" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-20">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="660" cy="61" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-21">
+                    <g>
+                        <path d="M 720 61 L 680 61" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-22">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="740" cy="61" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-23">
+                    <g>
+                        <path d="M 474.14 86.86 L 485.86 75.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-24">
+                    <g>
+                        <path d="M 460 121 L 460 161" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-25">
+                    <g>
+                        <path d="M 474.14 115.14 L 485.86 126.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-26">
+                    <g>
+                        <path d="M 480 101 L 520 101" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-27">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="460" cy="101" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-28">
+                    <g>
+                        <path d="M 554.14 86.86 L 565.86 75.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-29">
+                    <g>
+                        <path d="M 540 121 L 540 161" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-30">
+                    <g>
+                        <path d="M 525.86 115.14 L 514.14 126.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-31">
+                    <g>
+                        <path d="M 554.14 115.14 L 565.86 126.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-32">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="540" cy="101" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-33">
+                    <g>
+                        <path d="M 605.86 115.14 L 594.14 126.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-34">
+                    <g>
+                        <path d="M 605.86 86.86 L 594.14 75.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-35">
+                    <g>
+                        <path d="M 600 101 L 560 101" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-36">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="620" cy="101" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-37">
+                    <g>
+                        <path d="M 700 121 L 700 161" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-38">
+                    <g>
+                        <path d="M 685.86 115.14 L 674.14 126.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-39">
+                    <g>
+                        <path d="M 714.14 115.14 L 725.86 126.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-40">
+                    <g>
+                        <path d="M 714.14 86.86 L 725.86 75.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-41">
+                    <g>
+                        <path d="M 680 101 L 640 101" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-42">
+                    <g>
+                        <path d="M 685.86 86.86 L 674.14 75.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-43">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="700" cy="101" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-44">
+                    <g>
+                        <path d="M 720 141 L 680 141" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-45">
+                    <g>
+                        <path d="M 740 121 L 740 81" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-46">
+                    <g>
+                        <path d="M 740 161 L 740 201" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-47">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="740" cy="141" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-48">
+                    <g>
+                        <path d="M 645.86 126.86 L 634.14 115.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-49">
+                    <g>
+                        <path d="M 640 141 L 600 141" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-50">
+                    <g>
+                        <path d="M 660 161 L 660 201" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-51">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="660" cy="141" rx="20" ry="20" fill="#cccccc" stroke="#000000" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(204, 204, 204), rgb(62, 62, 62)); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-52">
+                    <g>
+                        <path d="M 565.86 155.14 L 554.14 166.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-53">
+                    <g>
+                        <path d="M 580 161 L 580 201" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-54">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="580" cy="141" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-55">
+                    <g>
+                        <path d="M 485.86 155.14 L 474.14 166.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-56">
+                    <g>
+                        <path d="M 520 141 L 560 141" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-57">
+                    <g>
+                        <path d="M 500 161 L 500 201" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-58">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="500" cy="141" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-59">
+                    <g>
+                        <path d="M 434.14 126.86 L 445.86 115.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-60">
+                    <g>
+                        <path d="M 434.14 155.14 L 445.86 166.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-61">
+                    <g>
+                        <path d="M 440 141 L 480 141" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-62">
+                    <g>
+                        <path d="M 420 161 L 420 201" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-63">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="420" cy="141" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-64">
+                    <g>
+                        <path d="M 480 181 L 520 181" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-65">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="460" cy="181" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-66">
+                    <g>
+                        <path d="M 525.86 166.86 L 514.14 155.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-67">
+                    <g>
+                        <path d="M 560 181 L 600 181" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-68">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="540" cy="181" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-69">
+                    <g>
+                        <path d="M 605.86 166.86 L 594.14 155.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-70">
+                    <g>
+                        <path d="M 620 161 L 620 121" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-71">
+                    <g>
+                        <path d="M 634.14 166.86 L 645.86 155.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-72">
+                    <g>
+                        <path d="M 640 181 L 680 181" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-73">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="620" cy="181" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-74">
+                    <g>
+                        <path d="M 685.86 166.86 L 674.14 155.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-75">
+                    <g>
+                        <path d="M 714.14 166.86 L 725.86 155.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-76">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="700" cy="181" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-79">
+                    <g>
+                        <rect x="520" y="281" width="135" height="20" fill="#4d4d4d" stroke="none" pointer-events="all" style="fill: light-dark(rgb(77, 77, 77), rgb(171, 171, 171));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-82">
+                    <g>
+                        <rect x="430" y="251" width="250" height="20" fill="#1a1a1a" stroke="none" pointer-events="all" style="fill: light-dark(rgb(26, 26, 26), rgb(215, 215, 215));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-83">
+                    <g>
+                        <path d="M 474.14 195.14 L 485.86 206.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-84">
+                    <g>
+                        <path d="M 525.86 195.14 L 514.14 206.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-85">
+                    <g>
+                        <path d="M 554.14 195.14 L 565.86 206.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-86">
+                    <g>
+                        <path d="M 605.86 195.14 L 594.14 206.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-87">
+                    <g>
+                        <path d="M 685.86 195.14 L 674.14 206.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-88">
+                    <g>
+                        <path d="M 714.14 195.14 L 725.86 206.86" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-89">
+                    <g>
+                        <path d="M 720 221 L 680 221" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-90">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="740" cy="221" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-91">
+                    <g>
+                        <path d="M 645.86 206.86 L 634.14 195.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-92">
+                    <g>
+                        <path d="M 640 221 L 600 221" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-93">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="660" cy="221" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-94">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="580" cy="221" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-95">
+                    <g>
+                        <path d="M 520 221 L 560 221" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-96">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="500" cy="221" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-97">
+                    <g>
+                        <path d="M 434.14 206.86 L 445.86 195.14" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-98">
+                    <g>
+                        <path d="M 440 221 L 480 221" fill="none" stroke="#999999" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-99">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="420" cy="221" rx="20" ry="20" fill="#e6e6e6" stroke="#999999" stroke-width="3" pointer-events="all" style="fill: light-dark(rgb(230, 230, 230), rgb(39, 39, 39)); stroke: light-dark(rgb(153, 153, 153), rgb(106, 106, 106));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-81">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="430" y="251" width="330" height="20" fill="none" stroke="#000000" stroke-width="3" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+            </g>
+            <g data-cell-id="pihWzB6tiNLzF9VtaYzv-4">
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-1">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="660" cy="141" rx="30" ry="30" fill="#ffffff" stroke="#000000" stroke-width="3" pointer-events="all" style="fill: var(--ge-adaptive-bg, #ffffff); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="NNUGWJtF6sMMf3fNjwb--4">
+                    <g>
+                        <rect x="860" y="191" width="80" height="80" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 925.72 205.44 C 923.14 206.71 920.1 207.75 916.72 208.52 C 915.19 203.49 913.12 199.33 910.65 196.32 C 916.41 198.09 921.56 201.27 925.72 205.44 Z M 919.6 228.21 C 919.48 222.36 918.81 216.92 917.67 212.11 C 921.68 211.17 925.28 209.89 928.27 208.31 C 932.72 213.85 935.56 220.71 936.14 228.21 Z M 917.13 250.32 C 918.59 244.91 919.46 238.66 919.6 231.93 L 936.23 231.93 C 936.02 240.32 932.98 248.01 927.99 254.06 C 924.93 252.48 921.22 251.23 917.13 250.32 Z M 916.06 253.88 C 919.53 254.63 922.67 255.66 925.33 256.92 C 920.85 261.3 915.32 264.44 909.26 266.04 C 911.98 263.22 914.3 259.04 916.06 253.88 Z M 886.11 254.16 C 887.99 259.57 890.48 263.89 893.41 266.65 C 886.77 265.42 880.78 262.39 875.93 258.08 C 878.67 256.45 882.15 255.12 886.11 254.16 Z M 882.47 231.93 C 882.61 238.79 883.51 245.14 885.02 250.62 C 880.39 251.77 876.34 253.39 873.22 255.39 C 867.54 249.15 864 240.96 863.77 231.93 Z M 884.47 211.77 C 883.29 216.67 882.59 222.22 882.47 228.21 L 863.86 228.21 C 864.49 220.08 867.8 212.7 872.92 206.94 C 875.96 208.95 879.92 210.59 884.47 211.77 Z M 885.44 208.21 C 881.58 207.22 878.21 205.88 875.58 204.25 C 880.13 200.09 885.74 197.07 891.96 195.65 C 889.3 198.63 887.07 202.94 885.44 208.21 Z M 886.19 228.21 C 886.31 222.33 886.99 217.08 888.07 212.59 C 892.33 213.41 896.97 213.86 901.76 213.86 C 906.01 213.86 910.17 213.5 914.05 212.84 C 915.1 217.27 915.76 222.43 915.88 228.21 Z M 912.4 253.2 C 909.49 261.48 905.18 266.35 901.03 266.35 C 896.92 266.35 892.65 261.56 889.74 253.41 C 893.48 252.75 897.55 252.4 901.76 252.4 C 905.32 252.4 908.88 252.67 912.4 253.2 Z M 901.76 248.67 C 897.17 248.67 892.73 249.09 888.63 249.84 C 887.23 244.78 886.19 238.74 886.05 231.93 L 915.81 231.93 C 915.67 238.63 914.87 244.6 913.5 249.62 C 909.78 249.01 905.82 248.67 901.76 248.67 Z M 901.83 194.81 C 906.04 195.39 910.35 200.53 913.08 209.23 C 909.51 209.82 905.69 210.14 901.76 210.14 C 897.3 210.14 893 209.74 889.07 209.01 C 891.9 200.11 896.39 194.99 900.72 194.76 C 901.09 194.77 901.46 194.8 901.83 194.81 Z M 902.11 191.11 C 901.75 191.07 901.4 191 901.03 191 C 900.92 191 900.8 191.03 900.68 191.04 C 900.45 191.03 900.23 191 900 191 C 877.94 191 860 208.94 860 231 C 860 253.06 877.94 271 900 271 C 922.06 271 940 253.06 940 231 C 940 209.66 923.18 192.22 902.11 191.11 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="NNUGWJtF6sMMf3fNjwb--5">
+                    <g>
+                        <rect x="870" y="101" width="65.64" height="80" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 895.67 153.95 L 922.69 153.95 L 922.69 150.31 L 895.67 150.31 Z M 895.67 142.82 L 929.05 142.82 L 929.05 139.18 L 895.67 139.18 Z M 895.67 131.69 L 909.98 131.69 L 909.98 128.05 L 895.67 128.05 Z M 873.64 164.62 L 875 164.62 L 875 168.26 L 871.82 168.26 C 870.81 168.26 870 167.44 870 166.44 L 870 102.84 C 870 101.84 870.81 101.03 871.82 101.03 L 902.03 101.03 L 902.03 104.66 L 873.64 104.66 Z M 883.17 170.98 L 886.13 170.98 L 886.13 174.62 L 881.36 174.62 C 880.35 174.62 879.54 173.8 879.54 172.8 L 879.54 109.2 C 879.54 108.2 880.35 107.38 881.36 107.38 L 909.98 107.38 L 909.98 111.02 L 883.17 111.02 Z M 892.71 177.34 L 892.71 117.38 L 916.11 117.38 L 916.11 131.46 C 916.11 132.46 916.92 133.28 917.92 133.28 L 932 133.28 L 932 177.34 Z M 919.74 119.95 L 929.43 129.64 L 919.74 129.64 Z M 935.11 130.17 L 919.21 114.28 C 918.87 113.94 918.41 113.74 917.92 113.74 L 890.9 113.74 C 889.89 113.74 889.08 114.56 889.08 115.56 L 889.08 179.16 C 889.08 180.16 889.89 180.97 890.9 180.97 L 933.82 180.97 C 934.83 180.97 935.64 180.16 935.64 179.16 L 935.64 131.46 C 935.64 130.98 935.45 130.52 935.11 130.17 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="NNUGWJtF6sMMf3fNjwb--8">
+                    <g>
+                        <rect x="860" y="21" width="80" height="70.77" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 874.6 88.14 L 936.29 88.14 L 936.29 39.15 L 874.6 39.15 Z M 863.71 88.14 L 870.97 88.14 L 870.97 39.15 L 863.71 39.15 Z M 863.71 35.52 L 936.29 35.52 L 936.29 24.63 L 863.71 24.63 Z M 939.92 22.81 L 939.92 89.96 C 939.92 90.44 939.73 90.9 939.39 91.24 C 939.05 91.58 938.59 91.77 938.11 91.77 L 861.89 91.77 C 860.89 91.77 860.08 90.96 860.08 89.96 L 860.08 22.81 C 860.08 21.81 860.89 21 861.89 21 L 938.11 21 C 938.59 21 939.05 21.19 939.39 21.53 C 939.73 21.87 939.92 22.33 939.92 22.81 Z M 919.96 72.55 L 919.96 57.05 L 907.26 65.52 L 907.26 79.61 Z M 890.93 72.55 L 903.63 79.61 L 903.63 65.52 L 890.93 57.05 Z M 892.59 53.8 L 905.44 62.37 L 918.29 53.8 L 905.44 46.66 Z M 923.59 53.66 L 923.59 73.62 C 923.59 74.28 923.23 74.89 922.66 75.21 L 906.32 84.28 C 906.05 84.43 905.75 84.51 905.44 84.51 C 905.14 84.51 904.84 84.43 904.56 84.28 L 888.23 75.21 C 887.66 74.89 887.3 74.28 887.3 73.62 L 887.3 53.66 C 887.3 53 887.66 52.39 888.23 52.07 L 904.56 43 C 905.11 42.7 905.78 42.7 906.32 43 L 922.66 52.07 C 923.23 52.39 923.59 53 923.59 53.66 Z M 881.86 31.89 L 885.48 31.89 L 885.48 28.26 L 881.86 28.26 Z M 874.6 31.89 L 878.23 31.89 L 878.23 28.26 L 874.6 28.26 Z M 867.34 31.89 L 870.97 31.89 L 870.97 28.26 L 867.34 28.26 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="NNUGWJtF6sMMf3fNjwb--12">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 698.66 177.04 L 704.02 166.3 L 822.56 225.57 L 827.7 215.29 L 838.66 240.33 L 812.05 246.59 L 817.19 236.3 Z" fill="#ffffff" stroke="#000000" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10" pointer-events="all" style="fill: var(--ge-adaptive-bg, #ffffff); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="NNUGWJtF6sMMf3fNjwb--13">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 711.52 147 L 711.48 135 L 817.48 134.65 L 817.44 123.15 L 838.5 140.58 L 817.56 158.15 L 817.52 146.65 Z" fill="#ffffff" stroke="#000000" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10" pointer-events="all" style="fill: var(--ge-adaptive-bg, #ffffff); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="pihWzB6tiNLzF9VtaYzv-3">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 704.02 115.7 L 698.66 104.96 L 817.19 45.7 L 812.05 35.41 L 838.66 41.67 L 827.7 66.71 L 822.56 56.43 Z" fill="#ffffff" stroke="#000000" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10" pointer-events="all" style="fill: var(--ge-adaptive-bg, #ffffff); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="NNUGWJtF6sMMf3fNjwb--6">
+                    <g>
+                        <rect x="642.56" y="121" width="34.87" height="40" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 667.5 150.17 L 660.87 143.54 L 662.54 141.88 L 669.17 148.51 Z M 650.73 132.05 L 651.05 131.74 L 653.62 133.61 L 652.61 134.63 Z M 663.18 139.96 C 662.84 139.62 662.24 139.62 661.9 139.96 L 661.07 140.79 L 655.04 134.76 L 655.65 134.15 C 655.84 133.96 655.94 133.7 655.92 133.44 C 655.9 133.17 655.76 132.93 655.55 132.77 L 651.49 129.81 C 651.13 129.55 650.63 129.59 650.31 129.91 L 648.9 131.32 C 648.58 131.64 648.55 132.13 648.81 132.49 L 651.77 136.55 C 651.92 136.77 652.17 136.9 652.43 136.92 C 652.45 136.92 652.48 136.92 652.5 136.92 C 652.74 136.92 652.97 136.83 653.14 136.66 L 653.76 136.04 L 659.78 142.07 L 658.95 142.9 C 658.6 143.26 658.6 143.83 658.95 144.18 L 666.86 152.09 C 667.03 152.27 667.26 152.36 667.5 152.36 C 667.74 152.36 667.97 152.27 668.14 152.09 L 671.09 149.15 C 671.44 148.8 671.44 148.22 671.09 147.87 Z M 662.74 134.83 C 662.46 133.43 662.9 131.94 663.93 130.91 C 665.24 129.6 667.25 129.27 668.92 130.08 C 669.18 130.21 669.37 130.46 669.42 130.74 C 669.46 131.03 669.37 131.33 669.16 131.53 L 667.82 132.88 L 668.12 133.18 L 669.46 131.84 C 669.67 131.63 669.96 131.53 670.25 131.58 C 670.54 131.63 670.78 131.81 670.91 132.08 C 671.73 133.75 671.4 135.75 670.08 137.06 C 669.04 138.11 667.58 138.54 666.16 138.26 L 664.62 139.8 L 663.33 138.52 L 665.25 136.61 C 665.49 136.36 665.85 136.28 666.18 136.39 C 667.11 136.71 668.11 136.47 668.8 135.78 C 669.2 135.38 669.45 134.87 669.52 134.34 L 668.76 135.1 C 668.59 135.27 668.36 135.37 668.12 135.37 L 668.12 135.37 C 667.87 135.37 667.64 135.27 667.47 135.1 L 665.9 133.52 C 665.54 133.16 665.54 132.59 665.9 132.24 L 666.66 131.48 C 666.12 131.55 665.61 131.79 665.21 132.2 C 664.53 132.88 664.29 133.9 664.6 134.81 C 664.71 135.14 664.63 135.5 664.39 135.75 L 661 139.13 L 659.72 137.85 Z M 658.8 145.62 L 657.25 147.17 C 657.53 148.57 657.09 150.06 656.05 151.09 C 655.22 151.92 654.11 152.36 652.99 152.36 C 652.34 152.36 651.68 152.22 651.07 151.92 C 650.81 151.79 650.62 151.54 650.57 151.25 C 650.53 150.96 650.62 150.67 650.83 150.46 L 652.17 149.12 L 651.87 148.82 L 650.53 150.17 C 650.32 150.37 650.03 150.46 649.74 150.42 C 649.46 150.37 649.21 150.19 649.08 149.93 C 648.26 148.26 648.59 146.25 649.91 144.94 C 650.93 143.91 652.42 143.47 653.83 143.74 L 656.85 140.72 L 658.13 142.01 L 654.74 145.39 C 654.49 145.64 654.13 145.72 653.8 145.61 C 652.89 145.29 651.87 145.53 651.19 146.22 C 650.79 146.62 650.54 147.13 650.47 147.67 L 651.23 146.9 C 651.59 146.55 652.16 146.55 652.51 146.9 L 654.09 148.48 C 654.45 148.83 654.45 149.41 654.09 149.76 L 653.33 150.53 C 653.86 150.46 654.37 150.21 654.77 149.81 C 655.46 149.13 655.7 148.1 655.39 147.19 C 655.28 146.86 655.36 146.5 655.6 146.25 L 657.52 144.34 Z M 675.48 150 L 659.95 158.91 L 644.46 149.91 L 644.51 132 L 660.04 123.09 L 675.53 132.09 Z M 660.05 121 L 642.7 130.95 L 642.65 150.95 L 659.94 161 L 677.29 151.05 L 677.34 131.05 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-3">
+                    <g>
+                        <rect x="30" y="1" width="20" height="17.69" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 33.65 17.78 L 49.07 17.78 L 49.07 5.54 L 33.65 5.54 Z M 30.93 17.78 L 32.74 17.78 L 32.74 5.54 L 30.93 5.54 Z M 30.93 4.63 L 49.07 4.63 L 49.07 1.91 L 30.93 1.91 Z M 49.98 1.45 L 49.98 18.24 C 49.98 18.36 49.93 18.47 49.85 18.56 C 49.76 18.64 49.65 18.69 49.53 18.69 L 30.47 18.69 C 30.35 18.69 30.24 18.64 30.15 18.56 C 30.07 18.47 30.02 18.36 30.02 18.24 L 30.02 1.45 C 30.02 1.33 30.07 1.22 30.15 1.13 C 30.24 1.05 30.35 1 30.47 1 L 49.53 1 C 49.65 1 49.76 1.05 49.85 1.13 C 49.93 1.22 49.98 1.33 49.98 1.45 Z M 44.99 13.89 L 44.99 10.01 L 41.81 12.13 L 41.81 15.65 Z M 37.73 13.89 L 40.91 15.65 L 40.91 12.13 L 37.73 10.01 Z M 38.15 9.2 L 41.36 11.34 L 44.57 9.2 L 41.36 7.41 Z M 45.9 9.16 L 45.9 14.15 C 45.9 14.32 45.81 14.47 45.66 14.55 L 41.58 16.82 C 41.51 16.86 41.44 16.87 41.36 16.87 C 41.29 16.87 41.21 16.86 41.14 16.82 L 37.06 14.55 C 36.91 14.47 36.82 14.32 36.82 14.15 L 36.82 9.16 C 36.82 9 36.91 8.85 37.06 8.77 L 41.14 6.5 C 41.28 6.42 41.44 6.42 41.58 6.5 L 45.66 8.77 C 45.81 8.85 45.9 9 45.9 9.16 Z M 35.46 3.72 L 36.37 3.72 L 36.37 2.81 L 35.46 2.81 Z M 33.65 3.72 L 34.56 3.72 L 34.56 2.81 L 33.65 2.81 Z M 31.84 3.72 L 32.74 3.72 L 32.74 2.81 L 31.84 2.81 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-4">
+                    <g>
+                        <rect x="30" y="31" width="16.41" height="20" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 36.42 44.24 L 43.17 44.24 L 43.17 43.33 L 36.42 43.33 Z M 36.42 41.45 L 44.76 41.45 L 44.76 40.55 L 36.42 40.55 Z M 36.42 38.67 L 39.99 38.67 L 39.99 37.76 L 36.42 37.76 Z M 30.91 46.9 L 31.25 46.9 L 31.25 47.81 L 30.45 47.81 C 30.2 47.81 30 47.61 30 47.36 L 30 31.46 C 30 31.21 30.2 31.01 30.45 31.01 L 38.01 31.01 L 38.01 31.92 L 30.91 31.92 Z M 33.29 48.49 L 34.03 48.49 L 34.03 49.4 L 32.84 49.4 C 32.59 49.4 32.38 49.2 32.38 48.95 L 32.38 33.05 C 32.38 32.8 32.59 32.6 32.84 32.6 L 39.99 32.6 L 39.99 33.51 L 33.29 33.51 Z M 35.68 50.08 L 35.68 35.1 L 41.53 35.1 L 41.53 38.61 C 41.53 38.87 41.73 39.07 41.98 39.07 L 45.5 39.07 L 45.5 50.08 Z M 42.44 35.74 L 44.86 38.16 L 42.44 38.16 Z M 46.28 38.29 L 42.3 34.32 C 42.22 34.23 42.1 34.19 41.98 34.19 L 35.22 34.19 C 34.97 34.19 34.77 34.39 34.77 34.64 L 34.77 50.54 C 34.77 50.79 34.97 50.99 35.22 50.99 L 45.96 50.99 C 46.21 50.99 46.41 50.79 46.41 50.54 L 46.41 38.61 C 46.41 38.49 46.36 38.38 46.28 38.29 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-5">
+                    <g>
+                        <rect x="30" y="61" width="20" height="20" fill="none" stroke="none" pointer-events="all"/>
+                        <path d="M 46.43 64.61 C 45.78 64.93 45.02 65.19 44.18 65.38 C 43.8 64.12 43.28 63.08 42.66 62.33 C 44.1 62.77 45.39 63.57 46.43 64.61 Z M 44.9 70.3 C 44.87 68.84 44.7 67.48 44.42 66.28 C 45.42 66.04 46.32 65.72 47.07 65.33 C 48.18 66.71 48.89 68.43 49.03 70.3 Z M 44.28 75.83 C 44.65 74.48 44.86 72.92 44.9 71.23 L 49.06 71.23 C 49 73.33 48.24 75.25 47 76.76 C 46.23 76.37 45.31 76.06 44.28 75.83 Z M 44.01 76.72 C 44.88 76.91 45.67 77.16 46.33 77.48 C 45.21 78.57 43.83 79.36 42.31 79.76 C 42.99 79.05 43.57 78.01 44.01 76.72 Z M 36.53 76.79 C 37 78.14 37.62 79.22 38.35 79.91 C 36.69 79.61 35.2 78.85 33.98 77.77 C 34.67 77.36 35.54 77.03 36.53 76.79 Z M 35.62 71.23 C 35.65 72.95 35.88 74.54 36.25 75.91 C 35.1 76.19 34.09 76.6 33.3 77.1 C 31.88 75.54 31 73.49 30.94 71.23 Z M 36.12 66.19 C 35.82 67.42 35.65 68.81 35.62 70.3 L 30.97 70.3 C 31.12 68.27 31.95 66.42 33.23 64.99 C 33.99 65.49 34.98 65.9 36.12 66.19 Z M 36.36 65.3 C 35.4 65.05 34.55 64.72 33.89 64.31 C 35.03 63.27 36.43 62.52 37.99 62.16 C 37.32 62.91 36.77 63.99 36.36 65.3 Z M 36.55 70.3 C 36.58 68.83 36.75 67.52 37.02 66.4 C 38.08 66.6 39.24 66.71 40.44 66.71 C 41.5 66.71 42.54 66.63 43.51 66.46 C 43.77 67.57 43.94 68.86 43.97 70.3 Z M 43.1 76.55 C 42.37 78.62 41.29 79.84 40.26 79.84 C 39.23 79.84 38.16 78.64 37.43 76.6 C 38.37 76.44 39.39 76.35 40.44 76.35 C 41.33 76.35 42.22 76.42 43.1 76.55 Z M 40.44 75.42 C 39.29 75.42 38.18 75.52 37.16 75.71 C 36.81 74.45 36.55 72.93 36.51 71.23 L 43.95 71.23 C 43.92 72.91 43.72 74.4 43.38 75.65 C 42.44 75.5 41.45 75.42 40.44 75.42 Z M 40.46 61.95 C 41.51 62.1 42.59 63.38 43.27 65.56 C 42.38 65.7 41.42 65.78 40.44 65.78 C 39.32 65.78 38.25 65.69 37.27 65.5 C 37.97 63.28 39.1 62 40.18 61.94 C 40.27 61.94 40.36 61.95 40.46 61.95 Z M 40.53 61.03 C 40.44 61.02 40.35 61 40.26 61 C 40.23 61 40.2 61.01 40.17 61.01 C 40.11 61.01 40.06 61 40 61 C 34.49 61 30 65.49 30 71 C 30 76.51 34.49 81 40 81 C 45.51 81 50 76.51 50 71 C 50 65.66 45.8 61.3 40.53 61.03 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-6">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 66.43 12.93 L 121.69 29.51" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 73.13 10.24 L 63.21 11.96 L 70.54 18.86" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-7">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 66.71 41 L 120 41" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 72.35 36.5 L 63.35 41 L 72.35 45.5" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-8">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 66.43 69.07 L 121.69 52.49" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 70.54 63.14 L 63.21 70.04 L 73.13 71.76" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                    </g>
+                </g>
+            </g>
+            <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-33">
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-34">
+                    <g>
+                        <path d="M 410.54 251.05 C 410.34 251.04 410.16 251.11 410.02 251.25 C 409.88 251.38 409.8 251.56 409.79 251.75 L 409.76 252.63 C 407.75 252.9 406.5 254.28 405.83 255.54 L 403.43 255.54 C 402.67 255.54 402.02 255.86 401.64 256.33 C 401.27 256.8 401.14 257.35 401.14 257.84 L 401.14 262.73 L 400.72 262.73 C 400.32 262.73 400 263.05 400 263.45 C 400 263.85 400.32 264.18 400.72 264.18 L 401.14 264.18 L 401.14 270.23 C 401.14 270.42 401.21 270.61 401.35 270.74 C 401.49 270.88 401.67 270.96 401.86 270.96 L 419.16 270.94 C 419.56 270.94 419.88 270.62 419.88 270.22 L 419.88 264.18 L 420.33 264.18 C 420.52 264.18 420.7 264.11 420.84 263.97 C 420.97 263.83 421.05 263.65 421.05 263.46 C 421.05 263.27 420.97 263.08 420.84 262.95 C 420.7 262.81 420.52 262.73 420.33 262.73 L 419.88 262.73 L 419.89 257.88 C 419.89 257.88 419.89 257.88 419.89 257.88 C 419.89 256.61 418.89 255.53 417.62 255.53 L 415.31 255.53 C 414.75 254.54 413.45 252.94 411.21 252.63 L 411.24 251.79 C 411.24 251.6 411.17 251.42 411.04 251.28 C 410.91 251.14 410.73 251.05 410.54 251.05 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 417.62 256.98 C 418.13 256.98 418.43 257.29 418.43 257.88 L 418.43 263.4 C 418.42 263.42 418.41 263.44 418.4 263.46 C 418.41 263.48 418.42 263.5 418.43 263.52 L 418.42 269.49 L 402.58 269.51 L 402.58 257.84 C 402.58 257.62 402.65 257.38 402.77 257.24 C 402.88 257.09 403.02 256.99 403.42 256.99 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                        <path d="M 407.72 265.32 C 407.53 265.32 407.34 265.39 407.2 265.52 C 407.06 265.65 406.98 265.84 406.98 266.03 C 406.97 266.22 407.05 266.41 407.18 266.55 C 408.95 268.4 412 268.41 413.88 266.61 C 414.01 266.47 414.09 266.29 414.1 266.1 C 414.1 265.91 414.03 265.72 413.89 265.58 C 413.76 265.45 413.58 265.37 413.39 265.36 C 413.19 265.36 413.01 265.43 412.87 265.57 C 411.58 266.81 409.42 266.79 408.23 265.54 C 408.09 265.4 407.91 265.32 407.72 265.32 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 410.47 254.01 C 411.95 254.01 412.94 254.8 413.55 255.53 L 407.52 255.53 C 408.13 254.72 409.05 254.01 410.47 254.01 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                        <path d="M 407.12 258.6 C 405.7 258.6 404.52 259.77 404.52 261.2 C 404.52 262.62 405.7 263.8 407.12 263.8 C 408.55 263.8 409.72 262.62 409.72 261.2 C 409.72 259.77 408.55 258.6 407.12 258.6 Z M 413.88 258.6 C 412.45 258.6 411.28 259.77 411.28 261.2 C 411.28 262.62 412.45 263.8 413.88 263.8 C 415.31 263.8 416.48 262.62 416.48 261.2 C 416.48 259.77 415.31 258.6 413.88 258.6 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 407.12 260.05 C 407.77 260.05 408.27 260.55 408.27 261.2 C 408.27 261.84 407.77 262.35 407.12 262.35 C 406.48 262.35 405.97 261.84 405.97 261.2 C 405.97 260.55 406.48 260.05 407.12 260.05 Z M 413.88 260.05 C 414.52 260.05 415.03 260.55 415.03 261.2 C 415.03 261.84 414.52 262.35 413.88 262.35 C 413.24 262.35 412.73 261.84 412.73 261.2 C 412.73 260.55 413.24 260.05 413.88 260.05 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-37">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="520" y="281" width="240" height="20" fill="none" stroke="#000000" stroke-width="3" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-35">
+                    <g>
+                        <path d="M 410.54 281.05 C 410.34 281.04 410.16 281.11 410.02 281.25 C 409.88 281.38 409.8 281.56 409.79 281.75 L 409.76 282.63 C 407.75 282.9 406.5 284.28 405.83 285.54 L 403.43 285.54 C 402.67 285.54 402.02 285.86 401.64 286.33 C 401.27 286.8 401.14 287.35 401.14 287.84 L 401.14 292.73 L 400.72 292.73 C 400.32 292.73 400 293.05 400 293.45 C 400 293.85 400.32 294.18 400.72 294.18 L 401.14 294.18 L 401.14 300.23 C 401.14 300.42 401.21 300.61 401.35 300.74 C 401.49 300.88 401.67 300.96 401.86 300.96 L 419.16 300.94 C 419.56 300.94 419.88 300.62 419.88 300.22 L 419.88 294.18 L 420.33 294.18 C 420.52 294.18 420.7 294.11 420.84 293.97 C 420.97 293.83 421.05 293.65 421.05 293.46 C 421.05 293.27 420.97 293.08 420.84 292.95 C 420.7 292.81 420.52 292.73 420.33 292.73 L 419.88 292.73 L 419.89 287.88 C 419.89 287.88 419.89 287.88 419.89 287.88 C 419.89 286.61 418.89 285.53 417.62 285.53 L 415.31 285.53 C 414.75 284.54 413.45 282.94 411.21 282.63 L 411.24 281.79 C 411.24 281.6 411.17 281.42 411.04 281.28 C 410.91 281.14 410.73 281.05 410.54 281.05 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 417.62 286.98 C 418.13 286.98 418.43 287.29 418.43 287.88 L 418.43 293.4 C 418.42 293.42 418.41 293.44 418.4 293.46 C 418.41 293.48 418.42 293.5 418.43 293.52 L 418.42 299.49 L 402.58 299.51 L 402.58 287.84 C 402.58 287.62 402.65 287.38 402.77 287.24 C 402.88 287.09 403.02 286.99 403.42 286.99 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                        <path d="M 407.72 295.32 C 407.53 295.32 407.34 295.39 407.2 295.52 C 407.06 295.65 406.98 295.84 406.98 296.03 C 406.97 296.22 407.05 296.41 407.18 296.55 C 408.95 298.4 412 298.41 413.88 296.61 C 414.01 296.47 414.09 296.29 414.1 296.1 C 414.1 295.91 414.03 295.72 413.89 295.58 C 413.76 295.45 413.58 295.37 413.39 295.36 C 413.19 295.36 413.01 295.43 412.87 295.57 C 411.58 296.81 409.42 296.79 408.23 295.54 C 408.09 295.4 407.91 295.32 407.72 295.32 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 410.47 284.01 C 411.95 284.01 412.94 284.8 413.55 285.53 L 407.52 285.53 C 408.13 284.72 409.05 284.01 410.47 284.01 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                        <path d="M 407.12 288.6 C 405.7 288.6 404.52 289.77 404.52 291.2 C 404.52 292.62 405.7 293.8 407.12 293.8 C 408.55 293.8 409.72 292.62 409.72 291.2 C 409.72 289.77 408.55 288.6 407.12 288.6 Z M 413.88 288.6 C 412.45 288.6 411.28 289.77 411.28 291.2 C 411.28 292.62 412.45 293.8 413.88 293.8 C 415.31 293.8 416.48 292.62 416.48 291.2 C 416.48 289.77 415.31 288.6 413.88 288.6 Z" fill="#000000" stroke="none" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));"/>
+                        <path d="M 407.12 290.05 C 407.77 290.05 408.27 290.55 408.27 291.2 C 408.27 291.84 407.77 292.35 407.12 292.35 C 406.48 292.35 405.97 291.84 405.97 291.2 C 405.97 290.55 406.48 290.05 407.12 290.05 Z M 413.88 290.05 C 414.52 290.05 415.03 290.55 415.03 291.2 C 415.03 291.84 414.52 292.35 413.88 292.35 C 413.24 292.35 412.73 291.84 412.73 291.2 C 412.73 290.55 413.24 290.05 413.88 290.05 Z" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                    </g>
+                </g>
+            </g>
+            <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-2">
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-20">
+                    <g>
+                        <rect x="240" y="1" width="580" height="320" fill="none" stroke="#000000" stroke-width="2" pointer-events="all" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-50">
+                    <g>
+                        <rect x="220" y="21" width="40" height="280" fill="#ffffff" stroke="#000000" stroke-width="2" pointer-events="all" style="fill: var(--ge-adaptive-bg, #ffffff); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-16">
+                    <g>
+                        <image width="40" height="40" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iY3VycmVudENvbG9yIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxwYXRoIGQ9Ik0xMiAyQzE3LjUyMjggMiAyMiA2LjQ3NzE1IDIyIDEyQzIyIDE3LjUyMjggMTcuNTIyOCAyMiAxMiAyMkM2LjQ3NzE1IDIyIDIgMTcuNTIyOCAyIDEySDRDNCAxNi40MTgzIDcuNTgxNzIgMjAgMTIgMjBDMTYuNDE4MyAyMCAyMCAxNi40MTgzIDIwIDEyQzIwIDcuNTgxNzIgMTYuNDE4MyA0IDEyIDRDOS4yNTAyMiA0IDYuODI0NDcgNS4zODczNCA1LjM4NDUxIDcuNTAwMjRMOCA3LjVWOS41SDJWMy41SDRMMy45OTk4OSA1Ljk5OTE4QzUuODI0MzQgMy41NzA3NSA4LjcyODczIDIgMTIgMlpNMTMgN0wxMi45OTk4IDExLjU4NUwxNi4yNDI2IDE0LjgyODRMMTQuODI4NCAxNi4yNDI2TDEwLjk5OTggMTIuNDEzTDExIDdIMTNaIi8+PC9zdmc+" preserveAspectRatio="none" x="220" y="201"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-29">
+                    <g>
+                        <image width="40" height="40" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iY3VycmVudENvbG9yIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxwYXRoIGQ9Ik0yMS4xMzg0IDNDMjEuNDE0NiAzIDIxLjYzODUgMy4yMjM4NiAyMS42Mzg1IDMuNUMyMS42Mzg1IDMuNTg3MDEgMjEuNjE1NyAzLjY3MjUyIDIxLjU3MjUgMy43NDgwN0wxOCAxMEwyMS41NzI1IDE2LjI1MTlDMjEuNzA5NSAxNi40OTE3IDIxLjYyNjIgMTYuNzk3MSAyMS4zODY1IDE2LjkzNDFDMjEuMzEwOSAxNi45NzczIDIxLjIyNTQgMTcgMjEuMTM4NCAxN0g0VjIySDJWM0gyMS4xMzg0Wk0xOC41NTM2IDVINFYxNUgxOC41NTM2TDE1LjY5NjUgMTBMMTguNTUzNiA1WiIvPjwvc3ZnPg==" preserveAspectRatio="none" x="220" y="261"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-42">
+                    <g>
+                        <image width="40" height="40" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iY3VycmVudENvbG9yIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxwYXRoIGQ9Ik0xOCAzQzE5LjY1NjkgMyAyMSA0LjM0MzE1IDIxIDZDMjEgNy42NTY4NSAxOS42NTY5IDkgMTggOUgxNUMxMy42OTQxIDkgMTIuNTgzMSA4LjE2NTYyIDEyLjE3MSA3LjAwMDlMMTEgN0M5LjkgNyA5IDcuOSA5IDlMOS4wMDA5IDkuMTcxMDJDMTAuMTY1NiA5LjU4MzEyIDExIDEwLjY5NDEgMTEgMTJDMTEgMTMuMzA1OSAxMC4xNjU2IDE0LjQxNjkgOS4wMDA5IDE0LjgyOUw5IDE1QzkgMTYuMSA5LjkgMTcgMTEgMTdMMTIuMTcwNyAxNy4wMDAxQzEyLjU4MjUgMTUuODM0OSAxMy42OTM3IDE1IDE1IDE1SDE4QzE5LjY1NjkgMTUgMjEgMTYuMzQzMSAyMSAxOEMyMSAxOS42NTY5IDE5LjY1NjkgMjEgMTggMjFIMTVDMTMuNjk0MSAyMSAxMi41ODMxIDIwLjE2NTYgMTIuMTcxIDE5LjAwMDlMMTEgMTlDOC43OSAxOSA3IDE3LjIxIDcgMTVINUMzLjM0MzE1IDE1IDIgMTMuNjU2OSAyIDEyQzIgMTAuMzQzMSAzLjM0MzE1IDkgNSA5SDdDNyA2Ljc5MDg2IDguNzkwODYgNSAxMSA1TDEyLjE3MDcgNS4wMDAwOUMxMi41ODI1IDMuODM0ODUgMTMuNjkzNyAzIDE1IDNIMThaTTE4IDE3SDE1QzE0LjQ0NzcgMTcgMTQgMTcuNDQ3NyAxNCAxOEMxNCAxOC41NTIzIDE0LjQ0NzcgMTkgMTUgMTlIMThDMTguNTUyMyAxOSAxOSAxOC41NTIzIDE5IDE4QzE5IDE3LjQ0NzcgMTguNTUyMyAxNyAxOCAxN1pNOCAxMUg1QzQuNDQ3NzIgMTEgNCAxMS40NDc3IDQgMTJDNCAxMi41NTIzIDQuNDQ3NzIgMTMgNSAxM0g4QzguNTUyMjggMTMgOSAxMi41NTIzIDkgMTJDOSAxMS40NDc3IDguNTUyMjggMTEgOCAxMVpNMTggNUgxNUMxNC40NDc3IDUgMTQgNS40NDc3MiAxNCA2QzE0IDYuNTUyMjggMTQuNDQ3NyA3IDE1IDdIMThDMTguNTUyMyA3IDE5IDYuNTUyMjggMTkgNkMxOSA1LjQ0NzcyIDE4LjU1MjMgNSAxOCA1WiIvPjwvc3ZnPg==" preserveAspectRatio="none" x="220" y="81"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-41">
+                    <g>
+                        <image width="40" height="40" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iY3VycmVudENvbG9yIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxwYXRoIGQ9Ik0xNSAzQzE1LjU1MjMgMyAxNiAzLjQ0NzcyIDE2IDRWOEMxNiA4LjU1MjI4IDE1LjU1MjMgOSAxNSA5SDEzVjExSDE3QzE3LjU1MjMgMTEgMTggMTEuNDQ3NyAxOCAxMlYxNUgyMEMyMC41NTIzIDE1IDIxIDE1LjQ0NzcgMjEgMTZWMjBDMjEgMjAuNTUyMyAyMC41NTIzIDIxIDIwIDIxSDE0QzEzLjQ0NzcgMjEgMTMgMjAuNTUyMyAxMyAyMFYxNkMxMyAxNS40NDc3IDEzLjQ0NzcgMTUgMTQgMTVIMTZWMTNIOFYxNUgxMEMxMC41NTIzIDE1IDExIDE1LjQ0NzcgMTEgMTZWMjBDMTEgMjAuNTUyMyAxMC41NTIzIDIxIDEwIDIxSDRDMy40NDc3MiAyMSAzIDIwLjU1MjMgMyAyMFYxNkMzIDE1LjQ0NzcgMy40NDc3MiAxNSA0IDE1SDZWMTJDNiAxMS40NDc3IDYuNDQ3NzIgMTEgNyAxMUgxMVY5SDlDOC40NDc3MiA5IDggOC41NTIyOCA4IDhWNEM4IDMuNDQ3NzIgOC40NDc3MiAzIDkgM0gxNVpNOSAxN0g1VjE5SDlWMTdaTTE5IDE3SDE1VjE5SDE5VjE3Wk0xNCA1SDEwVjdIMTRWNVoiLz48L3N2Zz4=" preserveAspectRatio="none" x="220" y="20"/>
+                    </g>
+                </g>
+                <g data-cell-id="zwqvQGgiUnLg7GYJQ2gw-43">
+                    <g>
+                        <image width="40" height="40" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iY3VycmVudENvbG9yIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxwYXRoIGQ9Ik0xNy4wMDA3IDEuMjA4MjUgMTguMzE5NSAzLjY4MTA4IDIwLjc5MjMgNC45OTk5MiAxOC4zMTk1IDYuMzE4NzYgMTcuMDAwNyA4Ljc5MTU5IDE1LjY4MTggNi4zMTg3NiAxMy4yMDkgNC45OTk5MiAxNS42ODE4IDMuNjgxMDggMTcuMDAwNyAxLjIwODI1Wk0xMC42NjczIDkuMzMzMjUgMTUuNjY3MyAxMS45OTk5IDEwLjY2NzMgMTQuNjY2NiA4LjAwMDY1IDE5LjY2NjYgNS4zMzM5OCAxNC42NjY2LjMzMzk4NCAxMS45OTk5IDUuMzMzOTggOS4zMzMyNSA4LjAwMDY1IDQuMzMzMjUgMTAuNjY3MyA5LjMzMzI1Wk0xMS40MTczIDExLjk5OTkgOS4xODkwNSAxMC44MTE1IDguMDAwNjUgOC41ODMyNSA2LjgxMjI0IDEwLjgxMTUgNC41ODM5OCAxMS45OTk5IDYuODEyMjQgMTMuMTg4MyA4LjAwMDY1IDE1LjQxNjYgOS4xODkwNSAxMy4xODgzIDExLjQxNzMgMTEuOTk5OVpNMTkuNjY3MyAxNi4zMzMzIDE4LjAwMDcgMTMuMjA4MyAxNi4zMzQgMTYuMzMzMyAxMy4yMDkgMTcuOTk5OSAxNi4zMzQgMTkuNjY2NiAxOC4wMDA3IDIyLjc5MTYgMTkuNjY3MyAxOS42NjY2IDIyLjc5MjMgMTcuOTk5OSAxOS42NjczIDE2LjMzMzNaIi8+PC9zdmc+" preserveAspectRatio="none" x="220" y="141"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-2">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="160" cy="41" rx="40" ry="40" fill="#ffffff" stroke="#000000" stroke-width="3" pointer-events="all" style="fill: var(--ge-adaptive-bg, #ffffff); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+                    </g>
+                </g>
+                <g data-cell-id="CHg6dRNRRbNlt2tWYbNk-1">
+                    <g>
+                        <image width="50" height="50" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iY3VycmVudENvbG9yIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxwYXRoIGQ9Ik03IDNWMUg5VjNIMTVWMUgxN1YzSDIxQzIxLjU1MjMgMyAyMiAzLjQ0NzcyIDIyIDRWOUgyMFY1SDE3VjdIMTVWNUg5VjdIN1Y1SDRWMTlIMTBWMjFIM0MyLjQ0NzcyIDIxIDIgMjAuNTUyMyAyIDIwVjRDMiAzLjQ0NzcyIDIuNDQ3NzIgMyAzIDNIN1pNMTcgMTJDMTQuNzkwOSAxMiAxMyAxMy43OTA5IDEzIDE2QzEzIDE4LjIwOTEgMTQuNzkwOSAyMCAxNyAyMEMxOS4yMDkxIDIwIDIxIDE4LjIwOTEgMjEgMTZDMjEgMTMuNzkwOSAxOS4yMDkxIDEyIDE3IDEyWk0xMSAxNkMxMSAxMi42ODYzIDEzLjY4NjMgMTAgMTcgMTBDMjAuMzEzNyAxMCAyMyAxMi42ODYzIDIzIDE2QzIzIDE5LjMxMzcgMjAuMzEzNyAyMiAxNyAyMkMxMy42ODYzIDIyIDExIDE5LjMxMzcgMTEgMTZaTTE2IDEzVjE2LjQxNDJMMTguMjkyOSAxOC43MDcxTDE5LjcwNzEgMTcuMjkyOUwxOCAxNS41ODU4VjEzSDE2WiIvPjwvc3ZnPg==" preserveAspectRatio="none" x="135" y="15"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

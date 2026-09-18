@@ -1,8 +1,8 @@
 ---
 theme: default
-title: "AI-DLC × OpenSpec — Garder la main quand l'IA code"
+title: "Adopter le codage agentique — et garder la main en équipe"
 info: |
-  ## AI-DLC × OpenSpec — Garder la main quand l'IA code
+  ## Adopter le codage agentique — garder la main en équipe
   Talk d'adoption, public ingénieurs (Dév · Tech Lead · Architecte).
 
   Fil : prompt → context → harness engineering (pourquoi OpenSpec/Spec-Kit
@@ -15,9 +15,11 @@ drawings:
   persist: false
 ---
 
-# AI-DLC × OpenSpec
+# Adopter le codage agentique
 
-**Garder la main** quand l'IA écrit le code
+## Comment garder la main en équipe
+
+quand l'IA écrit le code
 
 <div class="pt-8 opacity-70 text-sm">
 Pas « une méthode de plus ». Une réponse à une question que vous vous posez déjà :<br>
@@ -25,7 +27,7 @@ Pas « une méthode de plus ». Une réponse à une question que vous vous posez
 </div>
 
 <div class="pt-4 opacity-50 text-xs">
-Dév · Tech Lead · Architecte — ~30 min, démo live à la fin
+Product Owner · Développeur · Tech Lead · Architecte — ~30 min, démo live à la fin
 </div>
 
 <!--
@@ -39,19 +41,19 @@ layout: center
 class: text-center
 ---
 
-# Vous connaissez déjà cet irritant
+# L'irritant que vous connaissez sans doutes déjà
 
 <div class="mt-8 text-xl opacity-80">
 
-L'agent démarre bien.<br>
+L'agent démarre bien. Il analyse, suggère, clarifie, rédige.<br>
 Puis, au milieu d'une tâche longue, il **oublie**.<br>
-Il refait ce qui était fait, contredit une décision prise dix minutes plus tôt.
+Il refait ce qui vous considériez comme était fait, contredit une décision prise dix minutes plus tôt.
 
 </div>
 
 <div class="mt-8 text-lg opacity-60">
 Ce n'est pas un bug du modèle.<br>
-C'est un problème de <b>mémoire volatile</b> — et il a une histoire.
+C'est un problème d'<b>amnésie</b> des modèles de language actuel — et il a une histoire.
 </div>
 
 <!--
@@ -64,24 +66,51 @@ Ne pas dire « OpenSpec règle ça » ici — juste poser le symptôme. On y rev
 layout: section
 ---
 
-# 1 · L'histoire qu'on a vécue
+# 1 · Quartre ères
 
-Prompt engineering → context engineering → **harness engineering**.
-Chaque ère répond à la **volatilité** de la précédente.
+Prompt engineering → context engineering → **harness engineering**  →  loop engineering.
+
+Chaque ère répond à la **volatilité** mémorielle de la précédente.
+
+<div class="text-xs opacity-50 mt-2 text-center">
+Chaque ère naît de la volatilité que la précédente n'a pas su tenir.<br/>
+Nous, on ancre le harnais ; le loop puis l'adoption équipe sont le cap.
+</div>
+
+---
+layout: center
+hide: true
+---
+
+```mermaid
+timeline
+  title Les ères du codage assisté par l'IA — 2022 → 2027
+  2022 : Prompt engineering : soigner la formulation
+  2023 : Context engineering : RAG, exemples, fichiers ouverts
+  2024 : Le contexte déborde : compaction, l'agent oublie
+  2025 : Harness engineering : la spec durable et versionnée
+  2026 : Loop engineering : régler la boucle d'exécution
+  2027 : Adoption en équipe : co-location + verrous humains
+```
 
 ---
 layout: two-cols-header
 ---
 
-# Prompt engineering
+# Prompt engineering — soigner la formulation
 
 On soigne la **formulation**. Reformuler, donner le rôle, structurer la demande.
+
+![promt engineering](./media/diagrams/prompt-engineering.drawio.svg) {class="mx-auto block h-[200px]"}
 
 ::left::
 
 <div class="pr-4 text-sm">
 
 - Le levier : la qualité de la question
+  - [RTF](https://www.youtube.com/watch?v=e_ZQcu535PI): Rôle  · Task  ·  Format
+  - [CREATE](https://youtu.be/CuynTRSveLg?si=4YGga7VMEizcew8N): Character · Resquest · Example · Adjustment and constraints · Type of output · Evaluation steps
+  - [COSTAR](https://www.youtube.com/watch?v=LE578lYq2iw): Context · Objective · Style · Tone · Audience · Response format
 - Vrai gain, réel — un bon prompt bat un mauvais prompt
 
 </div>
@@ -105,16 +134,18 @@ Insister sur le mur, pas sur la technique. Le mur justifie l'ère suivante.
 layout: two-cols-header
 ---
 
-# Context engineering
+# Context engineering — injecter le contexte
 
 On **injecte** le bon contexte : RAG, exemples, fichiers ouverts, documentation.
+
+![context engineering](./media/diagrams/context-engineering.drawio.svg) {class="mx-auto block h-[200px]"}
 
 ::left::
 
 <div class="pr-4 text-sm">
 
 - Le levier : ce que le modèle a sous les yeux
-- L'agent connaît enfin votre domaine
+- L'agent connaît enfin **votre** projet : votre code, vos conventions, vos décisions d'architecture — pas une réponse générique
 
 </div>
 
@@ -137,9 +168,11 @@ contexte n'est pas une mémoire, c'est une fenêtre qui se vide. » 2 min.
 layout: two-cols-header
 ---
 
-# Harness engineering
+# Harness engineering — externaliser l'intention
 
 On **externalise** l'intention et l'état dans des artefacts **durables et versionnés** : la spec.
+
+![harness engineering](./media/diagrams/harness-engineering.drawio.svg) {class="mx-auto block" width=600}
 
 ::left::
 
@@ -147,10 +180,9 @@ On **externalise** l'intention et l'état dans des artefacts **durables et versi
 
 <v-clicks>
 
-- La spec n'est pas un contexte de plus
-- Elle est sur disque, relue à la demande
-- Elle **survit à la compaction** — parce qu'elle n'a jamais été dans la fenêtre
-- Diffable, revue en PR, propriété claire
+- La spec n'est **pas** un contexte de plus : _le contexte vit *dans* la fenêtre du modèle et disparaît ; la spec vit *à côté*, dans le repo, sur disque local du développeur_
+- Elle n'est pas injectée en permanence : _l'agent la **relit la spec à la demande**, quand il en a besoin ; En début de tâche, après compaction, en cas de doute ou de conflit_
+- Diffable, revue en PR ou en réunion, imputabilité claire
 
 </v-clicks>
 
@@ -162,7 +194,7 @@ On **externalise** l'intention et l'état dans des artefacts **durables et versi
 
 **Le déblocage** : la mémoire cesse d'être volatile. L'agent relit la spec quand il en a besoin.
 
-C'est pour ça qu'existent **OpenSpec**, **Spec-Kit** et consorts : plusieurs équipes ont convergé vers le même geste — _écrire la spec avant le code_.
+C'est pour ça qu'existent **OpenSpec**, **Spec-Kit**, **BMAD**, **AI-DLC workflows** et consorts : l'industrie converge vers le même geste — _écrire la spec avant le code_.
 
 <div class="mt-3 text-xs opacity-60">
 OpenSpec et Spec-Kit sont les deux incarnations validées chez nous.
@@ -180,9 +212,11 @@ pas X », renvoyer à l'annexe / Q&R. 3 min.
 layout: two-cols-header
 ---
 
-# Et après ? Loop engineering
+# L'étape d'après : loop engineering
 
 L'étape suivante de l'arc — **pas pour nous aujourd'hui, mais c'est là qu'on va**.
+
+![loop engineering](./media/diagrams/loop-engineering.drawio.svg) {class="mx-auto block" width=600}
 
 ::left::
 
@@ -227,17 +261,17 @@ AI-DLC (AI-Driven Development Lifecycle, Raja SP / AWS, 2025) est une **méthode
 <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs mt-3">
 
 <div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">1 · Réinventer, pas rafistoler</b><br>
+<b class="text-teal-500">1 · Réinventer, pas rafistoler (retrofit)</b><br>
 L'IA est un participant central, pas un outil greffé — un SDLC pensé pour l'IA.
 </div>
 
-<div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">2 · Inverser la conversation</b><br>
+<div class="p-2 rounded border border-blue-500/50 bg-blue-500/10">
+<b class="text-blue-400">2 · Inverser la conversation</b><br>
 L'humain énonce l'<i>intention</i> ; l'IA planifie, questionne, exécute, valide — et demande l'approbation.
 </div>
 
-<div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">3 · Techniques de conception au cœur</b><br>
+<div class="p-2 rounded border border-blue-500/50 bg-blue-500/10">
+<b class="text-blue-400">3 · Techniques de conception au cœur</b><br>
 DDD / BDD / TDD font partie de la méthode, pas d'une option d'équipe.
 </div>
 
@@ -251,14 +285,14 @@ L'IA n'est pas 100 % autonome — <b>humain dans la boucle</b>, validation et su
 Préserver tout le contexte projet — services, parties prenantes, dette — de bout en bout.
 </div>
 
-<div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">6 · Garder la symbiose humaine</b><br>
+<div class="p-2 rounded border border-blue-500/50 bg-blue-500/10">
+<b class="text-blue-400">6 · Garder la symbiose humaine</b><br>
 Maintenir le feedback continu là où l'humain apporte du jugement ; automatiser et documenter les points de contact.
 </div>
 
 <div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
 <b class="text-teal-500">7 · Transitionner par la familiarité</b><br>
-Adopter progressivement, en s'appuyant sur des concepts déjà connus.
+Adopter la méthode progressivement, en s'appuyant sur des concepts déjà connus par les participants.
 </div>
 
 <div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
@@ -293,93 +327,7 @@ OpenSpec). ~2 min.
 layout: section
 ---
 
-# 2 · Le choix que cette histoire impose
-
-Tout n'a pas besoin d'une spec. **Vibe ou spec ?**
-
----
-layout: two-cols-header
----
-
-# La frontière
-
-Le critère n'est pas le goût, c'est **le coût de l'erreur**.
-
-::left::
-
-<div class="pr-4 text-sm">
-
-**Vibe coding** — le coût de l'erreur est proche de zéro
-
-- Prototype, exploration, jetable
-- On cherche encore _quoi_ construire
-- Se tromper ne coûte rien : on relance
-
-</div>
-
-::right::
-
-<div class="pl-4 text-sm">
-
-**Spec-driven** — l'erreur se paie
-
-- Va en prod, traverse des équipes
-- On sait _quoi_ construire, il faut le faire juste
-- Défaire coûte cher : on cadre avant
-
-</div>
-
-<div class="mt-4 text-xs opacity-60 text-center">
-Corollaire de portée : mono-fichier/mono-dev penche vibe ; dès que ça traverse modules ou équipes, spec.
-</div>
-
-<!--
-La frontière n'est PAS arbitraire — la slide suivante montre qu'elle découle
-d'un principe. Ici, juste poser les deux régimes clairement. Un récit vibe et un
-récit spec de notre vécu peuvent illustrer. 2 min.
--->
-
----
-layout: two-cols-header
----
-
-# Pourquoi la frontière est principielle
-
-Même règle que l'IA autonome elle-même : la **règle de l'auto-arrêt**.
-
-::left::
-
-<div class="pr-4 text-sm">
-
-Une étape peut s'exécuter **sans surveillance** uniquement si ses post-conditions sont **vérifiables de façon déterministe**.
-
-- Vibe : pas de post-condition qui compte → laisser courir
-- Spec : l'erreur se paie → verrou humain là où le déterminisme s'arrête
-
-</div>
-
-::right::
-
-```mermaid {scale: 0.55}
-flowchart TD
-  S[Étape terminée] --> Q{Post-condition<br>vérifiable<br>déterministe ?}
-  Q -->|Oui| A[Auto-arrêt OK<br>ça continue]
-  Q -->|Non — jugé LLM| H[Ne peut pas<br>s'auto-arrêter<br>VERROU HUMAIN]
-  style H fill:#f59e0b,color:#000
-  style A fill:#14b8a6,color:#000
-```
-
-<!--
-Slide empruntée au deck cinq-rôles. C'est le pont : la frontière vibe/spec EST
-la règle de l'auto-arrêt, remontée d'un cran. Vibe = rien à vérifier ; spec =
-il faut vérifier, donc il faut un humain au bon endroit. 3 min.
--->
-
----
-layout: section
----
-
-# 3 · Vers où nous allons
+# 2 · La destination, avant la démo
 
 Avant de montrer, disons **la destination**.
 
@@ -387,7 +335,7 @@ Avant de montrer, disons **la destination**.
 layout: two-cols-header
 ---
 
-# OpenSpec en une carte
+# OpenSpec en un coup d'œil
 
 `explore` → `propose` → `apply` → `archive`. Quatre étapes, deux verrous.
 
@@ -423,10 +371,73 @@ la démo. Le deck cinq-rôles est le « deck 2 » de la phase d'élargissement. 
 -->
 
 ---
+layout: default
+---
+
+# Qui fait quoi dans OpenSpec ?
+
+Quatre rôles, quatre étapes — chaque verrou est tenu par la personne qui peut juger.
+
+<div class="mt-3 overflow-x-auto">
+<table class="text-xs w-full border-collapse">
+<thead>
+<tr>
+  <th class="border border-gray-500/30 px-3 py-2 text-left bg-gray-500/10">Étape</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-teal-500/10 text-teal-400">Product Owner</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-amber-500/10 text-amber-400">Architecte</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-blue-500/10 text-blue-400">Tech Lead</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-purple-500/10 text-purple-400">Développeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">explore</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Formule l'intention métier, définit les critères de succès</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Esquisse les contraintes techniques et les risques</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Identifie les dépendances et l'impact sur l'existant</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+</tr>
+<tr class="bg-amber-500/5">
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">propose<br><span class="text-amber-400 font-sans font-normal">▲ verrou</span></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Valide l'alignement avec les besoins métier</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center font-semibold text-amber-400">Approuve ou rejette la proposition — <b>verrou décisionnel</b></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+</tr>
+<tr class="bg-amber-500/5">
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">apply<br><span class="text-amber-400 font-sans font-normal">▲ verrou</span></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Disponible pour arbitrage si conflit de conception</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center font-semibold text-amber-400">Valide la décomposition en tâches — <b>verrou d'entrée</b></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Exécute les tâches depuis les tickets, remonte les blocages</td>
+</tr>
+<tr>
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">archive</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Confirme que le livrable répond à l'intention initiale</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Intègre les décisions à la ligne de base d'architecture</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Merge la PR, met à jour la documentation technique</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Clôture les tickets, valide les tests</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="mt-3 text-xs opacity-50">
+Ambre = verrous humains. Un verrou sans la bonne personne présente est un tampon vide.
+</div>
+
+<!--
+La slide la plus opérationnelle du deck. On nomme qui fait quoi, pas juste les étapes.
+Insister sur les deux lignes ambrées : propose = l'Architecte dit oui ou non ;
+apply = le Tech Lead valide que la décomposition est exécutable AVANT que les devs démarrent.
+Le PO apparaît à explore et archive — il cadre et il réceptionne. 3 min.
+-->
+
+---
 layout: two-cols-header
 ---
 
-# La co-location, c'est le point
+# La co-location, c'est tout le sujet
 
 Un verrou ne vaut que si la personne qui peut juger est **présente quand il se déclenche**.
 
@@ -463,7 +474,7 @@ optionnelle : c'est ce qui rend le verrou réel. La démo va le PROUVER en live.
 layout: section
 ---
 
-# 4 · Démo live
+# 3 · Démo live
 
 OpenSpec de `explore` à `archive`, verrou visible, hand-off Jira **réel**.
 
@@ -538,7 +549,7 @@ Un hand-off truqué non annoncé trahirait la valeur même qu'on vend. 0-1 min.
 layout: section
 ---
 
-# 5 · Et maintenant ?
+# 4 · Votre premier pas
 
 Une réunion qui inspire ne vaut rien sans **une action concrète**.
 
@@ -547,7 +558,7 @@ layout: center
 class: text-center
 ---
 
-# La demande à 30 jours
+# La demande à 10 jours ouvrés
 
 <div class="mt-8 text-xl opacity-85">
 
@@ -577,7 +588,6 @@ class: text-center
 <div class="mt-6 text-lg opacity-80">
 
 **Histoire** → prompt, context, harness : chacun répond à la volatilité du précédent<br>
-**Frontière** → vibe si l'erreur ne coûte rien, spec si elle se paie<br>
 **Principe** → verrouiller là où le déterminisme s'arrête<br>
 **Co-location** → le verrou n'est réel que si le bon juge est présent<br>
 **À vous** → un changement, un binôme, jusqu'à `archive`
@@ -591,4 +601,90 @@ Questions ? · OpenSpec & Spec-Kit validés en interne · démo Jira = hand-off 
 <!--
 Clôture + Q&R. Garder le comparatif d'outils pour la Q&R si on pousse.
 Reporter la mécanique fine des cinq rôles au « deck 2 ». 1 min.
+-->
+
+---
+layout: section
+---
+
+# Annexe · Vibe ou spec ?
+
+Pour aller plus loin si la question se pose en Q&R.
+
+---
+layout: two-cols-header
+---
+
+# La frontière : le coût de l'erreur
+
+Le critère n'est pas le goût, c'est **le coût de l'erreur**.
+
+::left::
+
+<div class="pr-4 text-sm">
+
+**Vibe coding** — le coût de l'erreur est proche de zéro
+
+- Prototype, exploration, jetable
+- On cherche encore _quoi_ construire
+- Se tromper ne coûte rien : on relance
+
+</div>
+
+::right::
+
+<div class="pl-4 text-sm">
+
+**Spec-driven** — l'erreur se paie
+
+- Va en prod, traverse des équipes
+- On sait _quoi_ construire, il faut le faire juste
+- Défaire coûte cher : on cadre avant
+
+</div>
+
+<div class="mt-4 text-xs opacity-60 text-center">
+Corollaire de portée : mono-fichier/mono-dev penche vibe ; dès que ça traverse modules ou équipes, spec.
+</div>
+
+<!--
+La frontière n'est PAS arbitraire — la slide suivante montre qu'elle découle
+d'un principe. Ici, juste poser les deux régimes clairement. Un récit vibe et un
+récit spec de notre vécu peuvent illustrer. 2 min.
+-->
+
+---
+layout: two-cols-header
+---
+
+# La frontière n'est pas arbitraire
+
+Même règle que l'IA autonome elle-même : la **règle de l'auto-arrêt**.
+
+::left::
+
+<div class="pr-4 text-sm">
+
+Une étape peut s'exécuter **sans surveillance** uniquement si ses post-conditions sont **vérifiables de façon déterministe**.
+
+- Vibe : pas de post-condition qui compte → laisser courir
+- Spec : l'erreur se paie → verrou humain là où le déterminisme s'arrête
+
+</div>
+
+::right::
+
+```mermaid {scale: 0.55}
+flowchart TD
+  S[Étape terminée] --> Q{Post-condition<br>vérifiable<br>déterministe ?}
+  Q -->|Oui| A[Auto-arrêt OK<br>ça continue]
+  Q -->|Non — jugé LLM| H[Ne peut pas<br>s'auto-arrêter<br>VERROU HUMAIN]
+  style H fill:#f59e0b,color:#000
+  style A fill:#14b8a6,color:#000
+```
+
+<!--
+Slide empruntée au deck cinq-rôles. C'est le pont : la frontière vibe/spec EST
+la règle de l'auto-arrêt, remontée d'un cran. Vibe = rien à vérifier ; spec =
+il faut vérifier, donc il faut un humain au bon endroit. 3 min.
 -->
