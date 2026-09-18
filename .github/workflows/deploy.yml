@@ -35,29 +35,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        # Version pinned via the root package.json "packageManager" field.
+        uses: pnpm/action-setup@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           # Single source of truth: keep CI on the same Node as local dev
-          # (see .nvmrc) so npm resolves identical lockfiles.
+          # (see .nvmrc) so pnpm resolves identical lockfiles.
           node-version-file: .nvmrc
-          cache: npm
+          cache: pnpm
           cache-dependency-path: |
-            workspaces/docusaurus/package-lock.json
-            workspaces/docusaurus/slides/package-lock.json
+            workspaces/docusaurus/pnpm-lock.yaml
+            workspaces/docusaurus/slides/pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install Slidev workspace dependencies
-        # Decks are a separate npm workspace under slides/ with their own
+        # Decks are a separate pnpm workspace under slides/ with their own
         # (per-deck pinned) Slidev versions.
         working-directory: workspaces/docusaurus/slides
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build website
         # Slidev builds a headless browser bundle; give scripts network access.
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -2,11 +2,11 @@
 /**
  * Build step for Slidev decks.
  *
- * Decks live in an npm workspace under `slides/`, one package per deck:
+ * Decks live in a pnpm workspace under `slides/`, one package per deck:
  *   slides/decks/<name>/package.json   (name, its own @slidev/cli version)
  *   slides/decks/<name>/slides.md      (the deck source + colocated assets)
  *
- * Each deck is built via its OWN `npm run build` (so it uses the Slidev
+ * Each deck is built via its OWN `pnpm run build` (so it uses the Slidev
  * version pinned in that deck's package.json), with the base path, output
  * directory and router mode passed through. The built app is emitted to
  * `static/slides/<name>/`, which Docusaurus serves verbatim at
@@ -42,7 +42,7 @@ const decksDir = join(slidesWorkspace, 'decks');
 const outRoot = join(root, 'static', 'slides');
 const manifestFile = join(root, 'src', 'slides-manifest.json');
 
-const npmCmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+const pnpmCmd = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 
 // Docusaurus baseUrl prefix (e.g. "/website/" on GitHub Pages, "/" locally).
 // Slidev assets must resolve under the same prefix the site is served from.
@@ -113,8 +113,8 @@ function readDeckTitle(entry, fallback) {
 async function supportsRouterMode(dir) {
   try {
     const { stdout } = await execFileAsync(
-      npmCmd,
-      ['exec', '--', 'slidev', 'build', '--help'],
+      pnpmCmd,
+      ['exec', 'slidev', 'build', '--help'],
       { cwd: dir, maxBuffer: 1024 * 1024 * 16 },
     );
     return /router-mode/.test(stdout);
@@ -141,7 +141,7 @@ async function buildDeck({ name, dir }) {
   console.log(`[slidev] building ${name} -> static/slides/${name}/`);
   // Run the deck's own build script (uses its pinned Slidev version). Args
   // after `--` are forwarded to `slidev build`.
-  await execFileAsync(npmCmd, args, { cwd: dir, maxBuffer: 1024 * 1024 * 64 });
+  await execFileAsync(pnpmCmd, args, { cwd: dir, maxBuffer: 1024 * 1024 * 64 });
 }
 
 /** Run tasks with bounded concurrency. */
@@ -178,12 +178,12 @@ async function main() {
   // installed before building any deck.
   if (!existsSync(join(slidesWorkspace, 'node_modules'))) {
     console.log('[slidev] installing slides workspace dependencies...');
-    await execFileAsync(npmCmd, ['ci'], {
+    await execFileAsync(pnpmCmd, ['install', '--frozen-lockfile'], {
       cwd: slidesWorkspace,
       maxBuffer: 1024 * 1024 * 64,
     }).catch(() =>
-      // Fall back to `npm install` if there is no lockfile yet.
-      execFileAsync(npmCmd, ['install'], {
+      // Fall back to a plain install if there is no lockfile yet.
+      execFileAsync(pnpmCmd, ['install'], {
         cwd: slidesWorkspace,
         maxBuffer: 1024 * 1024 * 64,
       }),

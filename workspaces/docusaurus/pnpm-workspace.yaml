@@ -1,0 +1,7 @@
+# Not a workspace root — this file carries pnpm settings, which pnpm 11+
+# reads here instead of the (now ignored) "pnpm" field in package.json.
+# Allow install scripts only for these trusted packages (was npm "allowScripts").
+allowBuilds:
+  '@swc/core': true
+  core-js: true
+  esbuild: true

@@ -1,0 +1,7 @@
+packages:
+  - 'decks/*'
+
+# Allow install scripts only for these trusted packages (was npm "allowScripts").
+allowBuilds:
+  esbuild: true
+  playwright-chromium: true
