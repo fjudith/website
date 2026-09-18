@@ -261,17 +261,17 @@ AI-DLC (AI-Driven Development Lifecycle, Raja SP / AWS, 2025) est une **méthode
 <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs mt-3">
 
 <div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">1 · Réinventer, pas rafistoler</b><br>
+<b class="text-teal-500">1 · Réinventer, pas rafistoler (retrofit)</b><br>
 L'IA est un participant central, pas un outil greffé — un SDLC pensé pour l'IA.
 </div>
 
-<div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">2 · Inverser la conversation</b><br>
+<div class="p-2 rounded border border-blue-500/50 bg-blue-500/10">
+<b class="text-blue-400">2 · Inverser la conversation</b><br>
 L'humain énonce l'<i>intention</i> ; l'IA planifie, questionne, exécute, valide — et demande l'approbation.
 </div>
 
-<div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">3 · Techniques de conception au cœur</b><br>
+<div class="p-2 rounded border border-blue-500/50 bg-blue-500/10">
+<b class="text-blue-400">3 · Techniques de conception au cœur</b><br>
 DDD / BDD / TDD font partie de la méthode, pas d'une option d'équipe.
 </div>
 
@@ -285,14 +285,14 @@ L'IA n'est pas 100 % autonome — <b>humain dans la boucle</b>, validation et su
 Préserver tout le contexte projet — services, parties prenantes, dette — de bout en bout.
 </div>
 
-<div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
-<b class="text-teal-500">6 · Garder la symbiose humaine</b><br>
+<div class="p-2 rounded border border-blue-500/50 bg-blue-500/10">
+<b class="text-blue-400">6 · Garder la symbiose humaine</b><br>
 Maintenir le feedback continu là où l'humain apporte du jugement ; automatiser et documenter les points de contact.
 </div>
 
 <div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
 <b class="text-teal-500">7 · Transitionner par la familiarité</b><br>
-Adopter progressivement, en s'appuyant sur des concepts déjà connus.
+Adopter la méthode progressivement, en s'appuyant sur des concepts déjà connus par les participants.
 </div>
 
 <div class="p-2 rounded border border-gray-500/30 bg-gray-500/5">
@@ -327,93 +327,7 @@ OpenSpec). ~2 min.
 layout: section
 ---
 
-# 2 · Vibe ou spec ? Le choix qui s'impose
-
-Tout n'a pas besoin d'une spec. **Vibe ou spec ?**
-
----
-layout: two-cols-header
----
-
-# La frontière : le coût de l'erreur
-
-Le critère n'est pas le goût, c'est **le coût de l'erreur**.
-
-::left::
-
-<div class="pr-4 text-sm">
-
-**Vibe coding** — le coût de l'erreur est proche de zéro
-
-- Prototype, exploration, jetable
-- On cherche encore _quoi_ construire
-- Se tromper ne coûte rien : on relance
-
-</div>
-
-::right::
-
-<div class="pl-4 text-sm">
-
-**Spec-driven** — l'erreur se paie
-
-- Va en prod, traverse des équipes
-- On sait _quoi_ construire, il faut le faire juste
-- Défaire coûte cher : on cadre avant
-
-</div>
-
-<div class="mt-4 text-xs opacity-60 text-center">
-Corollaire de portée : mono-fichier/mono-dev penche vibe ; dès que ça traverse modules ou équipes, spec.
-</div>
-
-<!--
-La frontière n'est PAS arbitraire — la slide suivante montre qu'elle découle
-d'un principe. Ici, juste poser les deux régimes clairement. Un récit vibe et un
-récit spec de notre vécu peuvent illustrer. 2 min.
--->
-
----
-layout: two-cols-header
----
-
-# La frontière n'est pas arbitraire
-
-Même règle que l'IA autonome elle-même : la **règle de l'auto-arrêt**.
-
-::left::
-
-<div class="pr-4 text-sm">
-
-Une étape peut s'exécuter **sans surveillance** uniquement si ses post-conditions sont **vérifiables de façon déterministe**.
-
-- Vibe : pas de post-condition qui compte → laisser courir
-- Spec : l'erreur se paie → verrou humain là où le déterminisme s'arrête
-
-</div>
-
-::right::
-
-```mermaid {scale: 0.55}
-flowchart TD
-  S[Étape terminée] --> Q{Post-condition<br>vérifiable<br>déterministe ?}
-  Q -->|Oui| A[Auto-arrêt OK<br>ça continue]
-  Q -->|Non — jugé LLM| H[Ne peut pas<br>s'auto-arrêter<br>VERROU HUMAIN]
-  style H fill:#f59e0b,color:#000
-  style A fill:#14b8a6,color:#000
-```
-
-<!--
-Slide empruntée au deck cinq-rôles. C'est le pont : la frontière vibe/spec EST
-la règle de l'auto-arrêt, remontée d'un cran. Vibe = rien à vérifier ; spec =
-il faut vérifier, donc il faut un humain au bon endroit. 3 min.
--->
-
----
-layout: section
----
-
-# 3 · La destination, avant la démo
+# 2 · La destination, avant la démo
 
 Avant de montrer, disons **la destination**.
 
@@ -421,7 +335,7 @@ Avant de montrer, disons **la destination**.
 layout: two-cols-header
 ---
 
-# OpenSpec en une carte
+# OpenSpec en un coup d'œil
 
 `explore` → `propose` → `apply` → `archive`. Quatre étapes, deux verrous.
 
@@ -560,7 +474,7 @@ optionnelle : c'est ce qui rend le verrou réel. La démo va le PROUVER en live.
 layout: section
 ---
 
-# 4 · Démo live
+# 3 · Démo live
 
 OpenSpec de `explore` à `archive`, verrou visible, hand-off Jira **réel**.
 
@@ -635,7 +549,7 @@ Un hand-off truqué non annoncé trahirait la valeur même qu'on vend. 0-1 min.
 layout: section
 ---
 
-# 5 · Votre premier pas
+# 4 · Votre premier pas
 
 Une réunion qui inspire ne vaut rien sans **une action concrète**.
 
@@ -644,7 +558,7 @@ layout: center
 class: text-center
 ---
 
-# La demande à 30 jours
+# La demande à 10 jours ouvrés
 
 <div class="mt-8 text-xl opacity-85">
 
@@ -674,7 +588,6 @@ class: text-center
 <div class="mt-6 text-lg opacity-80">
 
 **Histoire** → prompt, context, harness : chacun répond à la volatilité du précédent<br>
-**Frontière** → vibe si l'erreur ne coûte rien, spec si elle se paie<br>
 **Principe** → verrouiller là où le déterminisme s'arrête<br>
 **Co-location** → le verrou n'est réel que si le bon juge est présent<br>
 **À vous** → un changement, un binôme, jusqu'à `archive`
@@ -688,4 +601,90 @@ Questions ? · OpenSpec & Spec-Kit validés en interne · démo Jira = hand-off 
 <!--
 Clôture + Q&R. Garder le comparatif d'outils pour la Q&R si on pousse.
 Reporter la mécanique fine des cinq rôles au « deck 2 ». 1 min.
+-->
+
+---
+layout: section
+---
+
+# Annexe · Vibe ou spec ?
+
+Pour aller plus loin si la question se pose en Q&R.
+
+---
+layout: two-cols-header
+---
+
+# La frontière : le coût de l'erreur
+
+Le critère n'est pas le goût, c'est **le coût de l'erreur**.
+
+::left::
+
+<div class="pr-4 text-sm">
+
+**Vibe coding** — le coût de l'erreur est proche de zéro
+
+- Prototype, exploration, jetable
+- On cherche encore _quoi_ construire
+- Se tromper ne coûte rien : on relance
+
+</div>
+
+::right::
+
+<div class="pl-4 text-sm">
+
+**Spec-driven** — l'erreur se paie
+
+- Va en prod, traverse des équipes
+- On sait _quoi_ construire, il faut le faire juste
+- Défaire coûte cher : on cadre avant
+
+</div>
+
+<div class="mt-4 text-xs opacity-60 text-center">
+Corollaire de portée : mono-fichier/mono-dev penche vibe ; dès que ça traverse modules ou équipes, spec.
+</div>
+
+<!--
+La frontière n'est PAS arbitraire — la slide suivante montre qu'elle découle
+d'un principe. Ici, juste poser les deux régimes clairement. Un récit vibe et un
+récit spec de notre vécu peuvent illustrer. 2 min.
+-->
+
+---
+layout: two-cols-header
+---
+
+# La frontière n'est pas arbitraire
+
+Même règle que l'IA autonome elle-même : la **règle de l'auto-arrêt**.
+
+::left::
+
+<div class="pr-4 text-sm">
+
+Une étape peut s'exécuter **sans surveillance** uniquement si ses post-conditions sont **vérifiables de façon déterministe**.
+
+- Vibe : pas de post-condition qui compte → laisser courir
+- Spec : l'erreur se paie → verrou humain là où le déterminisme s'arrête
+
+</div>
+
+::right::
+
+```mermaid {scale: 0.55}
+flowchart TD
+  S[Étape terminée] --> Q{Post-condition<br>vérifiable<br>déterministe ?}
+  Q -->|Oui| A[Auto-arrêt OK<br>ça continue]
+  Q -->|Non — jugé LLM| H[Ne peut pas<br>s'auto-arrêter<br>VERROU HUMAIN]
+  style H fill:#f59e0b,color:#000
+  style A fill:#14b8a6,color:#000
+```
+
+<!--
+Slide empruntée au deck cinq-rôles. C'est le pont : la frontière vibe/spec EST
+la règle de l'auto-arrêt, remontée d'un cran. Vibe = rien à vérifier ; spec =
+il faut vérifier, donc il faut un humain au bon endroit. 3 min.
 -->
