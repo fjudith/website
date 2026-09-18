@@ -29,6 +29,8 @@
     "@docusaurus/theme-mermaid": "^3.10.2",
     "@likec4/core": "^1.59.3",
     "@likec4/diagram": "^1.59.3",
+    "@likec4/icons": "^1.46.4",
+    "@mantine/core": "^9.6.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "cosmos-docusaurus-theme": "^2.2.6",
@@ -61,11 +63,5 @@
   },
   "engines": {
     "node": ">=24.0"
-  },
-  "allowScripts": {
-    "@swc/core@1.16.2": true,
-    "core-js@3.50.0": true,
-    "esbuild@0.25.12": true,
-    "esbuild@0.28.1": true
   }
 }

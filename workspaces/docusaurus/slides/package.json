@@ -2,21 +2,15 @@
   "name": "docusaurus-slidev",
   "version": "1.0.0",
   "private": true,
-  "description": "Slidev presentation decks managed as an npm workspace",
-  "workspaces": [
-    "decks/*"
-  ],
+  "description": "Slidev presentation decks managed as a pnpm workspace",
   "scripts": {
-    "dev": "echo 'Usage: npm run dev --workspace <deck-name>' && exit 1",
-    "build": "echo 'Usage: npm run build --workspace <deck-name>' && exit 1",
-    "export": "echo 'Usage: npm run export --workspace <deck-name>' && exit 1",
-    "build:all": "npm run build --workspaces --if-present",
-    "export:all": "npm run export --workspaces --if-present"
+    "dev": "echo 'Usage: pnpm --filter <deck-name> dev' && exit 1",
+    "build": "echo 'Usage: pnpm --filter <deck-name> build' && exit 1",
+    "export": "echo 'Usage: pnpm --filter <deck-name> export' && exit 1",
+    "build:all": "pnpm -r --if-present run build",
+    "export:all": "pnpm -r --if-present run export"
   },
   "engines": {
     "node": ">=24.0.0"
-  },
-  "allowScripts": {
-    "esbuild@0.25.12": true
   }
 }

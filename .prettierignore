@@ -25,6 +25,7 @@ workspaces/**/slides/decks/*/slides.md
 
 # Lockfiles and generated data
 **/package-lock.json
+**/pnpm-lock.yaml
 **/*.min.*
 
 # Binary / non-formattable assets
