@@ -17,7 +17,9 @@ drawings:
 
 # Adopter le codage agentique
 
-**En équipe** — garder la main quand l'IA écrit le code
+## Comment garder la main en équipe
+
+quand l'IA écrit le code
 
 <div class="pt-8 opacity-70 text-sm">
 Pas « une méthode de plus ». Une réponse à une question que vous vous posez déjà :<br>
@@ -25,7 +27,7 @@ Pas « une méthode de plus ». Une réponse à une question que vous vous posez
 </div>
 
 <div class="pt-4 opacity-50 text-xs">
-Dév · Tech Lead · Architecte — ~30 min, démo live à la fin
+Product Owner · Développeur · Tech Lead · Architecte — ~30 min, démo live à la fin
 </div>
 
 <!--
@@ -43,7 +45,7 @@ class: text-center
 
 <div class="mt-8 text-xl opacity-80">
 
-L'agent démarre bien. Il analyse, suggère, clarifie, voir même rédige.<br>
+L'agent démarre bien. Il analyse, suggère, clarifie, rédige.<br>
 Puis, au milieu d'une tâche longue, il **oublie**.<br>
 Il refait ce qui vous considériez comme était fait, contredit une décision prise dix minutes plus tôt.
 
@@ -64,12 +66,23 @@ Ne pas dire « OpenSpec règle ça » ici — juste poser le symptôme. On y rev
 layout: section
 ---
 
-# 1 · Trois ères, une même volatilité mémorielle
+# 1 · Quartre ères
 
-Prompt engineering → context engineering → **harness engineering**.
-Chaque ère répond à la **volatilité** de la précédente.
+Prompt engineering → context engineering → **harness engineering**  →  loop engineering.
 
-```mermaid {scale: 0.8}
+Chaque ère répond à la **volatilité** mémorielle de la précédente.
+
+<div class="text-xs opacity-50 mt-2 text-center">
+Chaque ère naît de la volatilité que la précédente n'a pas su tenir.<br/>
+Nous, on ancre le harnais ; le loop puis l'adoption équipe sont le cap.
+</div>
+
+---
+layout: center
+hide: true
+---
+
+```mermaid
 timeline
   title Les ères du codage assisté par l'IA — 2022 → 2027
   2022 : Prompt engineering : soigner la formulation
@@ -80,10 +93,6 @@ timeline
   2027 : Adoption en équipe : co-location + verrous humains
 ```
 
-<div class="text-xs opacity-50 mt-2 text-center">
-Chaque ère naît de la volatilité que la précédente n'a pas su tenir. Nous, on ancre le harnais ; le loop puis l'adoption équipe sont le cap.
-</div>
-
 ---
 layout: two-cols-header
 ---
@@ -92,13 +101,16 @@ layout: two-cols-header
 
 On soigne la **formulation**. Reformuler, donner le rôle, structurer la demande.
 
-![promt engineering](./media/diagrams/prompt-engineering.drawio.png)
+![promt engineering](./media/diagrams/prompt-engineering.drawio.svg) {class="mx-auto block h-[200px]"}
 
 ::left::
 
 <div class="pr-4 text-sm">
 
 - Le levier : la qualité de la question
+  - [RTF](https://www.youtube.com/watch?v=e_ZQcu535PI): Rôle  · Task  ·  Format
+  - [CREATE](https://youtu.be/CuynTRSveLg?si=4YGga7VMEizcew8N): Character · Resquest · Example · Adjustment and constraints · Type of output · Evaluation steps
+  - [COSTAR](https://www.youtube.com/watch?v=LE578lYq2iw): Context · Objective · Style · Tone · Audience · Response format
 - Vrai gain, réel — un bon prompt bat un mauvais prompt
 
 </div>
@@ -126,14 +138,14 @@ layout: two-cols-header
 
 On **injecte** le bon contexte : RAG, exemples, fichiers ouverts, documentation.
 
-![context engineering](./media/diagrams/context-engineering.drawio.png)
+![context engineering](./media/diagrams/context-engineering.drawio.svg) {class="mx-auto block h-[200px]"}
 
 ::left::
 
 <div class="pr-4 text-sm">
 
 - Le levier : ce que le modèle a sous les yeux
-- L'agent connaît enfin votre domaine
+- L'agent connaît enfin **votre** projet : votre code, vos conventions, vos décisions d'architecture — pas une réponse générique
 
 </div>
 
@@ -160,7 +172,7 @@ layout: two-cols-header
 
 On **externalise** l'intention et l'état dans des artefacts **durables et versionnés** : la spec.
 
-![harness engineering](./media/diagrams/harness-engineering.drawio.png)
+![harness engineering](./media/diagrams/harness-engineering.drawio.svg) {class="mx-auto block" width=600}
 
 ::left::
 
@@ -168,10 +180,9 @@ On **externalise** l'intention et l'état dans des artefacts **durables et versi
 
 <v-clicks>
 
-- La spec n'est pas un contexte de plus
-- Elle est sur disque, relue à la demande
-- Elle **survit à la compaction** — parce qu'elle n'a jamais été dans la fenêtre
-- Diffable, revue en PR, propriété claire
+- La spec n'est **pas** un contexte de plus : _le contexte vit *dans* la fenêtre du modèle et disparaît ; la spec vit *à côté*, dans le repo, sur disque local du développeur_
+- Elle n'est pas injectée en permanence : _l'agent la **relit la spec à la demande**, quand il en a besoin ; En début de tâche, après compaction, en cas de doute ou de conflit_
+- Diffable, revue en PR ou en réunion, imputabilité claire
 
 </v-clicks>
 
@@ -183,7 +194,7 @@ On **externalise** l'intention et l'état dans des artefacts **durables et versi
 
 **Le déblocage** : la mémoire cesse d'être volatile. L'agent relit la spec quand il en a besoin.
 
-C'est pour ça qu'existent **OpenSpec**, **Spec-Kit** et consorts : plusieurs équipes ont convergé vers le même geste — _écrire la spec avant le code_.
+C'est pour ça qu'existent **OpenSpec**, **Spec-Kit**, **BMAD**, **AI-DLC workflows** et consorts : l'industrie converge vers le même geste — _écrire la spec avant le code_.
 
 <div class="mt-3 text-xs opacity-60">
 OpenSpec et Spec-Kit sont les deux incarnations validées chez nous.
@@ -204,6 +215,8 @@ layout: two-cols-header
 # L'étape d'après : loop engineering
 
 L'étape suivante de l'arc — **pas pour nous aujourd'hui, mais c'est là qu'on va**.
+
+![loop engineering](./media/diagrams/loop-engineering.drawio.svg) {class="mx-auto block" width=600}
 
 ::left::
 
@@ -441,6 +454,69 @@ Vue resserrée. Le tableau complet des cinq rôles vient une fois l'équipe conv
 <!--
 On n'apprend PAS tout le checkpoint map ici — juste les deux verrous qui portent
 la démo. Le deck cinq-rôles est le « deck 2 » de la phase d'élargissement. 2 min.
+-->
+
+---
+layout: default
+---
+
+# Qui fait quoi dans OpenSpec ?
+
+Quatre rôles, quatre étapes — chaque verrou est tenu par la personne qui peut juger.
+
+<div class="mt-3 overflow-x-auto">
+<table class="text-xs w-full border-collapse">
+<thead>
+<tr>
+  <th class="border border-gray-500/30 px-3 py-2 text-left bg-gray-500/10">Étape</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-teal-500/10 text-teal-400">Product Owner</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-amber-500/10 text-amber-400">Architecte</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-blue-500/10 text-blue-400">Tech Lead</th>
+  <th class="border border-gray-500/30 px-3 py-2 text-center bg-purple-500/10 text-purple-400">Développeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">explore</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Formule l'intention métier, définit les critères de succès</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Esquisse les contraintes techniques et les risques</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Identifie les dépendances et l'impact sur l'existant</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+</tr>
+<tr class="bg-amber-500/5">
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">propose<br><span class="text-amber-400 font-sans font-normal">▲ verrou</span></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Valide l'alignement avec les besoins métier</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center font-semibold text-amber-400">Approuve ou rejette la proposition — <b>verrou décisionnel</b></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+</tr>
+<tr class="bg-amber-500/5">
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">apply<br><span class="text-amber-400 font-sans font-normal">▲ verrou</span></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center opacity-40">—</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Disponible pour arbitrage si conflit de conception</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center font-semibold text-amber-400">Valide la décomposition en tâches — <b>verrou d'entrée</b></td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Exécute les tâches depuis les tickets, remonte les blocages</td>
+</tr>
+<tr>
+  <td class="border border-gray-500/30 px-3 py-2 font-mono font-bold">archive</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Confirme que le livrable répond à l'intention initiale</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Intègre les décisions à la ligne de base d'architecture</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Merge la PR, met à jour la documentation technique</td>
+  <td class="border border-gray-500/30 px-3 py-2 text-center">Clôture les tickets, valide les tests</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="mt-3 text-xs opacity-50">
+Ambre = verrous humains. Un verrou sans la bonne personne présente est un tampon vide.
+</div>
+
+<!--
+La slide la plus opérationnelle du deck. On nomme qui fait quoi, pas juste les étapes.
+Insister sur les deux lignes ambrées : propose = l'Architecte dit oui ou non ;
+apply = le Tech Lead valide que la décomposition est exécutable AVANT que les devs démarrent.
+Le PO apparaît à explore et archive — il cadre et il réceptionne. 3 min.
 -->
 
 ---
