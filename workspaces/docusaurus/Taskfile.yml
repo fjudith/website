@@ -1,0 +1,119 @@
+# Taskfile for the Docusaurus website CI/CD.
+# Run `task --list` to see available tasks.
+# Docs: https://taskfile.dev
+version: '3'
+
+vars:
+  # Directory of the Slidev decks (separate pnpm workspace).
+  SLIDES_DIR: slides
+  # Base URL used by Docusaurus and the Slidev build so asset paths resolve
+  # under the GitHub Pages subdirectory. Override locally with:
+  #   DOCUSAURUS_BASE_URL=/ task build
+  DOCUSAURUS_BASE_URL: '{{.DOCUSAURUS_BASE_URL | default "/website/"}}'
+
+env:
+  DOCUSAURUS_BASE_URL: '{{.DOCUSAURUS_BASE_URL}}'
+
+tasks:
+  default:
+    desc: List available tasks.
+    cmds:
+      - task --list
+    silent: true
+
+  # ---------------------------------------------------------------------------
+  # Dependencies
+  # ---------------------------------------------------------------------------
+  install:
+    desc: Install all dependencies (root + Slidev workspace) with frozen lockfiles, as in CI.
+    deps:
+      - install:root
+      - install:slides
+
+  install:root:
+    desc: Install root workspace dependencies (frozen lockfile).
+    cmds:
+      - pnpm install --frozen-lockfile
+    sources:
+      - pnpm-lock.yaml
+      - package.json
+
+  install:slides:
+    desc: Install Slidev workspace dependencies (frozen lockfile).
+    dir: '{{.SLIDES_DIR}}'
+    cmds:
+      - pnpm install --frozen-lockfile
+    sources:
+      - pnpm-lock.yaml
+      - '**/package.json'
+
+  install:dev:
+    desc: Install dependencies without frozen lockfile (for local updates).
+    cmds:
+      - pnpm install
+      - pnpm --dir {{.SLIDES_DIR}} install
+
+  # ---------------------------------------------------------------------------
+  # Code generation / asset builds (the Docusaurus prebuild pipeline)
+  # ---------------------------------------------------------------------------
+  codegen:
+    desc: Generate LikeC4 model code.
+    cmds:
+      - pnpm run likec4:codegen
+
+  calm:
+    desc: Build CALM architecture artifacts.
+    cmds:
+      - pnpm run calm:build
+
+  slidev:
+    desc: Build the Slidev decks.
+    cmds:
+      - pnpm run slidev:build
+
+  generate:
+    desc: Run all pre-build generation steps (LikeC4, CALM, Slidev).
+    cmds:
+      - task: codegen
+      - task: calm
+      - task: slidev
+
+  # ---------------------------------------------------------------------------
+  # Quality
+  # ---------------------------------------------------------------------------
+  typecheck:
+    desc: Type-check the project with tsc.
+    cmds:
+      - pnpm run typecheck
+
+  # ---------------------------------------------------------------------------
+  # Build / serve
+  # ---------------------------------------------------------------------------
+  build:
+    desc: Build the full website (runs the prebuild pipeline via pnpm, then Docusaurus).
+    cmds:
+      - pnpm run build
+
+  serve:
+    desc: Serve the production build locally.
+    cmds:
+      - pnpm run serve
+
+  start:
+    desc: Start the Docusaurus dev server. Run this manually in your terminal.
+    cmds:
+      - pnpm run start
+
+  clear:
+    desc: Clear the Docusaurus build cache and generated output.
+    cmds:
+      - pnpm run clear
+
+  # ---------------------------------------------------------------------------
+  # CI aggregate
+  # ---------------------------------------------------------------------------
+  ci:
+    desc: Full CI pipeline — install everything, then build (mirrors the GitHub Actions workflow).
+    cmds:
+      - task: install
+      - task: build
