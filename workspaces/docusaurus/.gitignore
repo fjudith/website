@@ -35,3 +35,6 @@ yarn-error.log*
 
 # Build output of likec4 deck projects (e.g. likec4/<deck>/dist)
 /likec4/*/dist
+
+# go-task runner cache
+/.task

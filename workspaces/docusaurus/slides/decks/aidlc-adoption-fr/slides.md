@@ -101,7 +101,7 @@ layout: two-cols-header
 
 On soigne la **formulation**. Reformuler, donner le rôle, structurer la demande.
 
-![promt engineering](./media/diagrams/prompt-engineering.drawio.svg) {class="mx-auto block h-[200px]"}
+![promt engineering](./media/diagrams/prompt-engineering.svg) {class="mx-auto block h-[200px]"}
 
 ::left::
 
@@ -138,7 +138,7 @@ layout: two-cols-header
 
 On **injecte** le bon contexte : RAG, exemples, fichiers ouverts, documentation.
 
-![context engineering](./media/diagrams/context-engineering.drawio.svg) {class="mx-auto block h-[200px]"}
+![context engineering](./media/diagrams/context-engineering.svg) {class="mx-auto block h-[200px]"}
 
 ::left::
 
@@ -172,7 +172,7 @@ layout: two-cols-header
 
 On **externalise** l'intention et l'état dans des artefacts **durables et versionnés** : la spec.
 
-![harness engineering](./media/diagrams/harness-engineering.drawio.svg) {class="mx-auto block" width=600}
+![harness engineering](./media/diagrams/harness-engineering.svg) {class="mx-auto block" width=600}
 
 ::left::
 
@@ -216,7 +216,7 @@ layout: two-cols-header
 
 L'étape suivante de l'arc — **pas pour nous aujourd'hui, mais c'est là qu'on va**.
 
-![loop engineering](./media/diagrams/loop-engineering.drawio.svg) {class="mx-auto block" width=600}
+![loop engineering](./media/diagrams/loop-engineering.svg) {class="mx-auto block" width=600}
 
 ::left::
 
