@@ -127,7 +127,13 @@ async function buildDeck({ name, dir }) {
   const base = `${siteBase}/slides/${name}/`;
   const out = join(outRoot, name);
 
-  const args = ['run', 'build', '--', '--out', out, '--base', base];
+  // Invoke the deck's pinned Slidev binary directly via `pnpm exec` rather
+  // than `pnpm run build -- <flags>`. Forwarding flags through the deck's
+  // npm-style "build" script is unreliable under pnpm (the `--out`/`--base`
+  // args were silently dropped, so Slidev fell back to writing ./dist and
+  // nothing landed in static/slides/). `pnpm exec` passes flags straight to
+  // the binary, so `--out` is always honored.
+  const args = ['exec', 'slidev', 'build', '--out', out, '--base', base];
   // Hash routing avoids server rewrites for subdirectory deploys, but only
   // pass it to Slidev versions that support the flag.
   if (await supportsRouterMode(dir)) {
@@ -139,8 +145,6 @@ async function buildDeck({ name, dir }) {
   }
 
   console.log(`[slidev] building ${name} -> static/slides/${name}/`);
-  // Run the deck's own build script (uses its pinned Slidev version). Args
-  // after `--` are forwarded to `slidev build`.
   await execFileAsync(pnpmCmd, args, { cwd: dir, maxBuffer: 1024 * 1024 * 64 });
 }
 
