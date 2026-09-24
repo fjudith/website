@@ -1,30 +1,34 @@
 ---
 slug: couches-plateformes-agentiques
 title: "Anatomie d'une plateforme agentique"
-description: 'LLM, agent, agentique, MCP : une carte en sept couches pour situer chaque terme et savoir de quelle couche relève votre prochain problème.'
+description: 'LLM, agent, agentique, MCP : une cartographie en sept couches pour situer chaque terme et savoir de quelle couche vient ton prochain problème.'
 authors: fjudith
 tags: [agentic-platforms, architecture, ai]
 ---
 
-« On va mettre un agent là-dessus. »
+« On va coller un agent là-dessus. »
 
-Dans la même réunion : pour l'un, c'est un appel LLM avec un prompt système. Pour l'autre, un orchestrateur multi-agents avec mémoire persistante et sandbox d'exécution. Personne ne relève. Tout le monde acquiesce.
+Dans la même réunion : pour l'un, c'est un appel LLM avec un prompt système. Pour l'autre, c'est un orchestrateur multi-agents avec mémoire persistante et sandbox d'exécution. Personne ne bronche. Tout le monde hoche la tête.
 
-LLM, agent, agentique, MCP, RAG, A2A — le vocabulaire s'empile plus vite que les plateformes. Moi aussi je m'y perds.
+C'est une chambre d'enfant après l'orage : les jouets sont tous sortis d'un coup, par terre. LLM, agent, agentique, mémoire long / moyen / court terme, MCP, RAG, A2A… Chacun en ramasse un et le range où bon lui semble — et personne ne range pareil. Le désordre n'est pas d'avoir trop de jouets. C'est que deux personnes, devant le même tas, ne sont pas d'accord sur ce qui va où.
 
-D'où cette carte : **sept couches, deux préoccupations transverses**. Pas de classement, pas de fournisseur recommandé — juste de quoi situer chaque terme et savoir **de quelle couche** relève votre prochain problème.
+Comment ranger tout ça, et que dois-je prioriser : acheter, construire, héberger, louer, distribuer, centraliser ?
 
-Ce n'est pas un modèle neutre. Deux partis pris la traversent — traiter sécurité et observabilité comme des _parois_ et non des couches, lire la même carte à deux fins opposées — et je les assume plus loin. D'autres cartes existent ; celle-ci a un point de vue.
+D'où cette cartographie : **sept couches, deux préoccupations transverses**. Pas de classement, pas de fournisseur à te recommander — juste de quoi situer chaque terme et comprendre **de quelle couche** vient ton prochain problème.
+
+Attention, ce n'est pas un modèle neutre. Deux partis pris le traversent — traiter sécurité et observabilité comme des _parois_ plutôt que comme des couches, et lire la même cartographie de deux façons opposées — et je les assume plus loin. D'autres cartographies existent ; celle-ci a un point de vue.
 
 {/* truncate */}
 
-## La carte
+## La cartographie
 
-Sept dalles empilées, et deux parois qui les longent sur toute la hauteur : les préoccupations transverses. Chaque dalle porte ses composants types peints au sol, colorés selon leur nature — brique différenciante à construire, service managé, infrastructure, standard ouvert, surface utilisateur, composant encore émergent.
+Reprenons l'étagère. Sept niveaux empilés, un pour chaque type de jouet : une place par étage, et la règle qui vaut partout — _on ne laisse rien traîner par terre_. Ranger, ce n'est pas caser au hasard ; c'est savoir de quel étage relève chaque chose.
+
+Sept dalles empilées, donc, et deux parois qui les longent sur toute la hauteur : les préoccupations transverses. Chaque dalle porte ses composants types peints au sol, colorés selon leur nature — brique différenciante à construire, service managé, infrastructure, standard ouvert, surface utilisateur, ou composant encore émergent.
 
 ![Vue isométrique de sept dalles empilées, de 01 Compute et inférence en bas à 07 Interface et surfaces en haut. Chaque dalle porte ses composants types, colorés selon leur nature : brique différenciante à construire, service managé, infrastructure, standard ouvert, surface utilisateur, composant émergent. Deux parois translucides longent la pile sur toute sa hauteur : A Sécurité et gouvernance, B Observabilité et évaluation.](./agentic-ai-architecture-layers-v1.0.png)
 
-Pourquoi sécurité et observabilité sont **transverses** et non des couches : elles ne se situent pas _entre_ deux strates, elles s'appliquent _à chacune_. Une permission gouverne l'appel d'outil (couche 4) autant que la surface d'interface (couche 7) ; une trace instrumente l'inférence (couche 1) autant que la coordination multi-agents (couche 6). Les traiter comme une couche, c'est les reléguer au rang de module — et découvrir trop tard qu'elles devaient être partout.
+Pourquoi sécurité et observabilité sont **transverses** et pas des couches à part ? Parce qu'elles ne se glissent pas _entre_ deux strates : elles s'appliquent _à chacune_. Une permission gouverne aussi bien l'appel d'outil (couche 4) que la surface d'interface (couche 7) ; une trace instrumente aussi bien l'inférence (couche 1) que la coordination multi-agents (couche 6). Les ranger dans une couche, c'est les rétrograder au rang de simple module — et se rendre compte trop tard qu'elles auraient dû être partout. La règle « on ne laisse rien traîner par terre » ne vit pas sur un étage : elle vaut pour tous.
 
 ## Les sept couches
 
@@ -40,35 +44,35 @@ Pourquoi sécurité et observabilité sont **transverses** et non des couches : 
 
 ## Où ça casse
 
-La carte devient utile quand elle sert de grille de diagnostic.
+La cartographie devient vraiment utile quand tu t'en sers comme grille de diagnostic. Une étagère rangée se dérange toute seule dès que personne ne sait plus de quel étage relève quoi — chaque symptôme ci-dessous, c'est un jouet remis au mauvais niveau, ou laissé par terre.
 
-| Symptôme                                           | Couche en cause                                      |
-| -------------------------------------------------- | ---------------------------------------------------- |
-| La facture explose sans explication                | **1** — pas de gateway, donc pas de mesure par appel |
-| Changer de modèle impose de toucher au code métier | **1** — accès aux modèles non centralisé             |
-| L'agent « oublie » au milieu d'une tâche longue    | **3** — pas d'état après compaction du contexte      |
-| Chaque outil coûte une intégration sur mesure      | **4** — pas de protocole standard                    |
-| L'agent a fait quelque chose de destructeur        | **A** — rayon d'impact non borné, pas d'approbation  |
-| Impossible de dire si la v2 vaut mieux que la v1   | **B** — sans evals, la fiabilité est une opinion     |
-| Ajouter un canal (cron, webhook) = réécriture      | **7** — logique agentique couplée à la surface       |
+| Symptôme                                            | Couche en cause                                      |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| La facture explose sans qu'on sache pourquoi        | **1** — pas de gateway, donc pas de mesure par appel |
+| Changer de modèle t'oblige à toucher au code métier | **1** — accès aux modèles non centralisé             |
+| L'agent « oublie » au milieu d'une tâche longue     | **3** — pas d'état après compaction du contexte      |
+| Chaque outil te coûte une intégration sur mesure    | **4** — pas de protocole standard                    |
+| L'agent a fait un truc destructeur                  | **A** — rayon d'impact non borné, pas d'approbation  |
+| Impossible de dire si la v2 est meilleure que la v1 | **B** — sans evals, la fiabilité, c'est une opinion  |
+| Ajouter un canal (cron, webhook) = tout réécrire    | **7** — logique agentique couplée à la surface       |
 
-Si plusieurs lignes vous parlent, elles ne désignent probablement pas le même propriétaire dans votre organisation. C'est généralement le vrai problème.
+Si plusieurs lignes te parlent, il y a de fortes chances qu'elles ne pointent pas vers le même responsable dans ton organisation. Et c'est souvent ça, le vrai problème.
 
-## Deux lectures de la même carte
+## Deux lectures de la même cartographie
 
-### Si vous portez l'architecture
+### Si tu portes l'architecture
 
-_Vous optimisez : cohérence, dette maîtrisée, dépendances lisibles._
+_Ce que tu cherches à optimiser : la cohérence, une dette maîtrisée, des dépendances lisibles._
 
-- **Couche 1 — le gateway est le seul point durable.** Centraliser l'accès aux modèles derrière une interface unique découple tout le reste du fournisseur. Trois jours de travail qui en épargnent trente.
-- **Couche 3 — c'est là qu'est le produit.** Le différenciateur n'est pas le framework d'orchestration mais la gestion d'état : reprise après compaction, idempotence des étapes. Le framework se remplace ; l'état mal pensé se paie.
-- **Couche 4 — MCP transforme « N agents × M outils » en « N + M ».** Et le sandboxing cesse d'être négociable dès que l'agent exécute du code.
-- **Couche 7 — le test de maturité.** Si la logique agentique connaît sa surface, chaque canal supplémentaire est une réécriture. Découpler runtime et surface, c'est ce qui sépare une plateforme d'une démo.
-- **Transverses — reformulez la question.** Pas « l'agent est-il sûr ? » mais « quelle est sa pire action possible, et qui l'approuve ? ».
+- **Couche 1 — le gateway, c'est le seul point qui dure.** Centraliser l'accès aux modèles derrière une interface unique, ça découple tout le reste du fournisseur. Trois jours de boulot qui t'en épargnent trente.
+- **Couche 3 — c'est là que se joue le produit.** Ce qui te différencie, ce n'est pas le framework d'orchestration, c'est la gestion d'état : reprise après compaction, idempotence des étapes. Le framework, tu le remplaces ; un état mal pensé, tu le paies.
+- **Couche 4 — MCP transforme « N agents × M outils » en « N + M ».** Et le sandboxing arrête d'être négociable dès l'instant où l'agent exécute du code.
+- **Couche 7 — c'est ton test de maturité.** Si la logique agentique sait sur quelle surface elle tourne, chaque nouveau canal devient une réécriture. Découpler le runtime de la surface, c'est exactement ce qui sépare une vraie plateforme d'une démo.
+- **Transverses — reformule la question.** Pas « est-ce que l'agent est sûr ? » mais « quelle est sa pire action possible, et qui l'approuve ? ».
 
-### Si vous portez la décision d'achat
+### Si tu portes la décision d'achat
 
-_Vous optimisez : risque, coût total, dépendance, maturité._
+_Ce que tu cherches à optimiser : le risque, le coût total, la dépendance, la maturité._
 
 | Couche                       | Build vs Buy             | Coût dominant                    | Lock-in                       | Maturité       |
 | ---------------------------- | ------------------------ | -------------------------------- | ----------------------------- | -------------- |
@@ -80,18 +84,18 @@ _Vous optimisez : risque, coût total, dépendance, maturité._
 | 6. Coordination multi-agents | Build                    | Ingénierie                       | Faible                        | Faible (early) |
 | 7. Interface & surfaces      | Buy / Build              | Licences par siège               | Moyen                         | Élevée         |
 
-**Cinq questions à poser avant de signer :**
+**Cinq questions à poser avant de signer quoi que ce soit :**
 
-- L'accès aux modèles passe-t-il par un gateway standard ?
-- Les outils passent-ils par un protocole ouvert (MCP) ?
-- La mémoire est-elle exportable — et dans quel format ?
-- Les traces et les coûts s'exportent-ils vers votre observabilité existante ?
-- Sécurité et audit sont-ils natifs, ou vendus plus tard en add-on ?
+- Est-ce que l'accès aux modèles passe par un gateway standard ?
+- Est-ce que les outils passent par un protocole ouvert (MCP) ?
+- Est-ce que la mémoire est exportable — et dans quel format ?
+- Est-ce que les traces et les coûts s'exportent vers ton observabilité déjà en place ?
+- Est-ce que la sécurité et l'audit sont natifs, ou vendus plus tard en add-on ?
 
-Une réponse floue sur l'une des cinq n'est pas rédhibitoire. Deux, c'est un pattern.
+Une réponse floue sur l'une des cinq, ça passe. Deux, c'est un pattern.
 
-## Ce que cette carte ne dit pas
+## Ce que cette cartographie ne dit pas
 
-Ce qu'elle apporte est modeste et utile : un vocabulaire partagé. Quand l'architecte dit « c'est un problème de couche 3 » et que l'acheteur comprend pourquoi ça ne se réglera pas en changeant de fournisseur, la carte a fait son travail.
+Ce qu'elle t'apporte est modeste, mais utile : un vocabulaire commun. Le jour où l'architecte dit « c'est un problème de couche 3 » et que l'acheteur comprend pourquoi ça ne se réglera pas en changeant de fournisseur, la cartographie a fait son job. La chambre n'est jamais rangée une fois pour toutes — mais au moins, tout le monde sait enfin de quel étage relève quoi.
 
-Reste une question qu'elle ne tranche pas : cette carte tient-elle face à ce que la CNCF, le platform engineering et les analystes décrivent de leur côté ? Elle converge avec eux sur la plupart des frontières, diverge sur deux points que j'assume — et bute sur une distinction que personne ne fait vraiment : celle entre l'agent qu'on _produit_ et l'agent qui _produit_. [C'est l'objet d'un second billet.](/blog/agent-producteur-agent-produit)
+Reste une question qu'elle ne tranche pas : est-ce qu'elle tient la route face à ce que la CNCF, le platform engineering et les analystes décrivent de leur côté ? Elle converge avec eux sur la plupart des frontières, diverge sur deux points que j'assume — et bute sur une distinction que personne ne fait vraiment : celle entre l'agent qu'on _produit_ et l'agent qui _produit_. [C'est justement le sujet d'un second billet.](/blog/agent-producteur-agent-produit)
