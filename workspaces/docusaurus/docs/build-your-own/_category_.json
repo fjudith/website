@@ -1,6 +1,6 @@
 {
   "label": "Build a site like this",
-  "position": 4,
+  "position": 2,
   "link": {
     "type": "generated-index",
     "description": "Step-by-step guide to build a Docusaurus site with LikeC4, CALM and Slidev rendering, deployed to GitHub Pages."

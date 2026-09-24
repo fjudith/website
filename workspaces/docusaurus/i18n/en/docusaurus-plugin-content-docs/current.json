@@ -1,0 +1,22 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Build a site like this": {
+    "message": "Build a site like this",
+    "description": "The label for category 'Build a site like this' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Build a site like this.link.generated-index.description": {
+    "message": "Step-by-step guide to build a Docusaurus site with LikeC4, CALM and Slidev rendering, deployed to GitHub Pages.",
+    "description": "The generated-index page description for category 'Build a site like this' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Experiments": {
+    "message": "Experiments",
+    "description": "The label for category 'Experiments' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Experiments.link.generated-index.description": {
+    "message": "Hands-on write-ups of things I've been tinkering with — infrastructure, tooling, and setups worth documenting.",
+    "description": "The generated-index page description for category 'Experiments' in sidebar 'tutorialSidebar'"
+  }
+}

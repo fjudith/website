@@ -1,6 +1,6 @@
 {
   "label": "Experiments",
-  "position": 5,
+  "position": 3,
   "link": {
     "type": "generated-index",
     "description": "Hands-on write-ups of things I've been tinkering with — infrastructure, tooling, and setups worth documenting."
