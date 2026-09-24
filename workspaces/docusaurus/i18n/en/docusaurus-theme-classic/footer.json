@@ -1,0 +1,26 @@
+{
+  "link.title.Contenu": {
+    "message": "Content",
+    "description": "The title of the footer links column with title=Contenu in the footer"
+  },
+  "link.title.Liens": {
+    "message": "Links",
+    "description": "The title of the footer links column with title=Liens in the footer"
+  },
+  "link.item.label.Articles": {
+    "message": "Articles",
+    "description": "The label of footer link with label=Articles linking to /blog"
+  },
+  "link.item.label.Présentations": {
+    "message": "Talks",
+    "description": "The label of footer link with label=Présentations linking to /decks"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/fjudith"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 Florian JUDITH. Built with Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

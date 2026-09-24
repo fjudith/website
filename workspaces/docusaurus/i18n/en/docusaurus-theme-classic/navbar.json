@@ -1,0 +1,26 @@
+{
+  "title": {
+    "message": "Florian JUDITH",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Florian Judith logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Articles": {
+    "message": "Articles",
+    "description": "Navbar item with label Articles"
+  },
+  "item.label.Présentations": {
+    "message": "Talks",
+    "description": "Navbar item with label Présentations"
+  },
+  "item.label.Notes": {
+    "message": "Notes",
+    "description": "Navbar item with label Notes"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
