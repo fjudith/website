@@ -11,12 +11,28 @@
     "message": "Step-by-step guide to build a Docusaurus site with LikeC4, CALM and Slidev rendering, deployed to GitHub Pages.",
     "description": "The generated-index page description for category 'Build a site like this' in sidebar 'tutorialSidebar'"
   },
-  "sidebar.tutorialSidebar.category.Experiments": {
-    "message": "Experiments",
-    "description": "The label for category 'Experiments' in sidebar 'tutorialSidebar'"
+  "sidebar.tutorialSidebar.category.Tutoriels": {
+    "message": "Tutorials",
+    "description": "The label for category 'Tutoriels' in sidebar 'tutorialSidebar'"
   },
-  "sidebar.tutorialSidebar.category.Experiments.link.generated-index.description": {
-    "message": "Hands-on write-ups of things I've been tinkering with — infrastructure, tooling, and setups worth documenting.",
-    "description": "The generated-index page description for category 'Experiments' in sidebar 'tutorialSidebar'"
+  "sidebar.tutorialSidebar.category.Tutoriels.link.generated-index.description": {
+    "message": "Hands-on, step-by-step write-ups — infrastructure, tooling, and reproducible setups worth documenting.",
+    "description": "The generated-index page description for category 'Tutoriels' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Références": {
+    "message": "References",
+    "description": "The label for category 'Références' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Références.link.generated-index.description": {
+    "message": "Reference sheets: commands, configurations, and technical landmarks to consult as needed.",
+    "description": "The generated-index page description for category 'Références' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.ADR": {
+    "message": "ADR",
+    "description": "The label for category 'ADR' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.ADR.link.generated-index.description": {
+    "message": "Architecture Decision Records — architecture decisions, their context and consequences, in MADR format. Numbered, immutable once accepted, superseded rather than rewritten.",
+    "description": "The generated-index page description for category 'ADR' in sidebar 'tutorialSidebar'"
   }
 }

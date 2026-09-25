@@ -1,0 +1,8 @@
+{
+  "label": "ADR",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Architecture Decision Records — décisions d'architecture, leur contexte et leurs conséquences, au format MADR. Numérotées, immuables une fois acceptées, remplacées plutôt que réécrites."
+  }
+}

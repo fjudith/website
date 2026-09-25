@@ -1,0 +1,119 @@
+---
+sidebar_position: 2
+title: '0001 — Choix du générateur de site : Docusaurus'
+slug: 0001-choix-generateur-docusaurus
+description: Décision de retenir Docusaurus plutôt que Starlight ou MkDocs, motivée par l'intégration de CALM, LikeC4 et Slidev.
+status: accepted
+date: 2026-09-25
+deciders: [fjudith]
+---
+
+# ADR 0001 — Choix du générateur de site : Docusaurus
+
+- **Statut** : accepted
+- **Date** : 2026-09-25
+- **Décideurs** : fjudith
+
+## Contexte et problème
+
+Ce site doit publier de la documentation technique bilingue (fr/en) **et**
+servir de vitrine à trois façons de décrire une architecture :
+
+- **[LikeC4](https://likec4.dev)** — diagrammes d'architecture interactifs
+  générés depuis un modèle ;
+- **[CALM](https://calm.finos.org)** (FINOS Common Architecture Language Model)
+  — architecture validée par schéma, rendue en Mermaid ;
+- **[Slidev](https://sli.dev)** — supports de présentation en Markdown, servis
+  comme applications statiques.
+
+Le générateur de site statique doit donc non seulement bien rendre de la
+documentation, mais aussi **héberger ces trois intégrations dans une même
+build**, sans les reléguer à des sites séparés. Quel générateur retenir ?
+
+## Facteurs de décision
+
+- **Intégration de composants riches** — pouvoir embarquer du React (LikeC4,
+  lecteur Slidev, diagrammes CALM) directement dans les pages.
+- **Rendu Mermaid natif** — CALM produit du Mermaid ; le support doit être de
+  première classe.
+- **Une seule build, un seul déploiement** — les trois intégrations doivent
+  cohabiter dans le même pipeline plutôt que dans des sites juxtaposés.
+- **i18n fr/en** — internationalisation intégrée, contenu source + surcouche de
+  traduction.
+- **Maturité de l'écosystème** — plugins, thèmes, longévité.
+
+## Options envisagées
+
+- **Option 1 — [Docusaurus](https://docusaurus.io)** (React, bundler webpack).
+- **Option 2 — [Starlight](https://starlight.astro.build)** (Astro).
+- **Option 3 — [MkDocs](https://www.mkdocs.org) / Material for MkDocs**
+  (Python, Jinja).
+
+## Décision
+
+Option retenue : « **Docusaurus** », parce que c'est le seul des trois où les
+**trois intégrations tiennent dans une build unique sans friction** :
+
+- **LikeC4** fournit un composant React de première classe (`LikeC4View` avec
+  navigateur de diagramme intégré). Il se branche directement dans une page
+  Docusaurus.
+- **CALM** est validé et rendu en Mermaid au build ; le thème Mermaid officiel
+  de Docusaurus (`@docusaurus/theme-mermaid`) affiche le résultat sans surcouche.
+- **Slidev** construit chaque deck en application statique, embarquée via
+  `<iframe>` et indexée par un composant React.
+
+Starlight aurait pu convenir (LikeC4 a un plugin Vite officiel, utilisable via
+`likec4:react`), mais MDX/JSX y est plus contraint qu'avec Docusaurus, et le
+modèle Astro « iles » complique l'usage de composants React lourds et
+interactifs comme le navigateur LikeC4. MkDocs, orienté Jinja/Markdown et sans
+socle composant, aurait imposé de recâbler chaque intégration à la main (React
+hors du pipeline) — l'inverse de l'objectif d'une build unifiée.
+
+### Conséquences
+
+- **Positives** — les trois intégrations vivent dans le même dépôt et le même
+  `npm run build` ; React est disponible partout ; l'i18n fr/en, la recherche,
+  les tags et le blog sont fournis d'origine ; l'écosystème de plugins est mûr.
+- **Négatives** — dépendance au bundler **webpack** (pas de plugin Vite : LikeC4
+  passe par un composant `BrowserOnly` côté client au lieu du module virtuel
+  `likec4:react` disponible sous Astro) ; build plus lourde que MkDocs ;
+  couplage à l'écosystème React.
+
+### Confirmation
+
+Le site en production embarque les trois rendus : les vues LikeC4 (`stack`,
+`virtiofs`, `landscape`), le diagramme CALM du site, et l'index des decks
+Slidev — tous produits par une unique `npm run build`, vérifiée en CI avant
+déploiement sur GitHub Pages.
+
+## Détail des options
+
+### Option 1 — Docusaurus
+
+- Bon, parce que React natif : LikeC4, Slidev et CALM s'intègrent comme
+  composants ou via Mermaid natif.
+- Bon, parce que i18n, recherche, blog et tags sont intégrés.
+- Mauvais, parce que le bundler est webpack : pas d'accès au plugin Vite de
+  LikeC4, contournement par composant client-only.
+
+### Option 2 — Starlight (Astro)
+
+- Bon, parce que LikeC4 fournit un **plugin Vite officiel** (`likec4:react`),
+  plus direct que sous webpack.
+- Bon, parce qu'Astro produit des pages très légères.
+- Mauvais, parce que le modèle « iles » et les contraintes MDX/JSX compliquent
+  l'embarquement de composants React lourds et interactifs (navigateur LikeC4,
+  lecteur Slidev).
+
+### Option 3 — MkDocs / Material for MkDocs
+
+- Bon, parce que très simple et rapide pour de la pure documentation.
+- Mauvais, parce que socle Jinja/Markdown sans composants : chaque intégration
+  React devrait être recâblée hors pipeline, à l'encontre d'une build unifiée.
+
+## Informations complémentaires
+
+- [À propos des ADR](/docs/adr) — conventions et cycle de vie.
+- [Gabarit MADR 0000](./0000-madr-template).
+- Rendus de référence sur ce site : voir la page **Diagrammes & Slides**
+  (LikeC4, CALM, Slidev).

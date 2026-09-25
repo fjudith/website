@@ -1,0 +1,124 @@
+---
+sidebar_position: 6
+title: '0005 — Exception: vLLM on classic containerization (GPU constraint)'
+slug: 0005-derogation-vllm-conteneurisation-classique
+description: Decision to run vLLM on classic containerization (docker/runc) rather than the default Kata sandbox, because GPU access is not available under the Cloud Hypervisor VMM.
+status: accepted
+date: 2026-09-25
+deciders: [fjudith]
+---
+
+# ADR 0005 — Exception: vLLM on classic containerization (GPU constraint)
+
+- **Status**: accepted
+- **Date**: 2026-09-25
+- **Deciders**: fjudith
+
+## Context and problem statement
+
+[ADR 0003](./0003-choix-runtime-conteneurs) sets the **safe default**: workloads
+run under **Kata (`kata-clh`)**, a hardware-isolated micro-VM, because an agent
+runs potentially untrusted code. [ADR 0004](./0004-choix-executeur-modeles-vllm)
+picks **vLLM** as the local model executor, for speed and governance.
+
+But vLLM only reaches its speed on a **GPU**, and GPU access collides head-on
+with the default runtime. Do we force vLLM into the Kata sandbox at the cost of
+the GPU, or make an exception to the isolation rule for this specific workload?
+
+## Decision drivers
+
+- **GPU access** — vLLM without a GPU loses its purpose (throughput).
+- **Consistency with the sandbox default** — deviate only when technically
+  constrained, and in a documented way.
+- **Workload trust profile** — vLLM serves _our_ models, not arbitrary agent
+  code.
+- **Operational simplicity** — avoid a heavy setup (VFIO, dedicated card) when it
+  brings no real benefit.
+
+## Considered options
+
+- **Option 1 — vLLM on classic containerization (`docker`/`runc`)** with the
+  NVIDIA Container Toolkit. _(exception to the Kata default)_
+- **Option 2 — vLLM under Kata `kata-clh`** (the default, unchanged).
+- **Option 3 — vLLM under Kata `kata-qemu` + VFIO passthrough** (VM isolation
+  _and_ GPU).
+
+## Decision outcome
+
+Chosen option: "**vLLM on classic containerization (`docker`/`runc`) with the
+NVIDIA Container Toolkit**", as an **accepted exception** to the Kata default of
+ADR 0003, for one hard technical reason: **GPU access**.
+
+**Why the GPU constraint forces the exception.**
+
+- The **`kata-clh`** default rests on **Cloud Hypervisor**, which **does not
+  support GPU passthrough** in Kata's matrix (nor does Firecracker). The default
+  sandbox therefore has **no GPU path** — vLLM would run on CPU there, which
+  guts its purpose (see the `salt-devops-tools/vllm` formula's "CPU-only" `kata`
+  mode).
+- The **NVIDIA Container Toolkit** works by **exposing the host driver into the
+  container**, a mechanism that **assumes a shared kernel** — hence `runc`, not a
+  micro-VM with a guest kernel. This is the path all local-inference tooling
+  assumes.
+- The only "GPU **and** VM isolation" route would be **`kata-qemu` + VFIO**: QEMU
+  is the only VMM that supports GPU passthrough in Kata, but that requires IOMMU
+  on the kernel cmdline, the GPU bound to `vfio-pci`, a **whole card dedicated**
+  to the VM, and a VMM change from our default. Disproportionate cost and
+  complexity here.
+
+**Why the exception is acceptable.** Kata isolation protects against **untrusted
+code**. vLLM does not serve arbitrary code: it runs **our own models** behind an
+API — a different trust profile from the agent's. Dropping VM isolation for this
+specific workload is a measured trade-off, not a general loosening — the
+**default stays Kata** for everything else (ADR 0003), and this exception is
+**named and documented**.
+
+### Consequences
+
+- **Positive** — vLLM runs at full speed on the GPU; a simple, standard setup
+  (NVIDIA Container Toolkit); we avoid VFIO / a dedicated card; the sandbox
+  default stays intact for untrusted workloads.
+- **Negative** — the vLLM workload **shares the host kernel**: no VM isolation
+  for that container (accepted because trusted models); the host must carry the
+  NVIDIA driver and toolkit; we maintain two runtime profiles (`kata-clh` by
+  default, `runc` for the GPU); watch the Docker daemon `userns-remap` pitfall
+  that can break GPU injection (noted in the formula).
+
+### Confirmation
+
+The `salt-devops-tools/vllm` formula implements exactly this exception: its
+**`docker`** mode reaches the GPU via `--gpus` and the NVIDIA Container Toolkit,
+while its **`kata`** mode is explicitly **CPU-only**. Classic containerization is
+therefore the only actually-working GPU mode today.
+
+## Pros and cons of the options
+
+### Option 1 — Classic containerization (`docker`/`runc`) + NVIDIA Container Toolkit
+
+- Good, because trivial, performant GPU, standard setup, no VFIO/IOMMU
+  prerequisite, a shareable card.
+- Bad, because **shared host kernel** — no VM isolation (acceptable for a trusted
+  workload).
+
+### Option 2 — vLLM under Kata `kata-clh` (default unchanged)
+
+- Good, because maximum VM isolation, consistent with the default.
+- Bad, because **no GPU access** (Cloud Hypervisor) → vLLM on CPU, unusable for
+  the speed goal. **Disqualifying.**
+
+### Option 3 — vLLM under Kata `kata-qemu` + VFIO
+
+- Good, because **the only route combining GPU and VM isolation**.
+- Bad, because heavy: IOMMU on boot, GPU bound to `vfio-pci`, a **whole card
+  dedicated**, a VMM switch (`kata-clh` → `kata-qemu`), host settings out of
+  scope. Over-engineered for a trusted workload on a workstation.
+
+## More information
+
+- [About ADRs](/docs/adr) — conventions and lifecycle.
+- [ADR 0002 — VMM choice: Cloud Hypervisor](./0002-choix-vmm-cloud-hypervisor).
+- [ADR 0003 — Container runtime: Kata by default, runc for GPU](./0003-choix-runtime-conteneurs).
+- [ADR 0004 — Local model executor: vLLM](./0004-choix-executeur-modeles-vllm).
+- Formula: [`salt-devops-tools/vllm`](https://github.com/fjudith/salt-devops-tools/tree/main/vllm).
+- [Kata Containers — supported hypervisors (GPU matrix)](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md).
+- [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html).
