@@ -1,0 +1,8 @@
+{
+  "label": "Tutoriels",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Guides pas à pas et retours d'expérience concrets — infrastructure, outillage et montages reproductibles."
+  }
+}

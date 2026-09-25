@@ -1,0 +1,126 @@
+---
+sidebar_position: 6
+title: '0005 — Dérogation : vLLM en conteneurisation classique (contrainte GPU)'
+slug: 0005-derogation-vllm-conteneurisation-classique
+description: Décision de faire tourner vLLM en conteneurisation classique (docker/runc) plutôt que dans le sandbox Kata par défaut, parce que l'accès GPU n'est pas disponible sous le VMM Cloud Hypervisor.
+status: accepted
+date: 2026-09-25
+deciders: [fjudith]
+---
+
+# ADR 0005 — Dérogation : vLLM en conteneurisation classique (contrainte GPU)
+
+- **Statut** : accepted
+- **Date** : 2026-09-25
+- **Décideurs** : fjudith
+
+## Contexte et problème
+
+L'[ADR 0003](./0003-choix-runtime-conteneurs) fixe le **défaut sûr** : les
+charges tournent sous **Kata (`kata-clh`)**, une micro-VM à isolation matérielle,
+parce qu'un agent exécute du code potentiellement non fiable. L'[ADR
+0004](./0004-choix-executeur-modeles-vllm) retient **vLLM** comme exécuteur de
+modèles locaux, pour la vitesse et la gouvernance.
+
+Or vLLM n'atteint sa vitesse que sur **GPU**, et l'accès GPU entre en collision
+frontale avec le runtime par défaut. Faut-il forcer vLLM dans le sandbox Kata au
+prix du GPU, ou déroger à la règle d'isolation pour cette charge précise ?
+
+## Facteurs de décision
+
+- **Accès GPU** — vLLM sans GPU perd sa raison d'être (débit).
+- **Cohérence avec le défaut sandbox** — ne déroger que si c'est techniquement
+  contraint, et de façon documentée.
+- **Profil de confiance de la charge** — vLLM sert _nos_ modèles, pas du code
+  arbitraire d'agent.
+- **Simplicité opérationnelle** — éviter un montage lourd (VFIO, carte dédiée)
+  quand il n'apporte pas de bénéfice réel.
+
+## Options envisagées
+
+- **Option 1 — vLLM en conteneurisation classique (`docker`/`runc`)** avec le
+  NVIDIA Container Toolkit. _(dérogation au défaut Kata)_
+- **Option 2 — vLLM sous Kata `kata-clh`** (le défaut, sans changement).
+- **Option 3 — vLLM sous Kata `kata-qemu` + passthrough VFIO** (isolation VM
+  _et_ GPU).
+
+## Décision
+
+Option retenue : « **vLLM en conteneurisation classique (`docker`/`runc`) avec
+le NVIDIA Container Toolkit** », en **dérogation assumée** au défaut Kata de
+l'ADR 0003, pour une raison technique dure : **l'accès GPU**.
+
+**Pourquoi la contrainte GPU force la dérogation.**
+
+- Le défaut **`kata-clh`** repose sur **Cloud Hypervisor**, qui **ne supporte pas
+  le passthrough GPU** dans la matrice Kata (tout comme Firecracker). Le sandbox
+  par défaut n'a donc **aucun chemin GPU** — vLLM y tournerait en CPU, ce qui le
+  vide de son intérêt (cf. le mode `kata` « CPU-only » de la formule
+  `salt-devops-tools/vllm`).
+- Le **NVIDIA Container Toolkit** fonctionne en **exposant le driver de l'hôte
+  dans le conteneur**, mécanisme qui **suppose un noyau partagé** — donc `runc`,
+  pas une micro-VM avec noyau invité. C'est le chemin que tout l'outillage
+  d'inférence locale suppose.
+- La seule voie « GPU **et** isolation VM » serait **`kata-qemu` + VFIO** : QEMU
+  est le seul VMM à supporter le passthrough GPU dans Kata, mais cela impose
+  IOMMU au boot, le GPU bindé à `vfio-pci`, une **carte entière dédiée** à la VM,
+  et un changement de VMM par rapport à notre défaut. Coût et complexité
+  disproportionnés ici.
+
+**Pourquoi la dérogation est acceptable.** L'isolation Kata protège contre du
+**code non fiable**. vLLM ne sert pas de code arbitraire : il exécute **nos
+propres modèles** derrière une API, un profil de confiance différent de celui de
+l'agent. Faire sauter l'isolation VM pour cette charge précise est donc un
+compromis mesuré, pas un relâchement général — le **défaut reste Kata** pour tout
+le reste (ADR 0003), et cette dérogation est **nominative et documentée**.
+
+### Conséquences
+
+- **Positives** — vLLM tourne à pleine vitesse sur GPU ; montage simple et
+  standard (NVIDIA Container Toolkit) ; on évite VFIO / carte dédiée ; le défaut
+  sandbox reste intact pour les charges non fiables.
+- **Négatives** — la charge vLLM **partage le noyau hôte** : pas d'isolation VM
+  pour ce conteneur (accepté car modèles de confiance) ; l'hôte doit porter le
+  driver NVIDIA et le toolkit ; on maintient deux profils de runtime
+  (`kata-clh` par défaut, `runc` pour le GPU) ; attention au piège
+  `userns-remap` du daemon Docker qui peut casser l'injection GPU (noté dans la
+  formule).
+
+### Confirmation
+
+La formule `salt-devops-tools/vllm` implémente exactement cette dérogation : son
+mode **`docker`** accède au GPU via `--gpus` et le NVIDIA Container Toolkit,
+tandis que son mode **`kata`** est explicitement **CPU-only**. La containerisation
+classique est donc le seul mode GPU réellement fonctionnel aujourd'hui.
+
+## Détail des options
+
+### Option 1 — Conteneurisation classique (`docker`/`runc`) + NVIDIA Container Toolkit
+
+- Bon, parce que GPU trivial et performant, montage standard, aucun prérequis
+  VFIO/IOMMU, carte partageable.
+- Mauvais, parce que **noyau hôte partagé** — pas d'isolation VM (acceptable pour
+  une charge de confiance).
+
+### Option 2 — vLLM sous Kata `kata-clh` (défaut inchangé)
+
+- Bon, parce qu'isolation VM maximale, cohérent avec le défaut.
+- Mauvais, parce que **pas d'accès GPU** (Cloud Hypervisor) → vLLM en CPU,
+  inutilisable pour l'objectif de vitesse. **Disqualifiant.**
+
+### Option 3 — vLLM sous Kata `kata-qemu` + VFIO
+
+- Bon, parce que **la seule voie combinant GPU et isolation VM**.
+- Mauvais, parce que lourd : IOMMU au boot, GPU bindé `vfio-pci`, **carte entière
+  dédiée**, bascule de VMM (`kata-clh` → `kata-qemu`), réglages hôte hors
+  périmètre. Surdimensionné pour une charge de confiance sur un poste.
+
+## Informations complémentaires
+
+- [À propos des ADR](/docs/adr) — conventions et cycle de vie.
+- [ADR 0002 — Choix du VMM : Cloud Hypervisor](./0002-choix-vmm-cloud-hypervisor).
+- [ADR 0003 — Runtime de conteneurs : Kata par défaut, runc pour le GPU](./0003-choix-runtime-conteneurs).
+- [ADR 0004 — Exécuteur de modèles locaux : vLLM](./0004-choix-executeur-modeles-vllm).
+- Formule : [`salt-devops-tools/vllm`](https://github.com/fjudith/salt-devops-tools/tree/main/vllm).
+- [Kata Containers — hyperviseurs supportés (matrice GPU)](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md).
+- [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html).

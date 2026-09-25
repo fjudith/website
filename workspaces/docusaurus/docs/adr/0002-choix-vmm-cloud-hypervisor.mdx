@@ -1,0 +1,154 @@
+---
+sidebar_position: 3
+title: '0002 — Choix du VMM : Cloud Hypervisor'
+slug: 0002-choix-vmm-cloud-hypervisor
+description: Décision de retenir Cloud Hypervisor comme moniteur de machine virtuelle pour l'isolation Kata, motivée par sa gouvernance neutre sous la Linux Foundation et le support de virtio-fs.
+status: accepted
+date: 2026-09-25
+deciders: [fjudith]
+---
+
+# ADR 0002 — Choix du VMM : Cloud Hypervisor
+
+- **Statut** : accepted
+- **Date** : 2026-09-25
+- **Décideurs** : fjudith
+
+## Contexte et problème
+
+Pour isoler le conteneur KiroCrew dans une micro-VM matérielle (voir le tutoriel
+_Isoler KiroCrew avec Kata Containers + Cloud Hypervisor_), il faut choisir un
+**moniteur de machine virtuelle** (VMM) que [Kata
+Containers](https://katacontainers.io) pilotera. Le montage tourne sur un poste
+de travail Linux et a une **exigence dure** : le partage de répertoires
+hôte→invité via **virtio-fs** (les répertoires `home` et `workspace` sont
+montés dans l'invité).
+
+Au-delà de la technique, je veux que la brique d'infrastructure au cœur de
+l'isolation repose sur une **gouvernance ouverte et neutre**, plutôt que sur un
+projet mono-éditeur exposé au risque de capture ou de changement de licence.
+Quel VMM open source retenir ?
+
+## Facteurs de décision
+
+- **virtio-fs** — le partage de fichiers hôte↔invité est obligatoire.
+- **Empreinte** — VMM léger, faible latence, faible consommation mémoire,
+  surface d'attaque réduite (poste de travail, pas un hyperviseur généraliste).
+- **Support de première classe dans Kata** — pas un backend expérimental.
+- **Gouvernance neutre** — de préférence hébergé par une fondation
+  (Linux Foundation, CNCF…) plutôt qu'un projet mono-éditeur, pour limiter le
+  risque de lock-in, de capture ou de re-licenciement.
+- **Sûreté mémoire** — un VMM écrit dans un langage à sûreté mémoire est un
+  atout pour une couche d'isolation.
+
+## Options envisagées
+
+- **Option 1 — [Cloud Hypervisor](https://www.cloudhypervisor.org)** (Rust).
+- **Option 2 — [QEMU](https://www.qemu.org)** (C).
+- **Option 3 — [Firecracker](https://firecracker-microvm.github.io)** (Rust).
+- **Option 4 — [crosvm](https://github.com/google/crosvm)** (Rust).
+
+## Décision
+
+Option retenue : « **Cloud Hypervisor** », pour deux raisons décisives, l'une
+technique et l'autre de gouvernance :
+
+1. **Adéquation technique.** Cloud Hypervisor supporte **virtio-fs** comme
+   dispositif de première classe, ce qui satisfait l'exigence dure de partage de
+   répertoires — que **Firecracker ne remplit pas** (pas de partage de fichiers
+   hôte↔invité, ce qui casserait les montages `home`/`workspace`). Il est bien
+   plus léger que QEMU (modèle de périphériques minimal, uniquement virtio,
+   64 bits, pas d'émulation de matériel hérité), ce qui correspond à un poste de
+   travail. Il est écrit en **Rust** (sûreté mémoire) et Kata le traite comme un
+   hyperviseur **supporté de première classe**, au même titre que QEMU et
+   Firecracker (config `configuration-clh.toml`, build statique packagé).
+
+2. **Gouvernance neutre.** Cloud Hypervisor est **hébergé par la Linux
+   Foundation** depuis le **8 décembre 2021**, avec une gouvernance
+   multi-éditeurs (Alibaba, ARM, ByteDance, Intel, Microsoft). C'est
+   déterminant face aux alternatives mono-éditeur : **Firecracker** est un
+   projet AWS, **crosvm** un projet Google — tous deux à éditeur unique. La
+   neutralité de fondation réduit le risque de capture par un acteur et de
+   re-licenciement unilatéral, et signale une viabilité à long terme, pour une
+   brique qui est au cœur de l'isolation.
+
+QEMU (hébergé par la Software Freedom Conservancy, GPLv2) remplit virtio-fs et
+la gouvernance neutre, mais son **modèle de périphériques complet** est plus
+lourd que nécessaire sur un poste de travail ; on paierait une complexité et une
+surface d'attaque dont ce montage n'a pas besoin.
+
+### Conséquences
+
+- **Positives** — virtio-fs disponible ; VMM léger et sûr en mémoire (Rust) ;
+  support Kata de première classe ; gouvernance neutre sous Linux Foundation
+  (faible risque de lock-in / re-licenciement) ; licence permissive
+  (Apache-2.0 **et** BSD-3-Clause).
+- **Négatives** — pas de passthrough GPU ni de TDX/SEV-SNP dans le tableau des
+  fonctionnalités : si le poste devait un jour exiger l'un de ces éléments, il
+  faudrait revenir à QEMU. Écosystème plus jeune que QEMU.
+
+### Support GPU
+
+Point d'attention explicite : dans le tableau des hyperviseurs de Kata, **QEMU
+est le seul VMM à offrir le passthrough GPU** (VFIO), au même titre que les
+extensions confidentielles TDX / SEV-SNP. Cloud Hypervisor et Firecracker ne
+proposent pas ce passthrough.
+
+Ce montage — isoler l'agent KiroCrew — **n'a pas besoin de GPU** : la charge est
+du CPU/IO piloté par `kiro-cli`, et l'exigence dure est le partage virtio-fs, pas
+l'accélération graphique. Le compromis est donc assumé en connaissance de cause.
+
+Conséquence pratique : **si un futur cas d'usage exigeait un GPU dans la micro-VM**
+(inférence locale accélérée, rendu, transcodage), Cloud Hypervisor ne serait plus
+adapté et il faudrait **basculer sur QEMU** pour ce profil. On documenterait alors
+ce changement par une nouvelle ADR remplaçant celle-ci pour le profil concerné,
+plutôt que de réécrire la présente décision.
+
+### Confirmation
+
+Le tutoriel _Isoler KiroCrew avec Kata Containers + Cloud Hypervisor_ documente
+le montage effectif : Kata est épinglé sur le backend `clh`
+(`configuration-clh.toml`) via un handler de runtime `kata-clh`, les répertoires
+`home` et `workspace` sont partagés en **virtio-fs**, et le noyau invité diffère
+du noyau hôte (`uname -r`) — preuve que la charge tourne bien dans la micro-VM.
+
+## Détail des options
+
+### Option 1 — Cloud Hypervisor (Rust)
+
+- Bon, parce que virtio-fs de première classe (exigence dure satisfaite).
+- Bon, parce que léger, sûr en mémoire (Rust), et support Kata de première classe.
+- Bon, parce que **hébergé par la Linux Foundation** (gouvernance neutre,
+  multi-éditeurs).
+- Mauvais, parce que pas de GPU passthrough / TDX / SEV-SNP ; écosystème plus
+  jeune que QEMU.
+
+### Option 2 — QEMU (C)
+
+- Bon, parce que virtio-fs supporté, gouvernance neutre (Software Freedom
+  Conservancy), maturité et couverture matérielle inégalées — **seul VMM du
+  tableau Kata à offrir le passthrough GPU** (VFIO) et TDX/SEV-SNP.
+- Mauvais, parce que modèle de périphériques complet, plus lourd et plus
+  complexe que nécessaire pour un poste de travail (surface d'attaque accrue).
+
+### Option 3 — Firecracker (Rust)
+
+- Bon, parce que micro-VM minimale, démarrage rapide, écrite en Rust.
+- Mauvais, parce que **pas de partage de fichiers hôte↔invité (pas de
+  virtio-fs)** — disqualifiant pour ce montage ; et projet **mono-éditeur (AWS)**,
+  hors fondation.
+
+### Option 4 — crosvm (Rust)
+
+- Bon, parce que fort bac à sable (processus par périphérique), Rust, portable.
+- Mauvais, parce que **mono-éditeur (Google)**, centré sur l'écosystème ChromeOS/
+  Android ; intégration Kata moins directe que clh.
+
+## Informations complémentaires
+
+- [À propos des ADR](/docs/adr) — conventions et cycle de vie.
+- [ADR 0001 — Choix du générateur de site](./0001-choix-generateur-docusaurus).
+- Tutoriel : _Isoler KiroCrew avec Kata Containers + Cloud Hypervisor_.
+- [Linux Foundation — hébergement de Cloud Hypervisor (8 déc. 2021)](https://www.linuxfoundation.org/press/press-release/linux-foundation-to-host-the-cloud-hypervisor-project-creating-a-performant-lightweight-virtual-machine-monitor-for-modern-cloud-workloads).
+- [Cloud Hypervisor](https://www.cloudhypervisor.org) — [dépôt GitHub](https://github.com/cloud-hypervisor/cloud-hypervisor).
+- [Kata Containers — hyperviseurs supportés](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md).

@@ -1,0 +1,168 @@
+---
+sidebar_position: 5
+title: '0004 — Exécuteur de modèles locaux : vLLM'
+slug: 0004-choix-executeur-modeles-vllm
+description: Choix de vLLM comme moteur d'inférence de modèles IA locaux, motivé par la vitesse (PagedAttention, continuous batching) et la gouvernance open source sous la PyTorch Foundation / Linux Foundation.
+status: accepted
+date: 2026-09-25
+deciders: [fjudith]
+---
+
+# ADR 0004 — Exécuteur de modèles locaux : vLLM
+
+- **Statut** : accepted
+- **Date** : 2026-09-25
+- **Décideurs** : fjudith
+
+## Contexte et problème
+
+Le montage sert des modèles IA en local (API compatible OpenAI, cf. la formule
+`salt-devops-tools/vllm` référencée dans l'[ADR
+0003](./0003-choix-runtime-conteneurs)). Il faut choisir le **moteur
+d'inférence/serving** qui exécute ces modèles. Deux critères pèsent plus que les
+autres dans ce choix :
+
+1. **La vitesse** — débit (tokens/s) et latence, pour que le service local soit
+   réellement utilisable.
+2. **La gouvernance open source** — préférence pour un projet sous une
+   **fondation neutre (Linux Foundation)**, cohérente avec les ADR 0002 et 0003.
+
+Quel exécuteur retenir ?
+
+## Facteurs de décision
+
+- **Débit / latence** — capacité à saturer le GPU et à servir plusieurs requêtes
+  concurrentes.
+- **Gouvernance neutre** — de préférence sous la Linux Foundation, pas un projet
+  mono-éditeur.
+- **Portabilité matérielle** — ne pas se lier à un seul fournisseur de puces.
+- **API et écosystème** — API compatible OpenAI, intégration conteneur simple.
+- **Licence permissive**.
+
+## Options envisagées
+
+- **Option 1 — [vLLM](https://docs.vllm.ai)**.
+- **Option 2 — [Ollama](https://ollama.com)** (surcouche llama.cpp).
+- **Option 3 — [llama.cpp](https://github.com/ggml-org/llama.cpp)**.
+- **Option 4 — [Hugging Face TGI](https://github.com/huggingface/text-generation-inference)**.
+- **Option 5 — [NVIDIA TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)**.
+
+## Décision
+
+Option retenue : « **vLLM** », parce qu'il est le mieux placé sur les **deux
+critères prioritaires** à la fois :
+
+**Vitesse.** vLLM est bâti autour de **PagedAttention**, qui traite le cache KV
+comme des pages mémoire (blocs non contigus + table de blocs par séquence). Le
+gaspillage mémoire tombe **sous 4 %** (contre 60–80 % dans les systèmes
+antérieurs), ce qui autorise des **batches plus grands** et donc un débit plus
+élevé. S'y ajoutent le **continuous batching** (ordonnancement à la granularité
+de l'itération : les séquences terminées quittent le batch, de nouvelles
+entrent), le **tensor/pipeline parallelism**, la **quantization** (FP8/INT8/INT4,
+AWQ, GPTQ), le **chunked prefill**, le **speculative decoding** et les **CUDA
+graphs**. Le papier SOSP 2023 mesure **2 à 4×** le débit face aux meilleurs
+systèmes de l'époque (Orca, FasterTransformer) à latence égale ; le blog de
+lancement annonce **jusqu'à 24×** face à HuggingFace Transformers vanilla (à
+citer avec sa baseline : c'est un pic sur un banc précis).
+
+**Gouvernance.** vLLM, né au **Sky Computing Lab d'UC Berkeley**, est un projet
+**hébergé par la PyTorch Foundation depuis le 7 mai 2025** — et la **PyTorch
+Foundation est une fondation ombrelle sous la Linux Foundation**. La chaîne de
+gouvernance est donc :
+
+```
+vLLM → PyTorch Foundation (projet hébergé, 7 mai 2025) → Linux Foundation (ombrelle)
+```
+
+C'est exactement le critère demandé. Le projet est en outre franchement
+**multi-éditeurs** côté matériel (NVIDIA jusqu'à Blackwell, AMD, Google TPU,
+Intel CPU/GPU/Gaudi, AWS Neuron, ARM, plus IBM Spyre et Huawei Ascend via
+plugins), avec un millier de contributeurs et plus. Licence **Apache-2.0**.
+
+Les alternatives échouent sur l'un des deux axes :
+
+- **Ollama** et **llama.cpp** privilégient la simplicité et le CPU / GPU grand
+  public ; excellents pour un poste isolé, mais pas dimensionnés pour le débit
+  multi-requêtes de vLLM, et Ollama est une surcouche pilotée par un éditeur
+  unique.
+- **Hugging Face TGI** est un concurrent direct côté serving (il emprunte
+  d'ailleurs la Paged Attention à vLLM), mais **le projet est passé en
+  maintenance et son dépôt archivé (21 mars 2026), Hugging Face recommandant
+  elle-même vLLM et SGLang** ; sa gouvernance reste par ailleurs celle d'un
+  éditeur (Hugging Face).
+- **NVIDIA TensorRT-LLM** vise la performance maximale mais **enferme sur le
+  matériel NVIDIA** (GPU NVIDIA uniquement, pas de CPU/AMD/Apple) — l'opposé du
+  critère de neutralité.
+
+### Conséquences
+
+- **Positives** — débit élevé et latence maîtrisée (PagedAttention + continuous
+  batching) ; gouvernance neutre sous la Linux Foundation (via PyTorch
+  Foundation), cohérente avec les ADR 0002/0003 ; portabilité multi-matériel ;
+  API compatible OpenAI ; licence Apache-2.0.
+- **Négatives** — vLLM cible surtout le **GPU serveur/datacenter** : moins adapté
+  qu'Ollama/llama.cpp au CPU pur ou aux petites cartes grand public ; empreinte
+  et complexité supérieures pour un usage mono-utilisateur simple ; l'accès GPU
+  reste soumis à la contrainte de runtime documentée à l'[ADR
+  0003](./0003-choix-runtime-conteneurs) (mode `docker`/`runc`, pas le sandbox
+  Kata `kata-clh`).
+
+### Confirmation
+
+La formule `salt-devops-tools/vllm` sert déjà vLLM via son image
+`vllm/vllm-openai` (API compatible OpenAI) en modes `native`, `docker` et `kata`.
+Le choix de vLLM comme exécuteur est donc déjà matérialisé ; cette ADR en
+enregistre la justification.
+
+## Détail des options
+
+### Option 1 — vLLM
+
+- Bon, parce que débit élevé (PagedAttention, continuous batching), portable
+  multi-matériel, **gouvernance PyTorch Foundation / Linux Foundation**,
+  Apache-2.0, API OpenAI.
+- Mauvais, parce qu'orienté GPU serveur ; lourd pour un usage mono-utilisateur
+  simple.
+
+### Option 2 — Ollama
+
+- Bon, parce que très simple à installer/utiliser, idéal poste isolé, gère bien
+  le GPU grand public via llama.cpp.
+- Mauvais, parce que **surcouche mono-éditeur**, pas dimensionné pour le débit
+  multi-requêtes ; hors fondation.
+
+### Option 3 — llama.cpp
+
+- Bon, parce que léger, portabilité matérielle très large (CPU x86/ARM/RISC-V,
+  Metal, CUDA, ROCm, Vulkan, SYCL…), format GGUF, projet **communautaire** sous
+  l'org `ggml-org`, licence MIT.
+- Mauvais, parce que positionné sur l'inférence locale légère, pas sur le débit
+  de serving concurrent visé ici.
+
+### Option 4 — Hugging Face TGI
+
+- Bon, parce que moteur de serving mûr (continuous batching, tensor parallelism,
+  Paged Attention — empruntée à vLLM), large support matériel, Apache-2.0.
+- Mauvais, parce que **gouvernance mono-éditeur (Hugging Face)** ; et surtout
+  **le projet est passé en maintenance et son dépôt a été archivé (21 mars 2026)** — Hugging Face recommande désormais elle-même **vLLM et SGLang**. Choisir
+  TGI aujourd'hui reviendrait à adopter un moteur que son éditeur retire.
+  _(Note : licence passée d'Apache-2.0 à la HFOIL restrictive en juil. 2023, puis
+  revenue à Apache-2.0 en avr. 2024.)_
+
+### Option 5 — NVIDIA TensorRT-LLM
+
+- Bon, parce que performances de pointe sur matériel NVIDIA (in-flight batching,
+  speculative decoding, réutilisation du cache KV), Apache-2.0.
+- Mauvais, parce que **lock-in matériel NVIDIA strict** — GPU NVIDIA uniquement,
+  Linux x86_64/aarch64, ni CPU, ni AMD/ROCm, ni Apple Silicon (matrice de support
+  officielle) — et gouvernance mono-éditeur. Contraire aux critères de neutralité
+  et de portabilité.
+
+## Informations complémentaires
+
+- [À propos des ADR](/docs/adr) — conventions et cycle de vie.
+- [ADR 0003 — Runtime de conteneurs](./0003-choix-runtime-conteneurs).
+- Formule : [`salt-devops-tools/vllm`](https://github.com/fjudith/salt-devops-tools/tree/main/vllm).
+- [PyTorch Foundation accueille vLLM (7 mai 2025)](https://pytorch.org/blog/pytorch-foundation-welcomes-vllm/) · [Extension en fondation ombrelle](https://pytorch.org/blog/press-release-pytorch-foundation-expands-welcomes-projects-vllm-deepspeed/).
+- [vLLM — blog de lancement (PagedAttention)](https://blog.vllm.ai/2023/06/20/vllm.html) · [papier SOSP 2023](https://arxiv.org/abs/2309.06180).
+- [vLLM — dépôt GitHub (Apache-2.0)](https://github.com/vllm-project/vllm).

@@ -1,0 +1,188 @@
+---
+sidebar_position: 4
+title: '0003 — Runtime de conteneurs : Kata par défaut, runc pour le GPU'
+slug: 0003-choix-runtime-conteneurs
+description: Choix du runtime OCI pour le sandboxing des agents (Kata Containers par défaut) et échappatoire runc par charge pour l'inférence de modèles IA locaux accélérée par GPU, orchestrés par containerd/nerdctl.
+status: accepted
+date: 2026-09-25
+deciders: [fjudith]
+---
+
+# ADR 0003 — Runtime de conteneurs : Kata par défaut, runc pour le GPU
+
+- **Statut** : accepted
+- **Date** : 2026-09-25
+- **Décideurs** : fjudith
+
+## Contexte et problème
+
+Deux charges de travail cohabitent sur le poste, avec des exigences opposées :
+
+1. **Le sandboxing des agents.** KiroCrew pilote des agents `kiro-cli` qui
+   exécutent des outils, lancent du shell et touchent au système de fichiers —
+   du **code potentiellement non fiable**. La frontière de sécurité doit être
+   forte : une évasion ne doit pas compromettre l'hôte.
+2. **Les modèles IA locaux.** L'inférence locale (Ollama, vLLM, llama.cpp…) veut
+   un **accès GPU** à faible friction pour être utilisable.
+
+Or ces deux besoins tirent dans des directions opposées : l'isolation la plus
+forte (micro-VM) est justement celle qui rend l'accès GPU le plus difficile.
+Quel(s) runtime(s) OCI retenir, et comment les orchestrer ?
+
+## Facteurs de décision
+
+- **Force de la frontière** — contenir du code hostile : idéalement une
+  frontière matérielle (VM), pas seulement le noyau hôte partagé.
+- **Accès GPU** pour l'inférence de modèles locaux, quand c'est nécessaire.
+- **Gouvernance neutre** — cohérence avec les ADR précédentes (préférence
+  fondation plutôt que mono-éditeur).
+- **Flexibilité par charge** — pouvoir choisir l'isolation conteneur par
+  conteneur, sans second démon ni reconfiguration.
+- **Outillage poste de travail** — pas de Kubernetes, un simple hôte Linux.
+
+## Options envisagées
+
+Runtimes OCI :
+
+- **Option A — [runc](https://github.com/opencontainers/runc)** (défaut
+  containerd) : namespaces + cgroups + seccomp, noyau hôte partagé.
+- **Option B — [gVisor / runsc](https://gvisor.dev)** (Google) : noyau
+  applicatif en espace utilisateur qui intercepte les appels système.
+- **Option C — [Kata Containers](https://katacontainers.io)** : micro-VM
+  matérielle avec noyau invité (via un VMM — voir [ADR
+  0002](./0002-choix-vmm-cloud-hypervisor)).
+
+Orchestration :
+
+- **[containerd](https://containerd.io) + [nerdctl](https://github.com/containerd/nerdctl)**
+  vs Docker/Podman.
+
+## Décision
+
+Option retenue : « **containerd + nerdctl**, avec **Kata (`kata-clh`) comme
+runtime par défaut** pour le sandboxing des agents, et **runc en échappatoire
+déclarée par charge** pour l'inférence GPU de modèles locaux ».
+
+**Pourquoi Kata par défaut.** Pour du code non fiable, les trois runtimes ne se
+valent pas :
+
+- **runc** partage le **noyau hôte** — le modèle de menace de containerd
+  lui-même désigne ce noyau comme la seule frontière ; ce n'est pas conçu pour
+  contenir du code hostile.
+- **gVisor** ajoute une frontière (noyau applicatif + seccomp), plus fort que
+  runc, mais reste une interception d'appels système, pas une frontière
+  matérielle.
+- **Kata** offre la frontière **la plus forte** : une évasion de conteneur reste
+  dans la VM invitée ; atteindre l'hôte exige une évasion de l'hyperviseur.
+
+C'est l'isolation adaptée à un agent qui exécute du code arbitraire. La
+gouvernance suit la même logique que l'ADR 0002 : Kata est un projet **top-level
+de l'OpenInfra Foundation** (elle-même rattachée à la Linux Foundation depuis
+2025), multi-éditeurs — face à **gVisor, mono-éditeur Google**.
+
+**Pourquoi runc en échappatoire GPU.** L'accès GPU dépend du runtime, et il y a
+une **tension irréductible** avec l'isolation :
+
+- **runc** : GPU **trivial** via le NVIDIA Container Toolkit (le toolkit expose
+  le driver hôte ; c'est le chemin que tout l'outillage d'inférence locale
+  suppose). MIG et toutes les cartes supportées.
+- **gVisor** : GPU possible via `nvproxy`, mais **contraint** (liste restreinte
+  de GPU/drivers/ioctls, pas de MIG, et **aucune protection contre les failles
+  du driver NVIDIA** puisque les ioctls sont relayés).
+- **Kata** : GPU via passthrough **VFIO**, et **seul QEMU le supporte** dans la
+  matrice Kata — **pas Cloud Hypervisor ni Firecracker**. Notre défaut `kata-clh`
+  (ADR 0002) n'a donc **pas de chemin GPU**, et il faut dédier une carte entière.
+
+Conclusion : on **ne peut pas** avoir simultanément l'isolation micro-VM et une
+accélération GPU locale sans friction dans un seul runtime. On assume donc un
+**défaut sûr** (Kata) et une **exception explicite** : les charges d'inférence
+GPU tournent sous **runc + NVIDIA Container Toolkit**, en connaissance de
+l'isolation moindre, sur des modèles que l'on considère de confiance.
+
+**Pourquoi containerd + nerdctl.** containerd est un projet **CNCF gradué**
+(gouvernance neutre, Apache-2.0) et supporte **plusieurs handlers de runtime
+côte à côte** dans un seul `/etc/containerd/config.toml` : `runc`, `kata-clh`,
+`runsc`… chacun mappé à son shim. On choisit donc l'isolation **conteneur par
+conteneur**, sans second démon. nerdctl est le CLI compatible Docker natif de
+containerd (même org, Apache-2.0). C'est exactement le montage documenté dans le
+tutoriel Kata (handler `kata-clh` déclaré dans containerd).
+
+### Conséquences
+
+- **Positives** — défaut sûr (VM) pour les agents non fiables ; gouvernance
+  neutre de bout en bout (containerd CNCF, Kata OpenInfra) ; choix d'isolation
+  par charge sans réoutiller ; échappatoire GPU claire et documentée.
+- **Négatives** — les charges GPU sous runc **ne bénéficient pas** de
+  l'isolation VM (compromis assumé, réservé à des modèles de confiance) ; deux
+  profils de runtime à maintenir ; si l'on voulait du GPU **isolé en VM**, il
+  faudrait un runtime `kata-qemu` séparé (QEMU + VFIO, carte dédiée).
+
+### Confirmation
+
+Le tutoriel Kata montre containerd configuré avec le handler `kata-clh` et
+l'agent lancé sous ce runtime. Un handler `runc` (défaut containerd) reste
+disponible dans le même `config.toml` pour les charges GPU, sélectionnable via
+`nerdctl run --runtime …`.
+
+Confirmation concrète : ma formule Salt
+[`salt-devops-tools/vllm`](https://github.com/fjudith/salt-devops-tools/tree/main/vllm)
+sert vLLM (API compatible OpenAI) selon trois modes exclusifs qui matérialisent
+exactement cet arbitrage :
+
+- **`docker`** — accès GPU via `--gpus` et le NVIDIA Container Toolkit (runtime
+  `nvidia` de Docker) : c'est le chemin GPU réel.
+- **`native`** — CUDA hôte directement (pip).
+- **`kata`** — même image via `nerdctl` dans une micro-VM Kata / Cloud
+  Hypervisor : **CPU uniquement pour l'instant**.
+
+Le mode GPU passe donc bien par un runtime à noyau hôte partagé, pas par le
+sandbox Kata — ce que la décision prévoit.
+
+### GPU dans Kata (travaux futurs)
+
+Rendre vLLM accéléré par GPU **à l'intérieur** d'une micro-VM Kata n'est pas
+qu'une case à cocher. Il faudrait :
+
+1. un **passthrough VFIO** — IOMMU activé au boot (`intel_iommu=on` /
+   `amd_iommu=on`), le GPU cible bindé à `vfio-pci`, une carte dédiée à la VM ;
+2. **basculer le runtime de `kata-clh` vers `kata-qemu`**, car dans la matrice
+   Kata **seul QEMU supporte le passthrough GPU** — pas Cloud Hypervisor (notre
+   défaut, ADR 0002), pas Firecracker.
+
+La formule `vllm` classe ce chemin en _future work_ (le socle VFIO existe dans
+la formule `common` mais n'est pas encore consommé), et les réglages
+bootloader/hôte restent hors périmètre. Tant que ces deux conditions ne sont pas
+réunies, l'inférence GPU vit sous `docker`/`runc`, hors sandbox Kata.
+
+## Détail des options
+
+### Option A — runc
+
+- Bon, parce que défaut containerd, near-native, GPU trivial (NVIDIA toolkit),
+  gouvernance OCI/Linux Foundation.
+- Mauvais, parce que **noyau hôte partagé** — frontière faible, inadaptée seule à
+  du code hostile.
+
+### Option B — gVisor / runsc
+
+- Bon, parce que frontière plus forte que runc (noyau applicatif + seccomp),
+  démarrage rapide, natif conteneur ; GPU possible via `nvproxy`.
+- Mauvais, parce que **mono-éditeur Google** ; GPU contraint (pas de MIG,
+  drivers/ioctls restreints, pas de protection contre les failles du driver).
+
+### Option C — Kata Containers
+
+- Bon, parce que **frontière matérielle la plus forte** (micro-VM + noyau
+  invité), base des Confidential Containers, gouvernance OpenInfra multi-éditeurs.
+- Mauvais, parce que surcoût VM ; GPU seulement via QEMU+VFIO (pas sous notre
+  défaut `kata-clh`), carte entière dédiée.
+
+## Informations complémentaires
+
+- [À propos des ADR](/docs/adr) — conventions et cycle de vie.
+- [ADR 0002 — Choix du VMM : Cloud Hypervisor](./0002-choix-vmm-cloud-hypervisor).
+- Tutoriel : _Isoler KiroCrew avec Kata Containers + Cloud Hypervisor_.
+- [containerd](https://containerd.io) — [CNCF (gradué)](https://www.cncf.io/projects/containerd/) · [nerdctl](https://github.com/containerd/nerdctl).
+- [gVisor — support GPU (`nvproxy`)](https://gvisor.dev/docs/user_guide/gpu/).
+- [Kata Containers — hyperviseurs supportés (matrice GPU)](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md).
+- [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html).
